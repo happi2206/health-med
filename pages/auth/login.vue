@@ -1,11 +1,9 @@
-<template>
-  <div class="container">
-    <div class="row">
+<template style="background: #b2b8b6">
+  <div class="px-3">
+    <div class="row fullheight">
       <AuthSide />
-      <div
-        class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto"
-      >
-        <div class="card card-plain">
+      <div class="col-6 d-flex flex-column mx-lg-0 mx-auto">
+        <div class="card w-75 my-auto mx-auto card-plain">
           <div class="card-header pb-0 text-start">
             <h4 class="font-weight-bolder">Sign In</h4>
             <p class="mb-0">Enter your email and password to sign In</p>
@@ -53,7 +51,7 @@
               Don't have an account?
 
               <NuxtLink
-                to="/auth/signup"
+                to="/auth/login"
                 class="text-primary text-gradient font-weight-bold"
                 style="cursor: pointer"
                 >Sign up</NuxtLink
@@ -71,4 +69,7 @@ export default {};
 </script>
 
 <style>
+.fullheight {
+  min-height: 100vh;
+}
 </style>
