@@ -1,6 +1,6 @@
 <template>
   <div>
-    <sidebar />
+    <!-- <sidebar /> -->
     <template>
       <!-- <div class="personal-details row">
         <div class="col-md-4">
@@ -53,69 +53,18 @@
 
       <form @submit.prevent="handleSubmit(submitForm)">
         <div class="bg-white border-radius mb-5 p-4 margin-fix">
-          <div class="font20 d-flex align-items-center click">
-            <h4 class="text-grey">Patient Registeration</h4>
+          <h4 class="text-grey mb-4 text-24">Personal Details</h4>
+          <div class="d-flex align-items-center">
+            <small class="text-grey text-12">New Born</small>
+            <input v-model="newBorn" type="checkbox" class="ml-2" />
           </div>
-
-          <div class="row mt-3">
-            <div class="col-lg-4 col-md-6 col-sm-12">
-              <small>UHID</small
-              ><input
-                v-model="student.UHID"
-                type="text"
-                placeholder="UHID"
-                class="form-control ng-untouched ng-pristine ng-valid"
-              />
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-12">
-              <small>UHID Date</small
-              ><input
-                v-model="student.UHID_Date"
-                type="date"
-                placeholder="UHID Date"
-                class="form-control ng-untouched ng-pristine ng-valid"
-              />
-            </div>
-            <div
-              class="
-                col-lg-4
-                d-flex
-                justify-content-between
-                align-items-center
-                col-md-6 col-sm-12
-              "
-            >
-              <div class="w-50 d-flex align-items-center">
-                <small>New Born</small>
-                <input v-model="newBorn" class="ml-2 mt-1" type="checkbox" />
-              </div>
-
-              <input
-                type="file"
-                ref="uploadAvatar"
-                @change="handleFileUpload"
-                class="form-control d-none ng-untouched ng-pristine ng-valid"
-              />
-              <div class="touch" @click.prevent="uploadImage">
-                <b-avatar
-                  variant="primary"
-                  :src="avatar"
-                  size="5rem"
-                  class="mr-1"
-                ></b-avatar>
-              </div>
-            </div>
-          </div>
-
-          <hr />
-          <h4 class="mb-4">Personal Details</h4>
           <div>
             <div class="row">
               <div class="col-lg-10 col-md-8 col-sm-12 mb-3">
                 <div>
                   <div class="row">
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small> First Name </small>
+                      <small class="text-grey text-12"> First Name </small>
                       <div class="d-flex">
                         <select
                           class="form-control w-50"
@@ -141,7 +90,7 @@
                       </div>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small>Middle Name</small
+                      <small class="text-grey text-12">Middle Name</small
                       ><input
                         v-model="student.middle_name"
                         type="text"
@@ -150,7 +99,7 @@
                       />
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small>Last Name</small
+                      <small class="text-grey text-12">Last Name</small
                       ><input
                         v-model="student.last_name"
                         type="text"
@@ -159,7 +108,7 @@
                       />
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small>Date of Birth</small>
+                      <small class="text-grey text-12">Date of Birth</small>
                       <!-- <v-date-picker
                         v-model="student.date_of_birth"
                         mode="date"
@@ -177,7 +126,7 @@
                       <input type="date" class="w-100 form-control" />
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small>Gender</small>
+                      <small class="text-grey text-12">Age</small>
                       <div class="d-flex">
                         <input
                           type="text"
@@ -197,7 +146,7 @@
                       </div>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3 mt-1">
-                      <small>Gender</small>
+                      <small class="text-grey text-12">Gender</small>
                       <v-select
                         v-model="student.gender"
                         class="style-chooser"
@@ -207,7 +156,7 @@
                       ></v-select>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3 mt-1">
-                      <small>Marital Status</small>
+                      <small class="text-grey text-12">Marital Status</small>
                       <v-select
                         v-model="student.marital_status"
                         class="style-chooser"
@@ -217,7 +166,7 @@
                       ></v-select>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small>Occupation</small
+                      <small class="text-grey text-12">Occupation</small
                       ><input
                         v-model="student.occupation"
                         type="text"
@@ -226,7 +175,7 @@
                       />
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small>Language</small
+                      <small class="text-grey text-12">Language</small
                       ><v-select
                         v-model="student.language"
                         class="style-chooser"
@@ -242,7 +191,7 @@
                       ></v-select>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small>Religion</small
+                      <small class="text-grey text-12">Religion</small
                       ><v-select
                         v-model="student.religion"
                         class="style-chooser"
@@ -259,7 +208,7 @@
                     </div>
 
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small>Nationality</small>
+                      <small class="text-grey text-12">Nationality</small>
                       <v-select
                         v-model="student.nationality"
                         class="style-chooser"
@@ -268,7 +217,7 @@
                       ></v-select>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small>Email Address</small
+                      <small class="text-grey text-12">Email Address</small
                       ><input
                         v-model="student.email"
                         type="email"
@@ -277,7 +226,7 @@
                       />
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small>Loyalty Name</small
+                      <small class="text-grey text-12">Loyalty Name</small
                       ><v-select
                         v-model="student.loyalty"
                         class="style-chooser"
@@ -292,7 +241,7 @@
                       ></v-select>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small>Expiry Date</small
+                      <small class="text-grey text-12">Expiry Date</small
                       ><input
                         v-model="student.expiryDate"
                         type="text"
@@ -343,7 +292,7 @@
                       </div>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small>Visa Validity</small
+                      <small class="text-grey text-12">Visa Validity</small
                       ><input
                         v-model="student.validity"
                         type="date"
@@ -351,7 +300,7 @@
                       />
                     </div>
                     <div class="col-lg-4 col-md-5 col-sm-12 mb-3">
-                      <small>LGA</small>
+                      <small class="text-grey text-12">LGA</small>
                       <input
                         v-model="student.lga"
                         type="text"
@@ -361,7 +310,7 @@
                     </div>
                     <!-- <div class="row" style="margin: 0; width: 100%">
                       <div class="mb-3 col-12">
-                        <small>Family (optional)</small>
+                        <small class="text-grey text-12">Family (optional)</small>
 
                         <v-select
                           v-model="student.family"
@@ -380,7 +329,7 @@
                       </div>
 
                       <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                        <small>Address/Village</small
+                        <small class="text-grey text-12">Address/Village</small
                         ><input
                           v-model="student.address"
                           type="text"
@@ -401,7 +350,7 @@
                       </div>
 
                       <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                        <small>City</small
+                        <small class="text-grey text-12">City</small
                         ><input
                           v-model="student.city"
                           type="text"
@@ -410,7 +359,7 @@
                         />
                       </div>
                       <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                        <small>Postal Code</small
+                        <small class="text-grey text-12">Postal Code</small
                         ><input
                           v-model="student.postal_code"
                           type="text"
@@ -419,7 +368,7 @@
                         />
                       </div>
                       <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                        <small>Phone Number</small
+                        <small class="text-grey text-12">Phone Number</small
                         ><input
                           v-model="student.phone_number"
                           type="text"
@@ -433,7 +382,7 @@
                   <h3>Nearest Relative</h3>
                   <div class="row">
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small>Relative Name</small
+                      <small class="text-grey text-12">Relative Name</small
                       ><input
                         v-model="relative.relative_name"
                         type="text"
@@ -452,7 +401,7 @@
                       ></v-select>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small>Phone Number</small
+                      <small class="text-grey text-12">Phone Number</small
                       ><input
                         v-model="relative.relative_phone_number"
                         type="text"
@@ -462,7 +411,7 @@
                     </div>
 
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small>Address/Village</small
+                      <small class="text-grey text-12">Address/Village</small
                       ><input
                         v-model="relative.address"
                         type="text"
@@ -482,7 +431,7 @@
                       ></v-select>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small>City</small
+                      <small class="text-grey text-12">City</small
                       ><input
                         v-model="relative.city"
                         type="text"
@@ -492,7 +441,7 @@
                     </div>
 
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small>Postal Code</small
+                      <small class="text-grey text-12">Postal Code</small
                       ><input
                         v-model="relative.postal_code"
                         type="text"
@@ -720,7 +669,7 @@ export default {
         phone: "",
         address: "",
       },
-
+      isLoading: false,
       states2: [],
       Statess: "sss",
       countries: [],
@@ -754,18 +703,6 @@ export default {
         state_of_origin: "",
         lga_name: "",
         address: "",
-        grade: "",
-        admission_date: new Date(),
-        family: "",
-        application_date: "",
-        application_status: "Declined",
-        application_academic_year: "",
-        present_academic_year: "",
-        present_level: "",
-        admission_number: "",
-
-        application_level: "jss 2",
-        differentiation: null,
 
         avatar: null,
       },
@@ -1031,6 +968,12 @@ export default {
       this.avatar = event.target.files[0].file;
       console.log(event.target.files[0].file);
     },
+    submitForm() {
+      alert("Record created");
+    },
+    changeLga(value) {
+      console.log(value);
+    },
   },
   computed: {
     allStates() {
@@ -1067,9 +1010,9 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .margin-fix {
-  margin: 6rem 0rem;
+  margin: 8rem 0rem 6rem;
 }
 .style-chooser {
   height: 38px;

@@ -12,6 +12,14 @@ body {
     background: #171E40;
 }
 
+.style-chooser {
+    height: 38px;
+}
+
+.text-grey {
+    color: #8f9aa3;
+}
+
 .navigation {
     z-index: 150;
     width: 100%;
@@ -30,10 +38,142 @@ body {
     padding-top: 1rem;
     position: relative;
     z-index: 1;
-    padding: 2rem calc(.5rem + 12px);
+    padding: 2rem calc(2rem + 12px);
     background-color: #F5F6F7;
 }
 
+.slide-bottom-enter-active,
+.slide-bottom-leave-active {
+    transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
+}
+
+.slide-bottom-enter,
+.slide-bottom-leave-to {
+    opacity: 0;
+    transform: translate3d(0, 15px, 0);
+}
+
+/* ******************Table Styles*************************** */
+.custom-table.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f5f6fa;
+}
+
+.custom-table.table td,
+.custom-table.table th {
+    padding: 0.75rem 0.5rem;
+    vertical-align: middle;
+    border: 0;
+    font-size: 14px;
+    line-height: 100%;
+    /* identical to box height, or 14px */
+
+    /* Dark text */
+
+    color: #40484f;
+}
+
+.custom-table.table thead td,
+.custom-table.table thead th {
+    padding: 0.9375rem 0.5rem;
+    vertical-align: middle;
+    border: 0;
+    font-size: 14px;
+    line-height: 100%;
+    color: #8f9aa3;
+}
+
+.custom-table.table-bordered thead td,
+.custom-table.table-bordered thead th,
+.custom-table.table-bordered td,
+.custom-table.table-bordered th {
+    border: 1px solid #dee2e6;
+}
+
+.custom-table.table-hover tbody tr:hover {
+    color: #40484f;
+    background-color: rgba(16, 112, 183, 0.1);
+}
+
+.custom-table input[type='checkbox'],
+.custom-table input[type='radio'] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.custom-table input[type='checkbox']~.checkmark,
+.custom-table input[type='radio']~.checkmark {
+    width: 20px;
+    height: 20px;
+    background: #ffffff;
+    border: 1px solid #d8d8d8;
+    border-radius: 4px;
+    outline: 0;
+    display: block;
+    position: relative;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.custom-table input[type='checkbox']:checked~.checkmark,
+.custom-table input[type='radio']:checked~.checkmark {
+    background: #1070b7;
+}
+
+.custom-table input[type='checkbox']~.checkmark::after,
+.custom-table input[type='radio']~.checkmark::after {
+    content: '';
+    position: absolute;
+    display: none;
+    left: 50%;
+    top: 50%;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg) translate(-110%, -20%);
+    -ms-transform: rotate(45deg) translate(-110%, -20%);
+    transform: rotate(45deg) translate(-110%, -20%);
+}
+
+.custom-table input[type='checkbox']:checked~.checkmark::after,
+.custom-table input[type='radio']:checked~.checkmark::after {
+    display: block;
+}
+
+.custom-table label {
+    margin: 0;
+}
+
+.custom-table .badge {
+    width: 100%;
+}
+
+/* ****************Custom tabs************************* */
+
+.custom-card-tabs.nav,
+.custom-card-tabs .nav {
+    padding: 0 0.25rem;
+    border-bottom: 1px solid #e7e8eb;
+    flex-wrap: nowrap;
+    overflow: auto;
+}
+
+.custom-card-tabs .nav-link {
+    font-size: 14px;
+    line-height: 100%;
+    color: #8f9aa3;
+    padding: 0.8rem 0;
+    margin: 0 1rem;
+    white-space: nowrap;
+}
+
+.custom-card-tabs .nav-link.active {
+    color: #1070b7;
+    border-bottom: 2px solid #1070b7;
+}
 
 /* ********************typography******************* */
 .text-12 {
@@ -61,9 +201,40 @@ body {
     font-family: Museo Sans;
 }
 
+.text-24 {
+    font-size: 24px;
+    font-family: Museo Sans;
+}
+
+.form-control {
+    background: #fff;
+    border: 1px solid #e7e8eb;
+    border-radius: 4px;
+    color: #40484f;
+    font-size: 14px;
+    line-height: 100%;
+}
+
+.form-control:placeholder-shown {
+    background: #fbfdfe;
+}
+
+::-webkit-input-placeholder {
+    /* Edge */
+    font-size: 14px;
+}
+
+:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    font-size: 14px;
+}
+
+::placeholder {
+    font-size: 14px;
+}
+
 /* Sidebar Styles  */
 .site-sidebar {
-    /* background: #fff; */
     width: var(--sidebar-width);
     height: 100%;
 
@@ -133,6 +304,7 @@ body {
 }
 
 .site-sidebar .nav-item.active,
+.nuxt-link-exact-active,
 .site-sidebar .nav-item::after,
 .site-sidebar .nav-item:hover {
     background: rgba(16, 112, 183, 0.1);
@@ -178,6 +350,10 @@ body {
     align-items: center;
     justify-content: center;
     border-radius: 1000px;
+}
+
+a.nuxt-link-exact-active {
+    color: #00c58e;
 }
 
 .site-sidebar .nav-item.has-dropdown {

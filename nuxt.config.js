@@ -16,6 +16,22 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: ["@/assets/css/main.css"],
+  scripts: [
+    {
+      src: '/js/scripts.js',
+    },
+    {
+      src: 'https://code.iconify.design/2/2.2.1/iconify.min.js',
+    },
+    {
+      src: 'https://code.jquery.com/jquery-3.5.1.slim.min.js',
+      integrity:
+        'sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj',
+      crossorigin: 'anonymous',
+    },
+  ],
+
+  pageTransition: 'slide-bottom',
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [

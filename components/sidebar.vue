@@ -40,57 +40,55 @@
 </template>
 
 // <script lang="ts">
-// import Vue from 'vue'
+import Vue from "vue";
 
-// export default Vue.extend({
-//   data() {
-//     const routes: RouteSetupType[] = []
-//     return {
-//       isMobile: false,
-//       isShowing: false,
-//       routes,
-//     }
-//   },
-//   watch: {
-//     $route: {
-//       handler() {
-//         this.onRouteChange()
-//       },
-//       immediate: true,
-//     },
+export default Vue.extend({
+  data() {
+    // const routes: RouteSetupType[] = [];
+    return {
+      isMobile: false,
+      isShowing: false,
+      // routes,
+    };
+  },
+  watch: {
+    // $route: {
+    //   handler() {
+    //     this.onRouteChange();
+    //   },
+    //   immediate: true,
+    // },
+    // "$route.query.fromPage": {
+    //   handler(newVal) {
+    //     if (newVal) {
+    //       this.onRouteChange(newVal);
+    //     }
+    //   },
+    //   immediate: true,
+    // },
+  },
 
-//     '$route.query.fromPage': {
-//       handler(newVal) {
-//         if (newVal) {
-//           this.onRouteChange(newVal)
-//         }
-//       },
-//       immediate: true,
-//     },
-//   },
+  created() {
+    this.$nuxt.$on("openSidebar", () => {
+      this.isMobile = !this.isMobile;
+      this.isShowing = !this.isShowing;
+    });
+  },
 
-//   created() {
-//     this.$nuxt.$on('openSidebar', () => {
-//       this.isMobile = !this.isMobile
-//       this.isShowing = !this.isShowing
-//     })
-//   },
+  methods: {
+    isShowingMethod() {
+      this.isShowing = !this.isShowing;
+    },
+    // onRouteChange(fullPath = null) {
+    //   const spiltUrlToArray = fullPath || this.$route.fullPath.split("/");
 
-//   methods: {
-//     isShowingMethod() {
-//       this.isShowing = !this.isShowing
-//     },
-//     onRouteChange(fullPath = null) {
-//       const spiltUrlToArray = fullPath || this.$route.fullPath.split('/')
-
-//       const RouteObj = Routes.find((item) =>
-//         item.keywords.every((keyword) => spiltUrlToArray.includes(keyword))
-//       )
-//       this.routes = RouteObj?.routes as []
-//     },
-//   },
-// })
-//
+    //   const RouteObj = Routes.find((item) =>
+    //     item.keywords.every((keyword) => spiltUrlToArray.includes(keyword))
+    //   );
+    //   this.routes = RouteObj?.routes as [];
+    // },
+  },
+});
 </script>
 
 <style scoped>
@@ -134,23 +132,24 @@
 .nuxt-link-exact-active {
   background: rgba(16, 112, 183, 0.1) !important;
 }
-.nuxt-link-active {
+/* .nuxt-link-active {
   background: rgba(16, 112, 183, 0.1) !important;
-}
+} */
 .nuxt-link-active .nav-item-text {
   color: #0d6cbb !important;
 }
 
-.nuxt-link-active .nav-item-icon {
+/* .nuxt-link-active .nav-item-icon {
   color: #0d6cbb !important;
 }
 .nuxt-link-exact-active .nav-item-text {
+  background: rgba(16, 112, 183, 0.1) !important;
+
   color: #0d6cbb !important;
 }
-
 .nuxt-link-exact-active .nav-item-icon {
   color: #0d6cbb !important;
-}
+} */
 
 .nav-item {
   border-radius: 8px;
