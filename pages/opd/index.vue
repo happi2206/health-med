@@ -62,7 +62,14 @@
             </svg>
             <span class="ml-2">Vitals</span>
           </template>
-          Content III
+          <base-card-tab>
+            <card-tab :title="vitals">
+              <h1>hjefujima,ws</h1>
+            </card-tab>
+            <card-tab :title="vitals">
+              <h1>hjefujima,ws</h1>
+            </card-tab>
+          </base-card-tab>
         </TabPanel>
         <TabPanel>
           <template #header>
@@ -77,12 +84,16 @@
 </template>
 
 <script>
+import BaseCardTab from "~/components/BaseCardTab.vue";
+import CardTab from "~/components/CardTab.vue";
 export default {
+  components: { BaseCardTab, CardTab },
   layout: "dashboard",
 
   data() {
     return {
       items: [],
+      vitals: "vitals",
       isLoading: false,
     };
   },
