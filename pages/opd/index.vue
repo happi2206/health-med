@@ -25,7 +25,85 @@
             </svg>
             <span class="ml-2">Consultation</span>
           </template>
-          Content I
+          <div>
+            <div class="d-flex">
+              <ul
+                class="text-14 pl-0"
+                style="
+                  list-style: none;
+                  width: 120px;
+                  border: 1px solid #f5f6f7;
+                  background: #f5f6f7;
+                "
+              >
+                <li class="p-2">Vitals</li>
+                <li class="p-2">Records</li>
+                <li class="p-2">Bills</li>
+                <li class="p-2">Vitals</li>
+                <li class="p-2">Records</li>
+                <li class="p-2">Bills</li>
+              </ul>
+              <div class="w-100 d-flex flex-wrap px-2">
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                  <small class="text-grey text-12">UHID</small
+                  ><input
+                    type="text"
+                    placeholder="UHID"
+                    class="form-control ng-untouched ng-pristine ng-valid"
+                  />
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                  <small class="text-grey text-12">Patient Name</small
+                  ><input
+                    type="text"
+                    placeholder="Patient Name"
+                    class="form-control ng-untouched ng-pristine ng-valid"
+                  />
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                  <small class="text-grey text-12">D.O.B</small
+                  ><input
+                    type="date"
+                    placeholder="Date of birth"
+                    class="form-control ng-untouched ng-pristine ng-valid"
+                  />
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                  <small class="text-grey text-12">Phone Number</small
+                  ><input
+                    type="text"
+                    placeholder="Phone Number"
+                    class="form-control ng-untouched ng-pristine ng-valid"
+                  />
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                  <small class="text-grey text-12">City</small
+                  ><input
+                    type="text"
+                    placeholder="City"
+                    class="form-control ng-untouched ng-pristine ng-valid"
+                  />
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                  <small class="text-grey text-12">Member No.</small
+                  ><input
+                    type="text"
+                    placeholder="Member No."
+                    class="form-control ng-untouched ng-pristine ng-valid"
+                  />
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                  <small class="text-grey text-12">HBP</small
+                  ><input
+                    type="text"
+                    placeholder="HPB"
+                    class="form-control ng-untouched ng-pristine ng-valid"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
         </TabPanel>
         <TabPanel>
           <template #header>
@@ -77,7 +155,9 @@
 </template>
 
 <script>
+import sidebar from "~/components/sidebar.vue";
 export default {
+  components: { sidebar },
   layout: "dashboard",
 
   data() {
@@ -90,6 +170,10 @@ export default {
 </script>
 
 <style scoped>
+li {
+  cursor: pointer;
+  border: 0.5px solid #fff;
+}
 .margin-fix {
   margin: 4.5rem 0 6rem;
   background: #fff;

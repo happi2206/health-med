@@ -96,10 +96,10 @@
               @click.prevent="populate"
               class="btn text-14 btn-outline-primary mr-5"
             >
-              <div class="mt-2">Search</div>
+              <div class="mt-1">Search</div>
             </div>
             <div @click.prevent="clear" class="btn text-14 btn-outline-danger">
-              <div class="mt-2">Clear</div>
+              <div class="mt-1">Clear</div>
             </div>
           </div>
         </div>

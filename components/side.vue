@@ -25,7 +25,7 @@
                     <div to="" variant="white" class="nav-item items text">
                       <div style="min-width: 18px">
                         <span
-                          class="iconify"
+                          class="iconify mb-1"
                           :data-icon="comp.icon"
                           data-width="18"
                           data-height="18"
