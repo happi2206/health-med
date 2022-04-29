@@ -14,30 +14,35 @@ export default {
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
   },
 
+  target: "static",
+  router: {
+    base: "/health-med/",
+  },
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: ["@/assets/css/main.css"],
   scripts: [
     {
-      src: '/js/scripts.js',
+      src: "/js/scripts.js",
     },
 
     // {
     //   src: 'https://code.iconify.design/2/2.2.1/iconify.min.js',
     // },
     {
-      src: 'https://code.jquery.com/jquery-3.5.1.slim.min.js',
+      src: "https://code.jquery.com/jquery-3.5.1.slim.min.js",
       integrity:
-        'sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj',
-      crossorigin: 'anonymous',
+        "sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj",
+      crossorigin: "anonymous",
     },
   ],
 
-  pageTransition: 'slide-bottom',
+  pageTransition: "slide-bottom",
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '~/plugins/vue-select.js',
-    '~/plugins/prime-vue.js',
+    "~/plugins/vue-select.js",
+    "~/plugins/prime-vue.js",
     // { src: '~/plugins/v-calendar.js', ssr: false }
   ],
 
@@ -51,14 +56,13 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     "@nuxtjs/axios",
-    'primevue/nuxt',
+    "primevue/nuxt",
     "bootstrap-vue/nuxt",
-
   ],
   primevue: {
-    theme: 'saga-blue',
+    theme: "saga-blue",
     ripple: true,
-    components: ['Button', 'Menu', 'TabView', 'TabPanel'],
+    components: ["Button", "Menu", "TabView", "TabPanel"],
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -74,6 +78,5 @@ export default {
       compact: true,
     },
     transpile: /primevue*/,
-
   },
 };
