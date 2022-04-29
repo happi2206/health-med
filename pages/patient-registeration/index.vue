@@ -1012,7 +1012,7 @@ export default {
 
 <style scoped>
 .margin-fix {
-  margin: 8rem 0rem 6rem;
+  margin: 4rem 0rem 6rem;
 }
 .style-chooser {
   height: 38px;

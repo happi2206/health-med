@@ -82,6 +82,26 @@
               class="form-control ng-untouched ng-pristine ng-valid"
             />
           </div>
+          <div
+            class="
+              col-lg-4
+              d-flex
+              justify-content-center
+              pt-3
+              col-md-6 col-sm-12
+              text-14
+            "
+          >
+            <div
+              @click.prevent="populate"
+              class="btn text-14 btn-outline-primary mr-5"
+            >
+              <div class="mt-2">Search</div>
+            </div>
+            <div @click.prevent="clear" class="btn text-14 btn-outline-danger">
+              <div class="mt-2">Clear</div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -145,38 +165,56 @@
 <script>
 export default {
   layout: "dashboard",
+  methods: {
+    clear() {
+      this.itemsToShow = [];
+      this.patient = {
+        UHID: "",
+        name: "",
+        dob: "",
+        phone: "",
+        city: "",
+        branch: "",
+        member_no: "",
+        policy_no: "",
+      };
+    },
+    populate() {
+      this.itemsToShow = [
+        {
+          UHID: "8966353",
+          name: "Mike Simons",
+          dob: "17/2/1992",
+          phone: "09050383673",
+          city: "Abuja",
+          branch: "Lugbe",
+          action: "",
+        },
+        {
+          UHID: "8966353",
+          name: "Mike Simons",
+          dob: "17/2/1992",
+          phone: "09050383673",
+          city: "Abuja",
+          branch: "Lugbe",
+          action: "",
+        },
+        {
+          UHID: "8966353",
+          name: "Mike Simons",
+          dob: "17/2/1992",
+          phone: "09050383673",
+          city: "Abuja",
+          branch: "Lugbe",
+          action: "",
+        },
+      ];
+    },
+  },
   data() {
     return {
       busy: false,
-      itemsToShow: [
-        {
-          UHID: "8966353",
-          name: "Mike Simons",
-          dob: "17/2/1992",
-          phone: "09050383673",
-          city: "Abuja",
-          branch: "Lugbe",
-          action: "",
-        },
-        {
-          UHID: "8966353",
-          name: "Mike Simons",
-          dob: "17/2/1992",
-          phone: "09050383673",
-          city: "Abuja",
-          branch: "Lugbe",
-          action: "",
-        },
-        {
-          UHID: "8966353",
-          name: "Mike Simons",
-          dob: "17/2/1992",
-          phone: "09050383673",
-          city: "Abuja",
-          branch: "Lugbe",
-          action: "",
-        },
-      ],
+      itemsToShow: [],
       dropdownItem: ["Clear", "Out patient visit"],
       fields: [
         { key: "UHID", label: "UHID", sortable: true },
@@ -202,9 +240,9 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .margin-fix {
-  margin: 8rem 0 6rem;
+  margin: 4rem 0 6rem;
   background: #fff;
 }
 .table_container {

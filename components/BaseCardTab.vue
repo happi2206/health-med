@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <div class="custom-card-tabs mt-1">
+    <div class="custom-card-tabs text-14 mt-1">
       <ul id="pills-tab" class="nav" role="tablist">
         <li
           v-for="(tab, index) in tabs"

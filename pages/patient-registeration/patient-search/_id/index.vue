@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="isLoading" class="skeleton"></div>
-    <div class="bg-light card text-14 border-radius mb-3 margin-fix" v-else>
+    <div class="bg-light card text-12 border-radius mb-3 margin-fix" v-else>
       <div class="card-body" style="background-color: #e7f0f8">
         <div class="d-flex align-content-center align-items-center">
           <div class="flex-grow-1">
@@ -48,7 +48,7 @@
                   <span
                     class="class-details-data_value"
                     style="color: rgb(0, 0, 0) !important"
-                    >12th July, 1972</span
+                    >12th July, 1972 (49 Years)</span
                   >
                 </div>
                 <div class="col-md-4 mb-2 text-capitalize">
@@ -106,6 +106,7 @@
       </card-tab>
       <card-tab title="Bill Estimate">
         <h1 class="text-18">Hello</h1>
+        <side />
       </card-tab>
     </base-card-tab>
   </div>
@@ -128,4 +129,8 @@ export default {
 </script>
 
 <style scoped>
+.margin-fix {
+  margin: 4rem 0 6rem;
+  background: #fff;
+}
 </style>

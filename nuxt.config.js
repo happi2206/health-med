@@ -20,9 +20,10 @@ export default {
     {
       src: '/js/scripts.js',
     },
-    {
-      src: 'https://code.iconify.design/2/2.2.1/iconify.min.js',
-    },
+
+    // {
+    //   src: 'https://code.iconify.design/2/2.2.1/iconify.min.js',
+    // },
     {
       src: 'https://code.jquery.com/jquery-3.5.1.slim.min.js',
       integrity:
@@ -35,8 +36,9 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    // '~/plugins/vcalendar.js',
-    '~/plugins/vue-select.js'
+    '~/plugins/vue-select.js',
+    '~/plugins/prime-vue.js',
+    // { src: '~/plugins/v-calendar.js', ssr: false }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -49,8 +51,15 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     "@nuxtjs/axios",
+    'primevue/nuxt',
     "bootstrap-vue/nuxt",
+
   ],
+  primevue: {
+    theme: 'saga-blue',
+    ripple: true,
+    components: ['Button', 'Menu', 'TabView', 'TabPanel'],
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
@@ -59,5 +68,12 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+
+  build: {
+    babel: {
+      compact: true,
+    },
+    transpile: /primevue*/,
+
+  },
 };

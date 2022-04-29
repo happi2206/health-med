@@ -1,8 +1,8 @@
 <template>
   <div class="">
     <navbar />
-    <topmenu />
-    <sidebar />
+    <!-- <topmenu /> -->
+    <side />
     <Transition name="slide-fade">
       <p v-if="toggle">nnbn</p>
       <main class="site-container height">
