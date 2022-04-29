@@ -15,9 +15,9 @@ export default {
   },
 
   target: "static",
-  router: {
-    base: "/health-med/",
-  },
+  // router: {
+  //   base: "/health-med/",
+  // },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: ["@/assets/css/main.css"],
