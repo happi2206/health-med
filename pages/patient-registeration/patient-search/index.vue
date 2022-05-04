@@ -8,83 +8,100 @@
         </div>
         <div class="row">
           <div class="col-lg-4 col-md-6 col-sm-12">
-            <small class="text-grey text-12">UHID</small
+            <small class="text-grey text-12">First Name</small
             ><input
-              v-model="patient.UHID"
+              @keyup.enter="getPatients"
+              v-model="firstname"
               type="text"
-              placeholder="UHID"
+              placeholder="First Name"
               class="form-control ng-untouched ng-pristine ng-valid"
             />
           </div>
           <div class="col-lg-4 col-md-6 col-sm-12">
-            <small class="text-grey text-12">Patient Name</small
+            <small class="text-grey text-12">Last Name</small
             ><input
-              v-model="patient.name"
+              @keyup.enter="getPatients"
+              v-model="lastname"
               type="text"
-              placeholder="Patient Name"
+              placeholder="Last Name"
               class="form-control ng-untouched ng-pristine ng-valid"
             />
           </div>
           <div class="col-lg-4 col-md-6 col-sm-12">
-            <small class="text-grey text-12">D.O.B</small
+            <small class="text-grey text-12">Middle Name</small
             ><input
-              v-model="patient.dob"
-              type="date"
-              placeholder="Date of birth"
+              @keyup.enter="getPatients"
+              v-model="middlename"
+              type="text"
+              placeholder="Middle Name"
               class="form-control ng-untouched ng-pristine ng-valid"
             />
           </div>
           <div class="col-lg-4 col-md-6 col-sm-12">
-            <small class="text-grey text-12">Phone Number</small
+            <small class="text-grey text-12">Marital status</small
             ><input
-              v-model="patient.number"
+              @keyup.enter="getPatients"
+              v-model="marital_status"
               type="text"
-              placeholder="Phone Number"
+              placeholder="Marital status"
               class="form-control ng-untouched ng-pristine ng-valid"
             />
           </div>
           <div class="col-lg-4 col-md-6 col-sm-12">
-            <small class="text-grey text-12">City</small
+            <small class="text-grey text-12">Gender</small
             ><input
-              v-model="patient.city"
+              @keyup.enter="getPatients"
+              v-model="gender"
               type="text"
-              placeholder="City"
+              placeholder="Gender"
+              class="form-control ng-untouched ng-pristine ng-valid"
+            />
+          </div>
+          <div class="col-lg-4 col-md-6 col-sm-12">
+            <small class="text-grey text-12">Nationlity</small
+            ><input
+              @keyup.enter="getPatients"
+              v-model="nationality"
+              type="text"
+              placeholder="Nationality"
               class="form-control ng-untouched ng-pristine ng-valid"
             />
           </div>
 
           <div class="col-lg-4 col-md-6 col-sm-12">
-            <small class="text-grey text-12">Branch</small>
-            <v-select
-              v-model="patient.branch"
-              class="style-chooser"
-              placeholder="Branch"
-              label="grade_name"
-              :options="['Mount St. John’s Medical Center', 'Clarehall clinic']"
-            ></v-select>
+            <small class="text-grey text-12">Offset</small>
+            <input
+              @keyup.enter="getPatients"
+              v-model="offset"
+              type="text"
+              placeholder="offset"
+              class="form-control ng-untouched ng-pristine ng-valid"
+            />
           </div>
 
           <div class="col-lg-4 col-md-6 col-sm-12">
-            <small class="text-grey text-12">Member No.</small
+            <small class="text-grey text-12">Ordering</small
             ><input
-              v-model="patient.member_no"
+              @keyup.enter="getPatients"
+              v-model="ordering"
               type="text"
-              placeholder="Member No."
+              placeholder="Ordering "
               class="form-control ng-untouched ng-pristine ng-valid"
             />
           </div>
           <div class="col-lg-4 col-md-6 col-sm-12">
-            <small class="text-grey text-12">Policy No.</small
+            <small class="text-grey text-12">religion</small
             ><input
-              v-model="patient.policy_no"
+              @keyup.enter="getPatients"
+              v-model="religion"
               type="text"
-              placeholder="Policy No."
+              placeholder="Religion"
               class="form-control ng-untouched ng-pristine ng-valid"
             />
           </div>
           <div
             class="
-              col-lg-4
+              col-lg-12
               d-flex
               justify-content-center
               pt-3
@@ -93,7 +110,7 @@
             "
           >
             <div
-              @click.prevent="populate"
+              @click.prevent="getPatients"
               class="btn text-14 btn-outline-primary mr-5"
             >
               <div class="mt-1">Search</div>
@@ -166,18 +183,36 @@
 export default {
   layout: "dashboard",
   methods: {
+    async getPatients() {
+      try {
+        this.busy = true;
+        let uri = `/patient/patients/?firstname=${this.firstname}&gender=${this.gender}&lastname=${this.lastname}&limit=${this.limit}&marital_status=${this.marital_status}&middlename=${this.middlename}&nationality=${this.nationality}&offset=${this.offset}&ordering=${this.ordering}&religion=${this.religion}`;
+
+        const response = await this.$axios.$get(uri, {
+          headers: {
+            Authorization: `Token ${localStorage.getItem(`HEALTH-TOKEN`)}`,
+          },
+        });
+
+        this.itemsToShow = response.results;
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.busy = false;
+      }
+    },
     clear() {
       this.itemsToShow = [];
-      this.patient = {
-        UHID: "",
-        name: "",
-        dob: "",
-        phone: "",
-        city: "",
-        branch: "",
-        member_no: "",
-        policy_no: "",
-      };
+      this.firstname = "";
+      this.gender = "";
+      this.lastname = "";
+      this.limit = 50;
+      this.marital_status = "";
+      this.middlename = "";
+      this.nationality = "";
+      this.offset = 0;
+      this.ordering = "";
+      this.religion = "";
     },
     populate() {
       this.itemsToShow = [
@@ -218,23 +253,24 @@ export default {
       dropdownItem: ["Clear", "Out patient visit"],
       fields: [
         { key: "UHID", label: "UHID", sortable: true },
-        { key: "name", label: "Patient Name", sortable: true },
-        { key: "dob", label: "D.O.B", sortable: true },
-        { key: "phone", label: "Mobile Number", sortable: true },
-        { key: "city", label: "City", sortable: true },
-        { key: "branch", label: "Branch Name", sortable: true },
+        { key: "firstname", label: "First Name", sortable: true },
+        { key: "lastname", label: "Last Name", sortable: true },
+        { key: "date_of_birth", label: "D.O.B", sortable: true },
+        { key: "gender", label: "Gender", sortable: true },
+        { key: "marital_status", label: "Marital Status", sortable: true },
         { key: "action", label: "", sortable: false },
       ],
-      patient: {
-        UHID: "",
-        name: "",
-        dob: "",
-        phone: "",
-        city: "",
-        branch: "",
-        member_no: "",
-        policy_no: "",
-      },
+
+      firstname: "",
+      gender: "",
+      lastname: "",
+      limit: 50,
+      marital_status: "",
+      middlename: "",
+      nationality: "",
+      offset: 0,
+      ordering: "",
+      religion: "",
     };
   },
 };

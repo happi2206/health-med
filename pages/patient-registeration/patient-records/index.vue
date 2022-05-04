@@ -50,67 +50,99 @@
         <div class="col-md-4"></div>
         <div class="col-md-4"></div>
       </div> -->
-
-      <form @submit.prevent="handleSubmit(submitForm)">
-        <div class="bg-white border-radius mb-5 p-4 margin-fix">
-          <h4 class="text-grey mb-4 text-24">Personal Details</h4>
-          <div class="d-flex align-items-center">
-            <small class="text-grey text-12">New Born</small>
-            <input v-model="newBorn" type="checkbox" class="ml-2" />
-          </div>
-          <div>
-            <div class="row">
-              <div class="col-lg-10 col-md-8 col-sm-12 mb-3">
-                <div>
-                  <div class="row">
-                    <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small class="text-grey text-12"> First Name </small>
-                      <div class="d-flex">
-                        <select
-                          class="form-control w-50"
-                          v-model="patient.title"
-                          name="title"
-                          id=""
-                        >
-                          <option value="">Title</option>
-                          <option value="">Baby</option>
-                          <option value="">Mr</option>
-                          <option value="">Mrs</option>
-                          <option value="">Miss</option>
-                          <option value="">Dr</option>
-                          <option value="">Ms</option>
-                          <option value="">Prof</option>
-                        </select>
-                        <input
-                          v-model="student.first_name"
+      <ValidationObserver v-slot="{ validate }">
+        <form>
+          <div class="bg-white border-radius mb-5 p-4 margin-fix">
+            <h4 class="text-grey mb-4 text-24">Personal Details</h4>
+            <div class="d-flex align-items-center">
+              <small class="text-grey text-12">New Born</small>
+              <input v-model="patient.is_baby" type="checkbox" class="ml-2" />
+            </div>
+            <div>
+              <div class="row">
+                <div class="col-lg-10 col-md-8 col-sm-12 mb-3">
+                  <div>
+                    <div class="row">
+                      <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                        <small class="text-grey text-12"> First Name *</small>
+                        <div class="d-flex">
+                          <validation-provider
+                            rules="required"
+                            v-slot="{ errors }"
+                          >
+                            <select
+                              class="form-control w-100"
+                              required
+                              v-model="patient.salutation"
+                              name="title"
+                              id=""
+                            >
+                              <option value="">Title</option>
+                              <option value="Baby">Baby</option>
+                              <option value="Mr">Mr</option>
+                              <option value="Mrs">Mrs</option>
+                              <option value="Miss">Miss</option>
+                              <option value="Dr">Dr</option>
+                              <option value="Ms">Ms</option>
+                              <option value="Prof">Prof</option>
+                            </select>
+                            <span class="text-12 mr-2" style="color: red">{{
+                              errors[0]
+                            }}</span>
+                          </validation-provider>
+                          <validation-provider
+                            rules="required"
+                            v-slot="{ errors }"
+                          >
+                            <input
+                              v-model="patient.firstname"
+                              type="text"
+                              placeholder="First Name*"
+                              class="
+                                ml-2
+                                form-control
+                                ng-untouched ng-pristine ng-valid
+                              "
+                            />
+                            <span class="text-12" style="color: red">{{
+                              errors[0]
+                            }}</span>
+                          </validation-provider>
+                        </div>
+                      </div>
+                      <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                        <small class="text-grey text-12">Middle Name</small
+                        ><input
+                          v-model="patient.middlename"
                           type="text"
-                          placeholder="First Name*"
+                          placeholder="Middle Name"
                           class="form-control ng-untouched ng-pristine ng-valid"
                         />
                       </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small class="text-grey text-12">Middle Name</small
-                      ><input
-                        v-model="student.middle_name"
-                        type="text"
-                        placeholder="Middle Name"
-                        class="form-control ng-untouched ng-pristine ng-valid"
-                      />
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small class="text-grey text-12">Last Name</small
-                      ><input
-                        v-model="student.last_name"
-                        type="text"
-                        placeholder="Last Name*"
-                        class="form-control ng-untouched ng-pristine ng-valid"
-                      />
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small class="text-grey text-12">Date of Birth</small>
-                      <!-- <v-date-picker
-                        v-model="student.date_of_birth"
+                      <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                        <small class="text-grey text-12">Last Name *</small
+                        ><validation-provider
+                          rules="required"
+                          v-slot="{ errors }"
+                        >
+                          <input
+                            v-model="patient.lastname"
+                            type="text"
+                            placeholder="Last Name*"
+                            class="
+                              form-control
+                              ng-untouched ng-pristine ng-valid
+                            "
+                          />
+                          <span class="text-12" style="color: red">{{
+                            errors[0]
+                          }}</span>
+                        </validation-provider>
+                      </div>
+                      <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                        <small class="text-grey text-12">Date of Birth *</small>
+                        <!-- <v-date-picker
+                        v-model="patient.date_of_birth"
                         mode="date"
                         @dayclick="toggleCalender2 = false"
                       >
@@ -118,165 +150,206 @@
                           <span @click="togglePopover()">
                             <input
                               class="form-control"
-                              :placeholder="student.date_of_birth | date"
+                              :placeholder="patient.date_of_birth | date"
                             />
                           </span>
                         </template>
                       </v-date-picker> -->
-                      <input type="date" class="w-100 form-control" />
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small class="text-grey text-12">Age</small>
-                      <div class="d-flex">
-                        <input
+                        <validation-provider
+                          rules="required"
+                          v-slot="{ errors }"
+                        >
+                          <input
+                            v-model="patient.date_of_birth"
+                            type="date"
+                            class="w-100 form-control"
+                          />
+                          <span class="text-12" style="color: red">{{
+                            errors[0]
+                          }}</span>
+                        </validation-provider>
+                      </div>
+                      <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                        <small class="text-grey text-12">Age</small>
+                        <div class="d-flex">
+                          <input
+                            type="text"
+                            class="w-100 form-control"
+                            placeholder="Year"
+                          />
+                          <input
+                            type="text"
+                            class="w-100 form-control"
+                            placeholder="Month"
+                          />
+                          <input
+                            type="text"
+                            class="w-100 form-control"
+                            placeholder="Day"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-lg-4 col-md-6 col-sm-12 mb-3 mt-1">
+                        <small class="text-grey text-12">Gender *</small>
+                        <validation-provider
+                          rules="required"
+                          v-slot="{ errors }"
+                        >
+                          <v-select
+                            v-model="patient.gender"
+                            class="style-chooser"
+                            placeholder="Gender"
+                            label="grade_name"
+                            :options="['Male', 'Female']"
+                          ></v-select>
+                          <span class="text-12" style="color: red">{{
+                            errors[0]
+                          }}</span>
+                        </validation-provider>
+                      </div>
+                      <div class="col-lg-4 col-md-6 col-sm-12 mb-3 mt-1">
+                        <small class="text-grey text-12"
+                          >Marital Status *</small
+                        >
+                        <validation-provider
+                          rules="required"
+                          v-slot="{ errors }"
+                        >
+                          <v-select
+                            v-model="patient.marital_status"
+                            class="style-chooser"
+                            placeholder="Marital Status"
+                            label="marital_status"
+                            :options="[
+                              'Married',
+                              'Divorced',
+                              'Single',
+                              'Widowed',
+                            ]"
+                          ></v-select>
+                          <span class="text-12" style="color: red">{{
+                            errors[0]
+                          }}</span>
+                        </validation-provider>
+                      </div>
+                      <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                        <small class="text-grey text-12">Occupation</small
+                        ><input
+                          v-model="patient.occupation"
                           type="text"
-                          class="w-100 form-control"
-                          placeholder="Year"
-                        />
-                        <input
-                          type="text"
-                          class="w-100 form-control"
-                          placeholder="Month"
-                        />
-                        <input
-                          type="text"
-                          class="w-100 form-control"
-                          placeholder="Day"
+                          placeholder="Occupation"
+                          class="form-control ng-untouched ng-pristine ng-valid"
                         />
                       </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12 mb-3 mt-1">
-                      <small class="text-grey text-12">Gender</small>
-                      <v-select
-                        v-model="student.gender"
-                        class="style-chooser"
-                        placeholder="Gender"
-                        label="grade_name"
-                        :options="['Male', 'Female']"
-                      ></v-select>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12 mb-3 mt-1">
-                      <small class="text-grey text-12">Marital Status</small>
-                      <v-select
-                        v-model="student.marital_status"
-                        class="style-chooser"
-                        placeholder="Marital Status"
-                        label="marital_status"
-                        :options="['Married', 'Divorced', 'Single', 'Widowed']"
-                      ></v-select>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small class="text-grey text-12">Occupation</small
-                      ><input
-                        v-model="student.occupation"
-                        type="text"
-                        placeholder="Occupation"
-                        class="form-control ng-untouched ng-pristine ng-valid"
-                      />
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small class="text-grey text-12">Language</small
-                      ><v-select
-                        v-model="student.language"
-                        class="style-chooser"
-                        placeholder="Language"
-                        label="marital_status"
-                        :options="[
-                          'English',
-                          'French',
-                          'Khmer',
-                          'Mandarin',
-                          'Russian',
-                        ]"
-                      ></v-select>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small class="text-grey text-12">Religion</small
-                      ><v-select
-                        v-model="student.religion"
-                        class="style-chooser"
-                        placeholder="Religion"
-                        label="religion"
-                        :options="[
-                          'Buddhism',
-                          'Christian',
-                          'Hinduism',
-                          'Islamic',
-                          'Russian',
-                        ]"
-                      ></v-select>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small class="text-grey text-12">Nationality</small>
-                      <v-select
-                        v-model="student.nationality"
-                        class="style-chooser"
-                        placeholder="Nationality"
-                        :options="countryList"
-                      ></v-select>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small class="text-grey text-12">Email Address</small
-                      ><input
-                        v-model="student.email"
-                        type="email"
-                        placeholder="Email Address"
-                        class="form-control ng-untouched ng-pristine ng-valid"
-                      />
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small class="text-grey text-12">Loyalty Name</small
-                      ><v-select
-                        v-model="student.loyalty"
-                        class="style-chooser"
-                        placeholder="Loyalty Name"
-                        label="loyalty"
-                        :options="[
-                          'Yellow Card',
-                          'Blue Card',
-                          'Silver Member',
-                          'Khema Baby',
-                        ]"
-                      ></v-select>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small class="text-grey text-12">Expiry Date</small
-                      ><input
-                        v-model="student.expiryDate"
-                        type="text"
-                        class="form-control ng-untouched ng-pristine ng-valid"
-                      />
-                    </div>
-                    <div class="mello col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small class="mb-0">State of Origin</small>
-                      <v-select
-                        v-model="student.state_of_origin"
-                        class="style-chooser"
-                        placeholder="Type to search"
-                        label="state_name"
-                        :options="states"
-                        @input="changeLga"
-                      ></v-select>
-                    </div>
-                    <div class="mello col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small class="mb-0">Identity No.</small>
-                      <div class="d-flex">
-                        <select
-                          class="form-control w-50"
-                          v-model="patient.title"
-                          name="title"
-                          id=""
+                      <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                        <small class="text-grey text-12">Language</small
+                        ><v-select
+                          class="style-chooser"
+                          placeholder="Language"
+                          label="marital_status"
+                          :options="[
+                            'English',
+                            'French',
+                            'Khmer',
+                            'Mandarin',
+                            'Russian',
+                          ]"
+                        ></v-select>
+                      </div>
+                      <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                        <small class="text-grey text-12">Religion *</small>
+                        <validation-provider
+                          rules="required"
+                          v-slot="{ errors }"
                         >
-                          <option value="">Driving License</option>
-                          <option value="">Employee Id</option>
-                          <option value="">Passport and Visa No</option>
-                          <option value="">Passport No</option>
-                          <option value="">Miss</option>
-                          <option value="">Visa No</option>
-                        </select>
-                        <!-- <v-select
-                          v-model="student.identity_no"
+                          <v-select
+                            v-model="patient.religion"
+                            class="style-chooser"
+                            placeholder="Religion"
+                            label="religion"
+                            :options="[
+                              'Buddhism',
+                              'Christian',
+                              'Hinduism',
+                              'Islamic',
+                              'Russian',
+                            ]"
+                          ></v-select>
+                          <span class="text-12" style="color: red">{{
+                            errors[0]
+                          }}</span>
+                        </validation-provider>
+                      </div>
+
+                      <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                        <small class="text-grey text-12">Nationality *</small>
+                        <validation-provider
+                          rules="required"
+                          v-slot="{ errors }"
+                        >
+                          <v-select
+                            v-model="patient.nationality"
+                            class="style-chooser"
+                            placeholder="Nationality"
+                            :options="countryList"
+                          ></v-select>
+                          <span class="text-12" style="color: red">{{
+                            errors[0]
+                          }}</span>
+                        </validation-provider>
+                      </div>
+                      <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                        <small class="text-grey text-12">Email Address</small
+                        ><input
+                          type="email"
+                          placeholder="Email Address"
+                          class="form-control ng-untouched ng-pristine ng-valid"
+                        />
+                      </div>
+                      <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                        <small class="text-grey text-12">Loyalty Name</small
+                        ><v-select
+                          class="style-chooser"
+                          placeholder="Loyalty Name"
+                          label="loyalty"
+                          :options="[
+                            'Yellow Card',
+                            'Blue Card',
+                            'Silver Member',
+                            'Khema Baby',
+                          ]"
+                        ></v-select>
+                      </div>
+                      <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                        <small class="text-grey text-12">Expiry Date</small
+                        ><input
+                          type="text"
+                          class="form-control ng-untouched ng-pristine ng-valid"
+                        />
+                      </div>
+                      <div class="mello col-lg-4 col-md-6 col-sm-12 mb-3">
+                        <small class="mb-0">State of Origin</small>
+                        <v-select
+                          class="style-chooser"
+                          placeholder="Type to search"
+                          label="state_name"
+                          :options="states"
+                          @input="changeLga"
+                        ></v-select>
+                      </div>
+                      <div class="mello col-lg-4 col-md-6 col-sm-12 mb-3">
+                        <small class="mb-0">Identity No.</small>
+                        <div class="d-flex">
+                          <select class="form-control w-50" name="title" id="">
+                            <option value="">Driving License</option>
+                            <option value="">Employee Id</option>
+                            <option value="">Passport and Visa No</option>
+                            <option value="">Passport No</option>
+
+                            <option value="">Visa No</option>
+                          </select>
+                          <!-- <v-select
+                          v-model="patient.identity_no"
                           class="style-chooser w-50"
                           placeholder="Select identity"
                           label="state_name"
@@ -288,32 +361,30 @@
                             'Visa No.',
                           ]"
                         ></v-select> -->
-                        <input type="text" class="w-50 form-control" />
+                          <input type="text" class="w-50 form-control" />
+                        </div>
                       </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small class="text-grey text-12">Visa Validity</small
-                      ><input
-                        v-model="student.validity"
-                        type="date"
-                        class="form-control ng-untouched ng-pristine ng-valid"
-                      />
-                    </div>
-                    <div class="col-lg-4 col-md-5 col-sm-12 mb-3">
-                      <small class="text-grey text-12">LGA</small>
-                      <input
-                        v-model="student.lga"
-                        type="text"
-                        placeholder="Local Government Area"
-                        class="form-control ng-untouched ng-pristine ng-valid"
-                      />
-                    </div>
-                    <!-- <div class="row" style="margin: 0; width: 100%">
+                      <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                        <small class="text-grey text-12">Visa Validity</small
+                        ><input
+                          type="date"
+                          class="form-control ng-untouched ng-pristine ng-valid"
+                        />
+                      </div>
+                      <div class="col-lg-4 col-md-5 col-sm-12 mb-3">
+                        <small class="text-grey text-12">LGA</small>
+                        <input
+                          type="text"
+                          placeholder="Local Government Area"
+                          class="form-control ng-untouched ng-pristine ng-valid"
+                        />
+                      </div>
+                      <!-- <div class="row" style="margin: 0; width: 100%">
                       <div class="mb-3 col-12">
                         <small class="text-grey text-12">Family (optional)</small>
 
                         <v-select
-                          v-model="student.family"
+                          v-model="patient.family"
                           class="style-chooser"
                           placeholder="Select Family"
                           label="family_name"
@@ -322,18 +393,119 @@
                       </div>
                     </div> -->
 
+                      <hr />
+                      <div class="row pt-3" style="margin: 0; width: 100%">
+                        <div class="col-9">
+                          <h4>Home Address</h4>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                          <small class="text-grey text-12"
+                            >Address/Village *</small
+                          >
+                          <validation-provider
+                            rules="required"
+                            v-slot="{ errors }"
+                          >
+                            <input
+                              type="text"
+                              v-model="patient.home_address.additionalProp1"
+                              placeholder="Address/Village"
+                              class="
+                                form-control
+                                ng-untouched ng-pristine ng-valid
+                              "
+                            />
+                            <span class="text-12" style="color: red">{{
+                              errors[0]
+                            }}</span>
+                          </validation-provider>
+                        </div>
+
+                        <div class="mello col-lg-4 col-md-6 col-sm-12 mb-3">
+                          <small class="mb-0">Country</small>
+                          <v-select
+                            class="style-chooser"
+                            placeholder="Type to search"
+                            label="Country"
+                            :options="[
+                              'Antigua and Barbuda',
+                              'General',
+                              'Kongo',
+                            ]"
+                          ></v-select>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                          <small class="text-grey text-12">City</small
+                          ><input
+                            type="text"
+                            placeholder="City"
+                            class="
+                              form-control
+                              ng-untouched ng-pristine ng-valid
+                            "
+                          />
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                          <small class="text-grey text-12">Postal Code</small
+                          ><input
+                            type="text"
+                            placeholder="Postal Code"
+                            class="
+                              form-control
+                              ng-untouched ng-pristine ng-valid
+                            "
+                          />
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                          <small class="text-grey text-12">Phone Number</small
+                          ><input
+                            type="text"
+                            placeholder="Phone Number"
+                            class="
+                              form-control
+                              ng-untouched ng-pristine ng-valid
+                            "
+                          />
+                        </div>
+                      </div>
+                    </div>
                     <hr />
-                    <div class="row pt-3" style="margin: 0; width: 100%">
-                      <div class="col-9">
-                        <h4>Home Address</h4>
+                    <h3>Nearest Relative</h3>
+                    <div class="row">
+                      <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                        <small class="text-grey text-12">Relative Name</small
+                        ><input
+                          type="text"
+                          placeholder="Relative Name"
+                          class="form-control ng-untouched ng-pristine ng-valid"
+                        />
+                      </div>
+                      <div class="col-lg-4 col-md-6 col-sm-12 mb-3 mt-1">
+                        <small class="redd">Relation </small>
+                        <v-select
+                          class="style-chooser"
+                          placeholder="Relation"
+                          label="name"
+                          :options="relation"
+                        ></v-select>
+                      </div>
+                      <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                        <small class="text-grey text-12">Phone Number</small
+                        ><input
+                          type="text"
+                          placeholder="Phone Number"
+                          class="form-control ng-untouched ng-pristine ng-valid"
+                        />
                       </div>
 
                       <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                         <small class="text-grey text-12">Address/Village</small
                         ><input
-                          v-model="student.address"
                           type="text"
                           placeholder="Address/Village"
+                          v-mode
                           class="form-control ng-untouched ng-pristine ng-valid"
                         />
                       </div>
@@ -341,168 +513,91 @@
                       <div class="mello col-lg-4 col-md-6 col-sm-12 mb-3">
                         <small class="mb-0">Country</small>
                         <v-select
-                          v-model="student.country"
                           class="style-chooser"
                           placeholder="Type to search"
                           label="Country"
                           :options="['Antigua and Barbuda', 'General', 'Kongo']"
                         ></v-select>
                       </div>
-
                       <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                         <small class="text-grey text-12">City</small
                         ><input
-                          v-model="student.city"
                           type="text"
                           placeholder="City"
                           class="form-control ng-untouched ng-pristine ng-valid"
                         />
                       </div>
+
                       <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                         <small class="text-grey text-12">Postal Code</small
                         ><input
-                          v-model="student.postal_code"
                           type="text"
                           placeholder="Postal Code"
                           class="form-control ng-untouched ng-pristine ng-valid"
                         />
                       </div>
-                      <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                        <small class="text-grey text-12">Phone Number</small
-                        ><input
-                          v-model="student.phone_number"
-                          type="text"
-                          placeholder="Phone Number"
-                          class="form-control ng-untouched ng-pristine ng-valid"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <hr />
-                  <h3>Nearest Relative</h3>
-                  <div class="row">
-                    <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small class="text-grey text-12">Relative Name</small
-                      ><input
-                        v-model="relative.relative_name"
-                        type="text"
-                        placeholder="Relative Name"
-                        class="form-control ng-untouched ng-pristine ng-valid"
-                      />
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12 mb-3 mt-1">
-                      <small class="redd">Relation </small>
-                      <v-select
-                        v-model="relative.relation"
-                        class="style-chooser"
-                        placeholder="Relation"
-                        label="name"
-                        :options="relation"
-                      ></v-select>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small class="text-grey text-12">Phone Number</small
-                      ><input
-                        v-model="relative.relative_phone_number"
-                        type="text"
-                        placeholder="Phone Number"
-                        class="form-control ng-untouched ng-pristine ng-valid"
-                      />
                     </div>
 
-                    <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small class="text-grey text-12">Address/Village</small
-                      ><input
-                        v-model="relative.address"
-                        type="text"
-                        placeholder="Address/Village"
-                        class="form-control ng-untouched ng-pristine ng-valid"
-                      />
-                    </div>
+                    <hr />
+                    <h3>Payer Information</h3>
 
-                    <div class="mello col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small class="mb-0">Country</small>
+                    <div class="mello col-lg-4 col-md-6 col-sm-12 mb-0">
+                      <small class="mb-0">Payer</small>
                       <v-select
-                        v-model="relative.country"
                         class="style-chooser"
                         placeholder="Type to search"
                         label="Country"
                         :options="['Antigua and Barbuda', 'General', 'Kongo']"
                       ></v-select>
                     </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small class="text-grey text-12">City</small
-                      ><input
-                        v-model="relative.city"
-                        type="text"
-                        placeholder="City"
-                        class="form-control ng-untouched ng-pristine ng-valid"
-                      />
+
+                    <div class="mello col-lg-4 col-md-6 col-sm-12 mb-0">
+                      <small class="mb-0">Sponsor</small>
+                      <v-select
+                        class="style-chooser"
+                        placeholder="Type to search"
+                        label="Country"
+                        :options="['Antigua and Barbuda', 'General', 'Kongo']"
+                      ></v-select>
                     </div>
 
-                    <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <small class="text-grey text-12">Postal Code</small
-                      ><input
-                        v-model="relative.postal_code"
-                        type="text"
-                        placeholder="Postal Code"
-                        class="form-control ng-untouched ng-pristine ng-valid"
-                      />
+                    <div class="mello col-lg-4 col-md-6 col-sm-12 mb-0">
+                      <small class="mb-0">Network</small>
+                      <v-select
+                        class="style-chooser"
+                        placeholder="Type to search"
+                        label="Country"
+                        :options="['Antigua and Barbuda', 'General', 'Kongo']"
+                      ></v-select>
                     </div>
-                  </div>
 
-                  <hr />
-                  <h3>Payer Information</h3>
+                    <div class="my-5 d-flex justify-content-end">
+                      <button class="btn btn-light btn-md mx-3">Cancel</button>
 
-                  <div class="mello col-lg-4 col-md-6 col-sm-12 mb-0">
-                    <small class="mb-0">Payer</small>
-                    <v-select
-                      v-model="relative.country"
-                      class="style-chooser"
-                      placeholder="Type to search"
-                      label="Country"
-                      :options="['Antigua and Barbuda', 'General', 'Kongo']"
-                    ></v-select>
-                  </div>
-
-                  <div class="mello col-lg-4 col-md-6 col-sm-12 mb-0">
-                    <small class="mb-0">Sponsor</small>
-                    <v-select
-                      v-model="relative.country"
-                      class="style-chooser"
-                      placeholder="Type to search"
-                      label="Country"
-                      :options="['Antigua and Barbuda', 'General', 'Kongo']"
-                    ></v-select>
-                  </div>
-
-                  <div class="mello col-lg-4 col-md-6 col-sm-12 mb-0">
-                    <small class="mb-0">Network</small>
-                    <v-select
-                      v-model="relative.country"
-                      class="style-chooser"
-                      placeholder="Type to search"
-                      label="Country"
-                      :options="['Antigua and Barbuda', 'General', 'Kongo']"
-                    ></v-select>
-                  </div>
-
-                  <div class="my-5 d-flex justify-content-end">
-                    <button class="btn btn-light btn-md mx-3">Cancel</button>
-
-                    <button class="btn btn-primary" :disabled="isLoading">
-                      <span
-                        v-if="isLoading"
-                        class="spinner-border spinner-border-sm"
-                        role="status"
-                        aria-hidden="true"
-                      ></span>
-                      <slot>Save </slot>
-                    </button>
+                      <button
+                        @click="createPatient"
+                        class="btn btn-primary"
+                        :disabled="isLoading"
+                      >
+                        <span
+                          v-if="isLoading"
+                          class="spinner-border spinner-border-sm"
+                          role="status"
+                          aria-hidden="true"
+                        ></span>
+                        <slot>Save </slot>
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <!-- <div class="col-lg-2 col-md-4 col-sm-12 mb-3">
+
+                <div
+                  type="button"
+                  ref="runValidation"
+                  id="runValidation"
+                  @click="validate"
+                ></div>
+                <!-- <div class="col-lg-2 col-md-4 col-sm-12 mb-3">
                       <div class="profile-picture-container">
                         <div class="profiles">
                           <b-avatar
@@ -560,10 +655,11 @@
                         </div>
                       </div>
                     </div> -->
+              </div>
             </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </ValidationObserver>
     </template>
   </div>
 </template>
@@ -582,21 +678,6 @@ export default {
       modelConfig: {
         type: "string",
         mask: "YYYY-MM-DD", // Uses 'iso' if missing
-      },
-      title: "",
-      patient: {
-        name: "",
-        dob: "",
-      },
-      newBorn: false,
-      relative: {
-        relative_name: "",
-        relation: "",
-        relative_phone_number: "",
-        address: "",
-        country: "",
-        city: "",
-        postal_code: "",
       },
       relation: [
         "Brother",
@@ -659,19 +740,9 @@ export default {
         "Zamfara",
       ],
       avatarImage: "",
-      showCropper: false,
       avatar: "",
       version: 1,
-      newFamily: {
-        family_name: "",
-        email: "",
-        primary_contact: "",
-        phone: "",
-        address: "",
-      },
       isLoading: false,
-      states2: [],
-      Statess: "sss",
       countries: [],
       familyList: [],
       gradeList: [],
@@ -679,32 +750,29 @@ export default {
       imagesArray: "",
       selectedState: "",
       selected: "State",
-      mello: "yoo",
-      newDate: null,
-      student: {
-        first_name: "",
-        last_name: "",
-        middle_name: "",
+
+      patient: {
+        is_baby: false,
+        salutation: "",
+        firstname: "",
+        lastname: "",
+        middlename: "",
         gender: "",
-        phone_number: "",
-        email: "",
         marital_status: "",
-        occupation: "",
-        language: "",
         religion: "",
-        loyalty: "",
-        country: "",
-        city: "",
-        postal_code: "",
-        relative_name: "",
-        relative_phone_number: "",
         date_of_birth: "",
         nationality: "",
-        state_of_origin: "",
-        lga_name: "",
-        address: "",
-
-        avatar: null,
+        state_id: {},
+        home_address: {
+          additionalProp1: "",
+          additionalProp2: "",
+          additionalProp3: "",
+        },
+        next_of_kin: {
+          additionalProp1: "",
+          additionalProp2: "",
+          additionalProp3: "",
+        },
       },
       countryList: [
         "Afghanistan",
@@ -968,8 +1036,42 @@ export default {
       this.avatar = event.target.files[0].file;
       console.log(event.target.files[0].file);
     },
-    submitForm() {
-      alert("Record created");
+    async createPatient() {
+      if (this.$refs.runValidation) {
+        this.$refs.runValidation.click();
+      }
+
+      if (
+        this.patient.salutation &&
+        this.patient.firstname &&
+        this.patient.lastname &&
+        this.patient.religion &&
+        this.patient.nationality &&
+        this.patient.date_of_birth &&
+        this.patient.gender &&
+        this.patient.marital_status
+      ) {
+        try {
+          this.isLoading = true;
+          let response = await this.$axios.$post(
+            "patient/patients/",
+            this.patient,
+            {
+              headers: {
+                Authorization: `Token ${localStorage.getItem(`HEALTH-TOKEN`)}`,
+              },
+            }
+          );
+          console.log(response);
+          if (response.salutation) {
+            this.$toast.success("Patient record created successfully");
+          }
+        } catch {
+          // this.$toast.error("Unable to create record");
+        } finally {
+          this.isLoading = false;
+        }
+      }
     },
     changeLga(value) {
       console.log(value);
@@ -977,7 +1079,7 @@ export default {
   },
   computed: {
     allStates() {
-      if (this.student.nationality === "Nigeria") {
+      if (this.patient.nationality === "Nigeria") {
         return this.states;
       } else {
         return [];
@@ -986,20 +1088,20 @@ export default {
 
     localGovts() {
       return this.states.filter((state) => {
-        return state.id === this.student.state_of_origin;
+        return state.id === this.patient.state_of_origin;
       });
       // return this.sta
     },
     lga() {
-      if (this.student.state_of_origin) {
-        return this.student.state_of_origin.lgas;
+      if (this.patient.state_of_origin) {
+        return this.patient.state_of_origin.lgas;
       } else {
         return "";
       }
     },
   },
   watch: {
-    "student.family": {
+    "patient.family": {
       handler(newValue) {
         if (newValue.family_name === "Add Family") {
           this.$bvModal.show("modal-add-family");

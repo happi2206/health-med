@@ -81,108 +81,145 @@
             </p>
           </div>
           <div class="">
-            <form role="form">
-              <div class="mb-3">
-                <label class="text-12 text-grey">Username</label>
-                <input
-                  type="text"
-                  class="form-control form-control-lg"
-                  placeholder="Username"
-                />
-              </div>
-              <div class="mb-3">
-                <label class="text-12 text-grey">Password</label>
-                <div class="d-flex">
-                  <input
-                    :type="password ? 'password' : 'text'"
-                    class="form-control form-control-lg"
-                    placeholder="Password"
-                    aria-label="Password"
-                    style="
-                      border-top-right-radius: 0px;
-                      border-bottom-right-radius: 0px;
-                    "
-                  />
-                  <div @click.prevent="toggle">
-                    <div
-                      v-if="show"
-                      class="
-                        bg-white
-                        d-flex
-                        align-items-center
-                        justify-content-center
-                        transit
-                      "
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="18"
-                        height="18"
-                        fill="currentColor"
-                        class="bi bi-eye"
-                        viewBox="0 0 16 16"
-                      >
-                        <path
-                          d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"
-                        />
-                        <path
-                          d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"
-                        />
-                      </svg>
-                    </div>
-                    <div
-                      v-else
-                      class="
-                        bg-white
-                        d-flex
-                        align-items-center
-                        justify-content-center
-                        transit
-                      "
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="18"
-                        height="18"
-                        fill="currentColor"
-                        class="bi bi-eye-slash"
-                        viewBox="0 0 16 16"
-                      >
-                        <path
-                          d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z"
-                        />
-                        <path
-                          d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z"
-                        />
-                        <path
-                          d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z"
-                        />
-                      </svg>
-                    </div>
-                  </div>
+            <ValidationObserver v-slot="{ validate }">
+              <form role="form">
+                <div class="mb-3">
+                  <label class="text-12 text-grey">Username</label>
+                  <validation-provider rules="required" v-slot="{ errors }">
+                    <input
+                      v-model="formDetail.username"
+                      type="text"
+                      class="form-control form-control-lg"
+                      placeholder="Username"
+                    />
+                    <span class="text-12" style="color: red">{{
+                      errors[0]
+                    }}</span>
+                  </validation-provider>
                 </div>
-              </div>
-              <div class="form-check form-switch">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  id="rememberMe"
-                />
-                <label class="form-check-label" for="rememberMe"
-                  >Remember me</label
-                >
-              </div>
-              <div class="text-center">
-                <button
-                  @click.prevent="next"
+                <div class="my-2">
+                  <label for="" class="d-block text-14 graytext"
+                    >Password</label
+                  >
+                  <validation-provider rules="required" v-slot="{ errors }">
+                    <div class="d-flex">
+                      <input
+                        :type="password ? 'text' : 'password'"
+                        v-model="formDetail.password"
+                        required
+                        style="min-height: 39px"
+                        placeholder="**************"
+                        class="form-control text-16"
+                      />
+                      <div @click.prevent="toggle">
+                        <div
+                          v-if="show"
+                          class="
+                            bg-white
+                            d-flex
+                            align-items-center
+                            justify-content-center
+                            transit
+                          "
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="18"
+                            height="18"
+                            fill="currentColor"
+                            class="bi bi-eye"
+                            viewBox="0 0 16 16"
+                          >
+                            <path
+                              d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"
+                            />
+                            <path
+                              d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"
+                            />
+                          </svg>
+                        </div>
+                        <div
+                          v-else
+                          class="
+                            bg-white
+                            d-flex
+                            align-items-center
+                            justify-content-center
+                            transit
+                          "
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="18"
+                            height="18"
+                            fill="currentColor"
+                            class="bi bi-eye-slash"
+                            viewBox="0 0 16 16"
+                          >
+                            <path
+                              d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z"
+                            />
+                            <path
+                              d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z"
+                            />
+                            <path
+                              d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z"
+                            />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                    <span class="text-12" style="color: red">{{
+                      errors[0]
+                    }}</span>
+                  </validation-provider>
+
+                  <div
+                    type="button"
+                    ref="runValidation"
+                    id="runValidation"
+                    @click="validate"
+                  ></div>
+                </div>
+                <div class="form-check form-switch">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="rememberMe"
+                  />
+                  <label class="form-check-label" for="rememberMe"
+                    >Remember me</label
+                  >
+                </div>
+                <div class="text-center">
+                  <button
+                    @click.prevent="Authentication"
+                    type="button"
+                    class="btn btn-primary text-16 w-100 mt-4 mb-3"
+                  >
+                    <span v-if="isbusy">
+                      <b-spinner
+                        label="loading"
+                        variant="primary"
+                        style="width: 1.5rem; height: 1.5rem"
+                        class="text-center"
+                      >
+                      </b-spinner>
+                    </span>
+                    <span v-else>Sign in</span>
+                  </button>
+                </div>
+
+                <div
                   type="button"
-                  class="btn btn-primary w-100 mt-4 mb-3"
-                >
-                  Sign in
-                </button>
-              </div>
-            </form>
+                  ref="runValidation"
+                  id="runValidation"
+                  @click="validate"
+                ></div>
+              </form>
+            </ValidationObserver>
           </div>
+
           <!-- <div class="text-center pt-0 px-lg-2 px-1">
             <p class="mb-4 text-sm mx-auto">
               Don't have an account?
@@ -202,20 +239,45 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
       show: false,
-      password: true,
+      password: false,
+      isbusy: false,
+      formDetail: {
+        username: "",
+        password: "",
+      },
     };
   },
   methods: {
+    ...mapActions({
+      Authentication: "loginUser",
+    }),
     toggle() {
       this.show = !this.show;
       this.password = !this.password;
     },
-    next() {
-      this.$router.push(`/patient-registeration/patient-records`);
+    async Authentication() {
+      if (this.$refs.runValidation) {
+        this.$refs.runValidation.click();
+      }
+
+      try {
+        this.isbusy = true;
+        await this.$store.dispatch("loginUser", this.formDetail);
+      } catch (error) {
+        ("yay");
+      } finally {
+        this.isbusy = false;
+        if (this.$store.getters.token) {
+          this.$router.push("/patient-registeration");
+        } else {
+          this.$router.push("/auth/login");
+        }
+      }
     },
   },
 };
@@ -263,14 +325,14 @@ export default {
   font-size: 14px;
   line-height: 100%;
 }
-.form-control {
+/* .form-control {
   background: #fff;
   border: 1px solid #e7e8eb;
   border-radius: 4px;
   color: #40484f;
   font-size: 14px;
   line-height: 100%;
-}
+} */
 .card-footer {
   padding: 0.75rem 1.25rem;
   /* background-color: rgba(0, 0, 0, 0.03); */

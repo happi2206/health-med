@@ -36,12 +36,9 @@
                   background: #f5f6f7;
                 "
               >
-                <li class="p-2">Vitals</li>
-                <li class="p-2">Records</li>
-                <li class="p-2">Bills</li>
-                <li class="p-2">Vitals</li>
-                <li class="p-2">Records</li>
-                <li class="p-2">Bills</li>
+                <li class="p-2"><nuxt-link to="/opd"> Vitals</nuxt-link></li>
+                <li class="p-2"><nuxt-link to="/opd"> Records</nuxt-link></li>
+                <li class="p-2"><nuxt-link to="/opd"> Bills </nuxt-link></li>
               </ul>
               <div class="w-100 d-flex flex-wrap px-2">
                 <div class="col-lg-4 col-md-6 col-sm-12">
@@ -170,6 +167,12 @@ export default {
 </script>
 
 <style scoped>
+.site-sidebar .nav-item.active,
+.nuxt-link-exact-active,
+.site-sidebar .nav-item::after,
+.site-sidebar .nav-item:hover {
+  /* background: rgba(16, 112, 183, 0.1); */
+}
 li {
   cursor: pointer;
   border: 0.5px solid #fff;

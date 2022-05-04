@@ -38,6 +38,7 @@ export default {
   plugins: [
     '~/plugins/vue-select.js',
     '~/plugins/prime-vue.js',
+    '~/plugins/veevalidate.js',
     // { src: '~/plugins/v-calendar.js', ssr: false }
   ],
 
@@ -63,8 +64,11 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: "/",
+    baseURL: process.env.BASE_URL,
+  },
+
+  env: {
+    BASE_URL: process.env.BASE_URL
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
@@ -73,7 +77,9 @@ export default {
     babel: {
       compact: true,
     },
-    transpile: /primevue*/,
+    transpile: [/primevue*/, 'vee-validate/dist/rules']
+
+
 
   },
 };

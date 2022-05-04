@@ -51,12 +51,12 @@
         <div class="col-md-4"></div>
       </div> -->
 
-      <form @submit.prevent="handleSubmit(submitForm)">
+      <form>
         <div class="bg-white border-radius mb-5 p-4 margin-fix">
           <h4 class="text-grey mb-4 text-24">Personal Details</h4>
           <div class="d-flex align-items-center">
             <small class="text-grey text-12">New Born</small>
-            <input v-model="newBorn" type="checkbox" class="ml-2" />
+            <input v-model="patient.is_baby" type="checkbox" class="ml-2" />
           </div>
           <div>
             <div class="row">
@@ -68,7 +68,7 @@
                       <div class="d-flex">
                         <select
                           class="form-control w-50"
-                          v-model="patient.title"
+                          v-model="patient.salutation"
                           name="title"
                           id=""
                         >
@@ -82,7 +82,7 @@
                           <option value="">Prof</option>
                         </select>
                         <input
-                          v-model="student.first_name"
+                          v-model="patient.firstname"
                           type="text"
                           placeholder="First Name*"
                           class="form-control ng-untouched ng-pristine ng-valid"
@@ -92,7 +92,7 @@
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                       <small class="text-grey text-12">Middle Name</small
                       ><input
-                        v-model="student.middle_name"
+                        v-model="patient.middlename"
                         type="text"
                         placeholder="Middle Name"
                         class="form-control ng-untouched ng-pristine ng-valid"
@@ -101,7 +101,7 @@
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                       <small class="text-grey text-12">Last Name</small
                       ><input
-                        v-model="student.last_name"
+                        v-model="patient.lastname"
                         type="text"
                         placeholder="Last Name*"
                         class="form-control ng-untouched ng-pristine ng-valid"
@@ -110,7 +110,7 @@
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                       <small class="text-grey text-12">Date of Birth</small>
                       <!-- <v-date-picker
-                        v-model="student.date_of_birth"
+                        v-model="patient.date_of_birth"
                         mode="date"
                         @dayclick="toggleCalender2 = false"
                       >
@@ -118,12 +118,16 @@
                           <span @click="togglePopover()">
                             <input
                               class="form-control"
-                              :placeholder="student.date_of_birth | date"
+                              :placeholder="patient.date_of_birth | date"
                             />
                           </span>
                         </template>
                       </v-date-picker> -->
-                      <input type="date" class="w-100 form-control" />
+                      <input
+                        v-model="patient.date_of_birth"
+                        type="date"
+                        class="w-100 form-control"
+                      />
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                       <small class="text-grey text-12">Age</small>
@@ -148,7 +152,7 @@
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3 mt-1">
                       <small class="text-grey text-12">Gender</small>
                       <v-select
-                        v-model="student.gender"
+                        v-model="patient.gender"
                         class="style-chooser"
                         placeholder="Gender"
                         label="grade_name"
@@ -158,7 +162,7 @@
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3 mt-1">
                       <small class="text-grey text-12">Marital Status</small>
                       <v-select
-                        v-model="student.marital_status"
+                        v-model="patient.marital_status"
                         class="style-chooser"
                         placeholder="Marital Status"
                         label="marital_status"
@@ -168,7 +172,7 @@
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                       <small class="text-grey text-12">Occupation</small
                       ><input
-                        v-model="student.occupation"
+                        v-model="patient.occupation"
                         type="text"
                         placeholder="Occupation"
                         class="form-control ng-untouched ng-pristine ng-valid"
@@ -177,7 +181,6 @@
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                       <small class="text-grey text-12">Language</small
                       ><v-select
-                        v-model="student.language"
                         class="style-chooser"
                         placeholder="Language"
                         label="marital_status"
@@ -193,7 +196,7 @@
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                       <small class="text-grey text-12">Religion</small
                       ><v-select
-                        v-model="student.religion"
+                        v-model="patient.religion"
                         class="style-chooser"
                         placeholder="Religion"
                         label="religion"
@@ -210,7 +213,7 @@
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                       <small class="text-grey text-12">Nationality</small>
                       <v-select
-                        v-model="student.nationality"
+                        v-model="patient.nationality"
                         class="style-chooser"
                         placeholder="Nationality"
                         :options="countryList"
@@ -219,7 +222,6 @@
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                       <small class="text-grey text-12">Email Address</small
                       ><input
-                        v-model="student.email"
                         type="email"
                         placeholder="Email Address"
                         class="form-control ng-untouched ng-pristine ng-valid"
@@ -228,7 +230,6 @@
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                       <small class="text-grey text-12">Loyalty Name</small
                       ><v-select
-                        v-model="student.loyalty"
                         class="style-chooser"
                         placeholder="Loyalty Name"
                         label="loyalty"
@@ -243,7 +244,6 @@
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                       <small class="text-grey text-12">Expiry Date</small
                       ><input
-                        v-model="student.expiryDate"
                         type="text"
                         class="form-control ng-untouched ng-pristine ng-valid"
                       />
@@ -251,7 +251,6 @@
                     <div class="mello col-lg-4 col-md-6 col-sm-12 mb-3">
                       <small class="mb-0">State of Origin</small>
                       <v-select
-                        v-model="student.state_of_origin"
                         class="style-chooser"
                         placeholder="Type to search"
                         label="state_name"
@@ -262,21 +261,16 @@
                     <div class="mello col-lg-4 col-md-6 col-sm-12 mb-3">
                       <small class="mb-0">Identity No.</small>
                       <div class="d-flex">
-                        <select
-                          class="form-control w-50"
-                          v-model="patient.title"
-                          name="title"
-                          id=""
-                        >
+                        <select class="form-control w-50" name="title" id="">
                           <option value="">Driving License</option>
                           <option value="">Employee Id</option>
                           <option value="">Passport and Visa No</option>
                           <option value="">Passport No</option>
-                          <option value="">Miss</option>
+
                           <option value="">Visa No</option>
                         </select>
                         <!-- <v-select
-                          v-model="student.identity_no"
+                          v-model="patient.identity_no"
                           class="style-chooser w-50"
                           placeholder="Select identity"
                           label="state_name"
@@ -294,7 +288,6 @@
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                       <small class="text-grey text-12">Visa Validity</small
                       ><input
-                        v-model="student.validity"
                         type="date"
                         class="form-control ng-untouched ng-pristine ng-valid"
                       />
@@ -302,7 +295,6 @@
                     <div class="col-lg-4 col-md-5 col-sm-12 mb-3">
                       <small class="text-grey text-12">LGA</small>
                       <input
-                        v-model="student.lga"
                         type="text"
                         placeholder="Local Government Area"
                         class="form-control ng-untouched ng-pristine ng-valid"
@@ -313,7 +305,7 @@
                         <small class="text-grey text-12">Family (optional)</small>
 
                         <v-select
-                          v-model="student.family"
+                          v-model="patient.family"
                           class="style-chooser"
                           placeholder="Select Family"
                           label="family_name"
@@ -331,7 +323,6 @@
                       <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                         <small class="text-grey text-12">Address/Village</small
                         ><input
-                          v-model="student.address"
                           type="text"
                           placeholder="Address/Village"
                           class="form-control ng-untouched ng-pristine ng-valid"
@@ -341,7 +332,6 @@
                       <div class="mello col-lg-4 col-md-6 col-sm-12 mb-3">
                         <small class="mb-0">Country</small>
                         <v-select
-                          v-model="student.country"
                           class="style-chooser"
                           placeholder="Type to search"
                           label="Country"
@@ -352,7 +342,6 @@
                       <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                         <small class="text-grey text-12">City</small
                         ><input
-                          v-model="student.city"
                           type="text"
                           placeholder="City"
                           class="form-control ng-untouched ng-pristine ng-valid"
@@ -361,7 +350,6 @@
                       <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                         <small class="text-grey text-12">Postal Code</small
                         ><input
-                          v-model="student.postal_code"
                           type="text"
                           placeholder="Postal Code"
                           class="form-control ng-untouched ng-pristine ng-valid"
@@ -370,7 +358,6 @@
                       <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                         <small class="text-grey text-12">Phone Number</small
                         ><input
-                          v-model="student.phone_number"
                           type="text"
                           placeholder="Phone Number"
                           class="form-control ng-untouched ng-pristine ng-valid"
@@ -384,7 +371,6 @@
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                       <small class="text-grey text-12">Relative Name</small
                       ><input
-                        v-model="relative.relative_name"
                         type="text"
                         placeholder="Relative Name"
                         class="form-control ng-untouched ng-pristine ng-valid"
@@ -393,7 +379,6 @@
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3 mt-1">
                       <small class="redd">Relation </small>
                       <v-select
-                        v-model="relative.relation"
                         class="style-chooser"
                         placeholder="Relation"
                         label="name"
@@ -403,7 +388,6 @@
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                       <small class="text-grey text-12">Phone Number</small
                       ><input
-                        v-model="relative.relative_phone_number"
                         type="text"
                         placeholder="Phone Number"
                         class="form-control ng-untouched ng-pristine ng-valid"
@@ -413,7 +397,6 @@
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                       <small class="text-grey text-12">Address/Village</small
                       ><input
-                        v-model="relative.address"
                         type="text"
                         placeholder="Address/Village"
                         class="form-control ng-untouched ng-pristine ng-valid"
@@ -423,7 +406,6 @@
                     <div class="mello col-lg-4 col-md-6 col-sm-12 mb-3">
                       <small class="mb-0">Country</small>
                       <v-select
-                        v-model="relative.country"
                         class="style-chooser"
                         placeholder="Type to search"
                         label="Country"
@@ -433,7 +415,6 @@
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                       <small class="text-grey text-12">City</small
                       ><input
-                        v-model="relative.city"
                         type="text"
                         placeholder="City"
                         class="form-control ng-untouched ng-pristine ng-valid"
@@ -443,7 +424,6 @@
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                       <small class="text-grey text-12">Postal Code</small
                       ><input
-                        v-model="relative.postal_code"
                         type="text"
                         placeholder="Postal Code"
                         class="form-control ng-untouched ng-pristine ng-valid"
@@ -457,7 +437,6 @@
                   <div class="mello col-lg-4 col-md-6 col-sm-12 mb-0">
                     <small class="mb-0">Payer</small>
                     <v-select
-                      v-model="relative.country"
                       class="style-chooser"
                       placeholder="Type to search"
                       label="Country"
@@ -468,7 +447,6 @@
                   <div class="mello col-lg-4 col-md-6 col-sm-12 mb-0">
                     <small class="mb-0">Sponsor</small>
                     <v-select
-                      v-model="relative.country"
                       class="style-chooser"
                       placeholder="Type to search"
                       label="Country"
@@ -479,7 +457,6 @@
                   <div class="mello col-lg-4 col-md-6 col-sm-12 mb-0">
                     <small class="mb-0">Network</small>
                     <v-select
-                      v-model="relative.country"
                       class="style-chooser"
                       placeholder="Type to search"
                       label="Country"
@@ -490,7 +467,11 @@
                   <div class="my-5 d-flex justify-content-end">
                     <button class="btn btn-light btn-md mx-3">Cancel</button>
 
-                    <button class="btn btn-primary" :disabled="isLoading">
+                    <button
+                      @click="createPatient"
+                      class="btn btn-primary"
+                      :disabled="isLoading"
+                    >
                       <span
                         v-if="isLoading"
                         class="spinner-border spinner-border-sm"
@@ -583,21 +564,6 @@ export default {
         type: "string",
         mask: "YYYY-MM-DD", // Uses 'iso' if missing
       },
-      title: "",
-      patient: {
-        name: "",
-        dob: "",
-      },
-      newBorn: false,
-      relative: {
-        relative_name: "",
-        relation: "",
-        relative_phone_number: "",
-        address: "",
-        country: "",
-        city: "",
-        postal_code: "",
-      },
       relation: [
         "Brother",
         "Brother-in-law",
@@ -659,19 +625,9 @@ export default {
         "Zamfara",
       ],
       avatarImage: "",
-      showCropper: false,
       avatar: "",
       version: 1,
-      newFamily: {
-        family_name: "",
-        email: "",
-        primary_contact: "",
-        phone: "",
-        address: "",
-      },
       isLoading: false,
-      states2: [],
-      Statess: "sss",
       countries: [],
       familyList: [],
       gradeList: [],
@@ -679,32 +635,21 @@ export default {
       imagesArray: "",
       selectedState: "",
       selected: "State",
-      mello: "yoo",
-      newDate: null,
-      student: {
-        first_name: "",
-        last_name: "",
-        middle_name: "",
+
+      patient: {
+        is_baby: "",
+        salutation: "",
+        firstname: "",
+        lastname: "",
+        middlename: "",
         gender: "",
-        phone_number: "",
-        email: "",
         marital_status: "",
-        occupation: "",
-        language: "",
         religion: "",
-        loyalty: "",
-        country: "",
-        city: "",
-        postal_code: "",
-        relative_name: "",
-        relative_phone_number: "",
         date_of_birth: "",
         nationality: "",
-        state_of_origin: "",
-        lga_name: "",
-        address: "",
-
-        avatar: null,
+        state_id: {},
+        home_address: {},
+        next_of_kin: {},
       },
       countryList: [
         "Afghanistan",
@@ -968,8 +913,23 @@ export default {
       this.avatar = event.target.files[0].file;
       console.log(event.target.files[0].file);
     },
-    submitForm() {
-      alert("Record created");
+    async createPatient() {
+      try {
+        this.isLoading = true;
+        let response = await this.$axios.$post(
+          "patient/patients/",
+          this.patient,
+          {
+            headers: {
+              Authorization: `Token ${localStorage.getItem(`HEALTH-TOKEN`)}`,
+            },
+          }
+        );
+        console.log(response);
+      } catch {
+      } finally {
+        this.isLoading = false;
+      }
     },
     changeLga(value) {
       console.log(value);
@@ -977,7 +937,7 @@ export default {
   },
   computed: {
     allStates() {
-      if (this.student.nationality === "Nigeria") {
+      if (this.patient.nationality === "Nigeria") {
         return this.states;
       } else {
         return [];
@@ -986,20 +946,20 @@ export default {
 
     localGovts() {
       return this.states.filter((state) => {
-        return state.id === this.student.state_of_origin;
+        return state.id === this.patient.state_of_origin;
       });
       // return this.sta
     },
     lga() {
-      if (this.student.state_of_origin) {
-        return this.student.state_of_origin.lgas;
+      if (this.patient.state_of_origin) {
+        return this.patient.state_of_origin.lgas;
       } else {
         return "";
       }
     },
   },
   watch: {
-    "student.family": {
+    "patient.family": {
       handler(newValue) {
         if (newValue.family_name === "Add Family") {
           this.$bvModal.show("modal-add-family");
