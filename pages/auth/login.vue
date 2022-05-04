@@ -68,6 +68,7 @@
           pt-0
           pb-3
           order-2
+          vh-100
           col-8
           flex-column
           mx-lg-0 mx-auto
@@ -345,11 +346,14 @@ export default {
   min-width: 300px;
 }
 @media screen and (max-width: 900px) {
+  .m-wit {
+    display: none;
+  }
   .order-2 {
     order: 1;
   }
   .w-50 {
-    width: 75% !important;
+    width: 50% !important;
   }
   .col-8 {
     flex: 0 0 100%;
@@ -372,7 +376,9 @@ export default {
   .mr-aut0,
   .mx-auto {
     /* margin-right: auto !important; */
-    padding-top: 3rem;
+    padding-top: 0rem;
+
+    /* padding-bottom: 20vh; */
   }
   .push {
     margin-right: 4rem;
@@ -391,7 +397,7 @@ export default {
     min-width: 100%;
   }
   .vh-100 {
-    min-height: 105vh;
+    min-height: 100vh;
   }
 }
 @media screen and (max-width: 760px) {
@@ -408,7 +414,9 @@ export default {
     flex: 0 0 33.333333%;
     max-width: 100%;
   }
-
+  .w-50 {
+    width: 75% !important;
+  }
   .col-4 {
     /* flex: 0 0 33.333333%; */
     /* max-width: 33.333333%; */

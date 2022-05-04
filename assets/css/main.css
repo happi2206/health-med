@@ -462,7 +462,7 @@ body::-webkit-scrollbar-thumb {
     color: #1070b7;
 }
 
-@media (max-width: 996px) {
+@media (min-width: 1036px) {
 
 
     .site-sidebar,
