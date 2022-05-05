@@ -59,53 +59,61 @@
               <input v-model="patient.is_baby" type="checkbox" class="ml-2" />
             </div>
             <div>
-              <div class="row" style="min-width: 100%">
-                <div class="col-lg-10 col-md-8 col-sm-12 mb-3">
+              <div class="">
+                <div class="col-lg-12 col-md-12 col-sm-12 mb-3">
                   <div>
-                    <div class="row" style="min-width: 100%">
+                    <div class="row vw-100">
                       <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                         <small class="text-grey text-12"> First Name *</small>
                         <div class="d-flex">
-                          <validation-provider
-                            rules="required"
-                            v-slot="{ errors }"
-                          >
-                            <select
-                              class="form-control w-100"
-                              v-model="patient.salutation"
-                              name="title"
-                              id=""
+                          <div class="col-md-4 p-0">
+                            <validation-provider
+                              rules="required"
+                              v-slot="{ errors }"
                             >
-                              <option value="">Title</option>
-                              <option
-                                v-for="(salute, index) in salutations"
-                                :key="index"
-                                :value="salute"
-                              >
-                                {{ salute }}
-                              </option>
-                            </select>
-                            <span class="text-12" style="color: red">{{
-                              errors[0]
-                            }}</span>
-                          </validation-provider>
-                          <validation-provider
-                            rules="required"
-                            v-slot="{ errors }"
-                          >
-                            <input
-                              v-model="patient.firstname"
-                              type="text"
-                              placeholder="First Name*"
-                              class="
-                                form-control
-                                ng-untouched ng-pristine ng-valid
-                              "
-                            />
-                            <span class="text-12" style="color: red">{{
-                              errors[0]
-                            }}</span>
-                          </validation-provider>
+                              <div class="w-100">
+                                <select
+                                  class="form-control w-100"
+                                  v-model="patient.salutation"
+                                  name="title"
+                                  id=""
+                                >
+                                  <option value="">Title</option>
+                                  <option
+                                    v-for="(salute, index) in salutations"
+                                    :key="index"
+                                    :value="salute"
+                                  >
+                                    {{ salute }}
+                                  </option>
+                                </select>
+                              </div>
+
+                              <span class="text-12" style="color: red">{{
+                                errors[0]
+                              }}</span>
+                            </validation-provider>
+                          </div>
+
+                          <div class="col-md-8 p-0">
+                            <validation-provider
+                              rules="required"
+                              v-slot="{ errors }"
+                            >
+                              <input
+                                v-model="patient.firstname"
+                                type="text"
+                                placeholder="First Name*"
+                                class="
+                                  form-control
+                                  ng-untouched ng-pristine ng-valid
+                                "
+                              />
+                              <span class="text-12" style="color: red">{{
+                                errors[0]
+                              }}</span>
+                            </validation-provider>
+                          </div>
                         </div>
                       </div>
                       <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
@@ -317,7 +325,7 @@
                         />
                       </div>
                       <div class="mello col-lg-4 col-md-6 col-sm-12 mb-3">
-                        <small class="mb-0 text-grey text-12"
+                        <small class="mb-0 text-grey text-grey text-12"
                           >State of Origin *</small
                         >
                         <v-select
@@ -329,15 +337,24 @@
                         ></v-select>
                       </div>
                       <div class="mello col-lg-4 col-md-6 col-sm-12 mb-3">
-                        <small class="mb-0">Identity No.</small>
+                        <small class="mb-0 text-grey">Identity No.</small>
                         <div class="d-flex">
-                          <select class="form-control w-50" name="title" id="">
-                            <option value="">Driving License</option>
-                            <option value="">Employee Id</option>
-                            <option value="">Passport and Visa No</option>
-                            <option value="">Passport No</option>
+                          <select
+                            v-model="patient.identity.type"
+                            class="form-control w-50"
+                            name="title"
+                            id=""
+                          >
+                            <option value="Driving License">
+                              Driving License
+                            </option>
+                            <option value="Employee Id">Employee Id</option>
+                            <option value="Passport and Visa No">
+                              Passport and Visa No
+                            </option>
+                            <option value="Passport No">Passport No</option>
 
-                            <option value="">Visa No</option>
+                            <option value="Visa No">Visa No</option>
                           </select>
                           <!-- <v-select
                           v-model="patient.identity_no"
@@ -352,7 +369,11 @@
                             'Visa No.',
                           ]"
                         ></v-select> -->
-                          <input type="text" class="w-50 form-control" />
+                          <input
+                            v-model="patient.identity.no_"
+                            type="text"
+                            class="w-50 form-control"
+                          />
                         </div>
                       </div>
                       <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
@@ -387,7 +408,7 @@
                       <hr />
                       <div class="row pt-3" style="margin: 0; width: 100%">
                         <div class="col-9">
-                          <h4>Home Address</h4>
+                          <h4 class="text-24">Home Address</h4>
                         </div>
 
                         <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
@@ -397,6 +418,7 @@
 
                           <input
                             type="text"
+                            v-model="patient.home_address.address"
                             placeholder="Address/Village"
                             class="
                               form-control
@@ -406,22 +428,20 @@
                         </div>
 
                         <div class="mello col-lg-4 col-md-6 col-sm-12 mb-3">
-                          <small class="mb-0">Country</small>
+                          <small class="mb-0 text-grey">Country</small>
                           <v-select
+                            v-model="patient.home_address.country"
                             class="style-chooser"
                             placeholder="Type to search"
                             label="Country"
-                            :options="[
-                              'Antigua and Barbuda',
-                              'General',
-                              'Kongo',
-                            ]"
+                            :options="countryList"
                           ></v-select>
                         </div>
 
                         <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                           <small class="text-grey text-12">City</small
                           ><input
+                            v-model="patient.home_address.city"
                             type="text"
                             placeholder="City"
                             class="
@@ -433,6 +453,7 @@
                         <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                           <small class="text-grey text-12">Postal Code</small
                           ><input
+                            v-model="patient.home_address.postal_code"
                             type="text"
                             placeholder="Postal Code"
                             class="
@@ -444,6 +465,7 @@
                         <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                           <small class="text-grey text-12">Phone Number</small
                           ><input
+                            v-model="patient.home_address.mobile_number"
                             type="text"
                             placeholder="Phone Number"
                             class="
@@ -455,19 +477,21 @@
                       </div>
                     </div>
                     <hr />
-                    <h3>Nearest Relative</h3>
+                    <h3 class="text-24">Nearest Relative</h3>
                     <div class="row">
                       <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                         <small class="text-grey text-12">Relative Name</small
                         ><input
+                          v-model="patient.next_of_kin.nok_name"
                           type="text"
                           placeholder="Relative Name"
                           class="form-control ng-untouched ng-pristine ng-valid"
                         />
                       </div>
                       <div class="col-lg-4 col-md-6 col-sm-12 mb-3 mt-1">
-                        <small class="redd">Relation </small>
+                        <small class="text-grey">Relation </small>
                         <v-select
+                          v-model="patient.next_of_kin.relation"
                           class="style-chooser"
                           placeholder="Relation"
                           label="name"
@@ -477,6 +501,7 @@
                       <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                         <small class="text-grey text-12">Phone Number</small
                         ><input
+                          v-model="patient.next_of_kin.mobile_number"
                           type="text"
                           placeholder="Phone Number"
                           class="form-control ng-untouched ng-pristine ng-valid"
@@ -486,6 +511,7 @@
                       <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                         <small class="text-grey text-12">Address/Village</small
                         ><input
+                          v-model="patient.next_of_kin.address"
                           type="text"
                           placeholder="Address/Village"
                           class="form-control ng-untouched ng-pristine ng-valid"
@@ -493,17 +519,19 @@
                       </div>
 
                       <div class="mello col-lg-4 col-md-6 col-sm-12 mb-3">
-                        <small class="mb-0">Country</small>
+                        <small class="mb-0 text-grey">Country</small>
                         <v-select
+                          v-model="patient.next_of_kin.country"
                           class="style-chooser"
                           placeholder="Type to search"
                           label="Country"
-                          :options="['Antigua and Barbuda', 'General', 'Kongo']"
+                          :options="countryList"
                         ></v-select>
                       </div>
                       <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                         <small class="text-grey text-12">City</small
                         ><input
+                          v-model="patient.next_of_kin.city"
                           type="text"
                           placeholder="City"
                           class="form-control ng-untouched ng-pristine ng-valid"
@@ -513,6 +541,7 @@
                       <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                         <small class="text-grey text-12">Postal Code</small
                         ><input
+                          v-model="patient.next_of_kin.postal_code"
                           type="text"
                           placeholder="Postal Code"
                           class="form-control ng-untouched ng-pristine ng-valid"
@@ -521,30 +550,36 @@
                     </div>
 
                     <hr />
-                    <h3>Payer Information</h3>
+                    <h3 class="text-24">Payer Information</h3>
 
-                    <div class="mello col-lg-4 col-md-6 col-sm-12 mb-0">
-                      <small class="mb-0">Payer</small>
+                    <div
+                      class="mello col-lg-4 col-md-6 col-sm-12 mb-0 text-grey"
+                    >
+                      <small class="mb-0 text-grey text-grey">Payer</small>
                       <v-select
                         class="style-chooser"
                         placeholder="Type to search"
                         label="Country"
-                        :options="['Antigua and Barbuda', 'General', 'Kongo']"
+                        :options="countryList"
                       ></v-select>
                     </div>
 
-                    <div class="mello col-lg-4 col-md-6 col-sm-12 mb-0">
-                      <small class="mb-0">Sponsor</small>
+                    <div
+                      class="mello col-lg-4 col-md-6 col-sm-12 mb-0 text-grey"
+                    >
+                      <small class="mb-0 text-grey">Sponsor</small>
                       <v-select
                         class="style-chooser"
                         placeholder="Type to search"
                         label="Country"
-                        :options="['Antigua and Barbuda', 'General', 'Kongo']"
+                        :options="countryList"
                       ></v-select>
                     </div>
 
-                    <div class="mello col-lg-4 col-md-6 col-sm-12 mb-0">
-                      <small class="mb-0">Network</small>
+                    <div
+                      class="mello col-lg-4 col-md-6 col-sm-12 mb-0 text-grey"
+                    >
+                      <small class="mb-0 text-grey">Network</small>
                       <v-select
                         class="style-chooser"
                         placeholder="Type to search"
@@ -697,8 +732,26 @@ export default {
         date_of_birth: "",
         nationality: "",
         state_id: {},
-        home_address: {},
-        next_of_kin: {},
+        identity: {
+          type: "",
+          no_: "",
+        },
+        home_address: {
+          address: "",
+          country: "",
+          city: "",
+          postal_code: "",
+          mobile_number: "",
+        },
+        next_of_kin: {
+          nok_name: "",
+          relation: "",
+          mobile_number: "",
+          address: "",
+          country: "",
+          city: "",
+          postal_code: "",
+        },
       },
       countryList: ["Nigeria"],
       gender: [],
@@ -767,7 +820,7 @@ export default {
     },
     async getCountries() {
       try {
-        let response = await this.$axios.$get(`core/countries/?limit=249`, {
+        let response = await this.$axios.$get(`core/countries/`, {
           headers: {
             Authorization: `Token ${localStorage.getItem(`HEALTH-TOKEN`)}`,
           },
@@ -891,5 +944,32 @@ export default {
 }
 .touch {
   cursor: pointer;
+}
+.vw-100 {
+  width: 86vw !important;
+}
+@media screen and (max-width: 1115px) {
+  .vw-100 {
+    width: 80vw !important;
+  }
+}
+@media screen and (max-width: 875px) {
+  .vw-100 {
+    width: 70vw !important;
+  }
+}
+@media screen and (max-width: 591px) {
+  .vw-100 {
+    width: 60vw !important;
+  }
+}
+@media screen and (max-width: 454px) {
+  .vw-100 {
+    width: 55vw !important;
+  }
+
+  .p-4 {
+    padding: 0.5rem !important;
+  }
 }
 </style>

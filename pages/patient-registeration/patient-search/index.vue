@@ -41,6 +41,7 @@
             <small class="text-grey text-12">Marital status</small>
             <v-select
               v-model="marital_status"
+              @change="getPatients"
               class="style-chooser text-grey"
               placeholder="Marital status"
               :options="marital"
@@ -102,7 +103,7 @@
               d-flex
               justify-content-center
               pt-3
-              col-md-6 col-sm-12
+              col-md-12 col-sm-12
               text-14
             "
           >
@@ -301,6 +302,7 @@ export default {
       offset: 0,
       ordering: "",
       religion: "",
+
       patientList: [],
       genders: [],
       marital: [],
@@ -315,17 +317,16 @@ export default {
   methods: {
     async getPatients() {
       try {
-        if (this.marital_status === null) {
-          this.marital_status === "";
-        }
-        if (this.gender === null) {
-          this.gender === "";
-        }
-        if (this.nationality === null) {
-          this.nationality === "";
-        }
         this.busy = true;
-        let uri = `/patient/patients/?firstname=${this.firstname}&gender=${this.gender}&lastname=${this.lastname}&limit=${this.limit}&marital_status=${this.marital_status}&middlename=${this.middlename}&nationality=${this.nationality}&offset=${this.offset}&ordering=${this.ordering}&religion=${this.religion}`;
+        let uri = `/patient/patients/?firstname=${this.firstname}&gender=${
+          this.gender ? this.gender : ""
+        }&lastname=${this.lastname}&limit=${this.limit}&marital_status=${
+          this.marital_status ? this.marital_status : ""
+        }&middlename=${this.middlename}&nationality=${
+          this.nationality ? this.nationality : ""
+        }&offset=${this.offset}&ordering=${this.ordering}&religion=${
+          this.religion
+        }`;
 
         const response = await this.$axios.$get(uri, {
           headers: {
