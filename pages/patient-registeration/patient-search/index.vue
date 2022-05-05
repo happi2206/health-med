@@ -38,37 +38,34 @@
             />
           </div>
           <div class="col-lg-4 col-md-6 col-sm-12">
-            <small class="text-grey text-12">Marital status</small
-            ><input
-              @keyup.enter="getPatients"
+            <small class="text-grey text-12">Marital status</small>
+            <v-select
               v-model="marital_status"
-              type="text"
+              class="style-chooser text-grey"
               placeholder="Marital status"
-              class="form-control ng-untouched ng-pristine ng-valid"
-            />
+              :options="marital"
+            ></v-select>
           </div>
           <div class="col-lg-4 col-md-6 col-sm-12">
-            <small class="text-grey text-12">Gender</small
-            ><input
-              @keyup.enter="getPatients"
+            <small class="text-grey text-12">Gender</small>
+            <v-select
               v-model="gender"
-              type="text"
+              class="style-chooser text-grey"
               placeholder="Gender"
-              class="form-control ng-untouched ng-pristine ng-valid"
-            />
+              :options="genders"
+            ></v-select>
           </div>
           <div class="col-lg-4 col-md-6 col-sm-12">
             <small class="text-grey text-12">Nationlity</small
-            ><input
-              @keyup.enter="getPatients"
+            ><v-select
               v-model="nationality"
-              type="text"
-              placeholder="Nationality"
-              class="form-control ng-untouched ng-pristine ng-valid"
-            />
+              class="style-chooser text-grey"
+              placeholder="Nationlity"
+              :options="nations"
+            ></v-select>
           </div>
 
-          <div class="col-lg-4 col-md-6 col-sm-12">
+          <!-- <div class="col-lg-4 col-md-6 col-sm-12">
             <small class="text-grey text-12">Offset</small>
             <input
               @keyup.enter="getPatients"
@@ -98,7 +95,7 @@
               placeholder="Religion"
               class="form-control ng-untouched ng-pristine ng-valid"
             />
-          </div>
+          </div> -->
           <div
             class="
               col-lg-12
@@ -109,30 +106,127 @@
               text-14
             "
           >
-            <div
+            <button
               @click.prevent="getPatients"
-              class="btn text-14 btn-outline-primary mr-5"
+              :disabled="hellNo"
+              class="btn text-14 btn-primary mr-5"
             >
               <div class="mt-1">Search</div>
-            </div>
-            <div @click.prevent="clear" class="btn text-14 btn-outline-danger">
+            </button>
+            <div
+              @click.prevent="clear"
+              style="background: #dc3545; color: #fff"
+              class="btn text-14"
+            >
               <div class="mt-1">Clear</div>
             </div>
           </div>
         </div>
       </div>
 
+      <b-modal
+        id="Add-encounter"
+        title="Add Encounter"
+        centered
+        hide-footer
+        ref="encounterModal"
+      >
+        <ValidationObserver v-slot="{ validate }">
+          <form @submit.prevent="addEncounter" class="px-4 mx-3">
+            <div class="row mt-4">
+              <div class="w-100">
+                <div class="mb-2">
+                  <small class="text-grey text-12">Clinic *</small>
+                  <validation-provider rules="required" v-slot="{ errors }">
+                    <v-select
+                      class="style-chooser"
+                      placeholder="Clinic"
+                      :options="['optomology']"
+                    ></v-select>
+                    <span class="text-12" style="color: red">{{
+                      errors[0]
+                    }}</span>
+                  </validation-provider>
+                </div>
+                <div class="mb-2">
+                  <small class="text-grey text-12">Chart *</small>
+                  <validation-provider rules="required" v-slot="{ errors }">
+                    <v-select
+                      class="style-chooser"
+                      placeholder="Chart"
+                      :options="['BP']"
+                    ></v-select>
+                    <span class="text-12" style="color: red">{{
+                      errors[0]
+                    }}</span>
+                  </validation-provider>
+                </div>
+
+                <div class="mb-2">
+                  <small class="text-grey text-12">Provider *</small>
+                  <validation-provider rules="required" v-slot="{ errors }">
+                    <v-select
+                      class="style-chooser"
+                      placeholder="Provider"
+                      :options="['Dr. Vally Karim']"
+                    ></v-select>
+                    <span class="text-12" style="color: red">{{
+                      errors[0]
+                    }}</span>
+                  </validation-provider>
+                </div>
+                <div class="mb-2">
+                  <small class="text-grey text-12">Patient *</small>
+                  <validation-provider rules="required" v-slot="{ errors }">
+                    <v-select
+                      class="style-chooser"
+                      placeholder="Patient"
+                      :options="patientList"
+                    ></v-select>
+                    <span class="text-12" style="color: red">{{
+                      errors[0]
+                    }}</span>
+                  </validation-provider>
+                </div>
+              </div>
+            </div>
+
+            <div class="my-3 d-flex justify-content-end">
+              <button
+                class="btn btn-primary mainbtndashboard medbrownparagraph"
+                style="height: 40px; width: 9rem; text-align: center"
+              >
+                <span v-if="isbusy">
+                  <b-spinner
+                    label="loading"
+                    variant="primary"
+                    style="width: 1.5rem; height: 1.5rem"
+                    class="text-center"
+                  >
+                  </b-spinner>
+                </span>
+                <span v-else>Save</span>
+              </button>
+            </div>
+            <div
+              type="button"
+              ref="runValidation"
+              id="runValidation"
+              @click="validate"
+            ></div>
+          </form>
+        </ValidationObserver>
+      </b-modal>
       <div>
         <div class="table_container table-responsive mt-2 pt-2">
           <table-component
             :paginate="true"
             :busy="busy"
             :items="itemsToShow"
+            @row-clicked="viewPatientData"
             :dropdownItem="dropdownItem"
+            @dropdown="getDataForPatientByID"
             :fields="fields"
-            @page-changed="handlePage"
-            :perPage="perPage"
-            :totalItems="totalItems"
           >
             <template #action="{ data: { item } }">
               <b-dropdown
@@ -166,7 +260,7 @@
                     right
                     :key="index"
                     class="text-capitalize text-14"
-                    @click="$emit(dropdown, row.item)"
+                    @click="optionClicked(item, index)"
                     >{{ dropdown.split("_").join(" ") }}</b-dropdown-item
                   >
                 </template>
@@ -182,75 +276,11 @@
 <script>
 export default {
   layout: "dashboard",
-  methods: {
-    async getPatients() {
-      try {
-        this.busy = true;
-        let uri = `/patient/patients/?firstname=${this.firstname}&gender=${this.gender}&lastname=${this.lastname}&limit=${this.limit}&marital_status=${this.marital_status}&middlename=${this.middlename}&nationality=${this.nationality}&offset=${this.offset}&ordering=${this.ordering}&religion=${this.religion}`;
-
-        const response = await this.$axios.$get(uri, {
-          headers: {
-            Authorization: `Token ${localStorage.getItem(`HEALTH-TOKEN`)}`,
-          },
-        });
-
-        this.itemsToShow = response.results;
-      } catch (error) {
-        console.log(error);
-      } finally {
-        this.busy = false;
-      }
-    },
-    clear() {
-      this.itemsToShow = [];
-      this.firstname = "";
-      this.gender = "";
-      this.lastname = "";
-      this.limit = 50;
-      this.marital_status = "";
-      this.middlename = "";
-      this.nationality = "";
-      this.offset = 0;
-      this.ordering = "";
-      this.religion = "";
-    },
-    populate() {
-      this.itemsToShow = [
-        {
-          UHID: "8966353",
-          name: "Mike Simons",
-          dob: "17/2/1992",
-          phone: "09050383673",
-          city: "Abuja",
-          branch: "Lugbe",
-          action: "",
-        },
-        {
-          UHID: "8966353",
-          name: "Mike Simons",
-          dob: "17/2/1992",
-          phone: "09050383673",
-          city: "Abuja",
-          branch: "Lugbe",
-          action: "",
-        },
-        {
-          UHID: "8966353",
-          name: "Mike Simons",
-          dob: "17/2/1992",
-          phone: "09050383673",
-          city: "Abuja",
-          branch: "Lugbe",
-          action: "",
-        },
-      ];
-    },
-  },
   data() {
     return {
       busy: false,
       itemsToShow: [],
-      dropdownItem: ["Clear", "Out patient visit"],
+      dropdownItem: ["View", "Add Encounter"],
       fields: [
         { key: "UHID", label: "UHID", sortable: true },
         { key: "firstname", label: "First Name", sortable: true },
@@ -262,21 +292,157 @@ export default {
       ],
 
       firstname: "",
-      gender: "",
+      gender: null,
       lastname: "",
       limit: 50,
-      marital_status: "",
+      marital_status: null,
       middlename: "",
-      nationality: "",
+      nationality: null,
       offset: 0,
       ordering: "",
       religion: "",
+      patientList: [],
+      genders: [],
+      marital: [],
+      nations: ["Nigeria"],
     };
+  },
+  mounted() {
+    this.getGender();
+    this.getMaritalStatus();
+    this.getCountries();
+  },
+  methods: {
+    async getPatients() {
+      try {
+        if (this.marital_status === null) {
+          this.marital_status === "";
+        }
+        if (this.gender === null) {
+          this.gender === "";
+        }
+        if (this.nationality === null) {
+          this.nationality === "";
+        }
+        this.busy = true;
+        let uri = `/patient/patients/?firstname=${this.firstname}&gender=${this.gender}&lastname=${this.lastname}&limit=${this.limit}&marital_status=${this.marital_status}&middlename=${this.middlename}&nationality=${this.nationality}&offset=${this.offset}&ordering=${this.ordering}&religion=${this.religion}`;
+
+        const response = await this.$axios.$get(uri, {
+          headers: {
+            Authorization: `Token ${localStorage.getItem(`HEALTH-TOKEN`)}`,
+          },
+        });
+
+        this.itemsToShow = response.results;
+        for (const iterator of await response.results) {
+          this.patientList.push(iterator.firstname + " " + iterator.lastname);
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.busy = false;
+      }
+    },
+    async getGender() {
+      try {
+        let response = await this.$axios.$get(`core/gender/`, {
+          headers: {
+            Authorization: `Token ${localStorage.getItem(`HEALTH-TOKEN`)}`,
+          },
+        });
+
+        for (const iterator of await response.results) {
+          this.genders.push(iterator.gender);
+        }
+      } catch {
+      } finally {
+      }
+    },
+    async getMaritalStatus() {
+      try {
+        let response = await this.$axios.$get(`core/marital-status/`, {
+          headers: {
+            Authorization: `Token ${localStorage.getItem(`HEALTH-TOKEN`)}`,
+          },
+        });
+
+        for (const iterator of await response.results) {
+          this.marital.push(iterator.marital_status);
+        }
+      } catch {
+      } finally {
+      }
+    },
+    async getCountries() {
+      try {
+        let response = await this.$axios.$get(`core/countries/?limit=249`, {
+          headers: {
+            Authorization: `Token ${localStorage.getItem(`HEALTH-TOKEN`)}`,
+          },
+        });
+
+        for (const iterator of await response.results) {
+          this.nations.push(iterator.country);
+        }
+        this.nations.splice(159, 1);
+      } catch {
+      } finally {
+      }
+    },
+    getDataForPatientByID(e) {
+      this.$router.push(`patient-registeration/patient-search/${e.id}`);
+    },
+    viewPatientData(e) {
+      this.$router.push(`/patient-registeration/patient-search/${e.id}`);
+    },
+    optionClicked(e, i) {
+      console.log(e, i);
+      if (i === 0) {
+        this.$router.push(`/patient-registeration/patient-search/${e.id}`);
+      }
+      if (i === 1) {
+        this.$bvModal.show("Add-encounter");
+      }
+    },
+    clear() {
+      this.itemsToShow = [];
+      this.firstname = "";
+      this.gender = " ";
+      this.lastname = "";
+      this.limit = 50;
+      this.marital_status = "";
+      this.middlename = " ";
+      this.nationality = " ";
+      this.offset = 0;
+      this.ordering = "";
+      this.religion = "";
+    },
+  },
+
+  computed: {
+    hellNo() {
+      if (
+        this.firstname.length === 0 &&
+        this.middlename.length === 0 &&
+        this.lastname.length === 0 &&
+        this.gender === null &&
+        this.nationality === null &&
+        this.marital_status === null
+      ) {
+        return true;
+      }
+      return false;
+    },
   },
 };
 </script>
 
 <style scoped>
+.btn.btn-primary {
+  background: #1070b7;
+  border: 1px solid #1070b7;
+  color: #fff;
+}
 .margin-fix {
   margin: 4rem 0 6rem;
   background: #fff;
@@ -294,8 +460,11 @@ export default {
 .table td {
   padding: 0.75rem;
   vertical-align: top;
-
   /* border-top: 1px solid #dee2e6; */
+}
+
+td {
+  cursor: pointer;
 }
 
 .table th {

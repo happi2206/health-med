@@ -39,7 +39,7 @@
             </div>
           </template>
           <b-dropdown-item href="#" class="items text-14">
-            <nuxt-link to="/" class="text-dark"> Sign Out </nuxt-link>
+            <div @click="logOut" class="text-dark">Sign Out</div>
           </b-dropdown-item>
         </b-dropdown>
       </div>
@@ -48,7 +48,14 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    logOut() {
+      this.$store.dispatch("signOutAction");
+      this.$router.push("/auth/login");
+    },
+  },
+};
 </script>
 
 <style scoped>

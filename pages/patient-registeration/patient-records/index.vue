@@ -59,10 +59,10 @@
               <input v-model="patient.is_baby" type="checkbox" class="ml-2" />
             </div>
             <div>
-              <div class="row">
+              <div class="row" style="min-width: 100%">
                 <div class="col-lg-10 col-md-8 col-sm-12 mb-3">
                   <div>
-                    <div class="row">
+                    <div class="row" style="min-width: 100%">
                       <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                         <small class="text-grey text-12"> First Name *</small>
                         <div class="d-flex">
@@ -72,21 +72,20 @@
                           >
                             <select
                               class="form-control w-100"
-                              required
                               v-model="patient.salutation"
                               name="title"
                               id=""
                             >
                               <option value="">Title</option>
-                              <option value="Baby">Baby</option>
-                              <option value="Mr">Mr</option>
-                              <option value="Mrs">Mrs</option>
-                              <option value="Miss">Miss</option>
-                              <option value="Dr">Dr</option>
-                              <option value="Ms">Ms</option>
-                              <option value="Prof">Prof</option>
+                              <option
+                                v-for="(salute, index) in salutations"
+                                :key="index"
+                                :value="salute"
+                              >
+                                {{ salute }}
+                              </option>
                             </select>
-                            <span class="text-12 mr-2" style="color: red">{{
+                            <span class="text-12" style="color: red">{{
                               errors[0]
                             }}</span>
                           </validation-provider>
@@ -99,7 +98,6 @@
                               type="text"
                               placeholder="First Name*"
                               class="
-                                ml-2
                                 form-control
                                 ng-untouched ng-pristine ng-valid
                               "
@@ -111,8 +109,9 @@
                         </div>
                       </div>
                       <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                        <small class="text-grey text-12">Middle Name</small
-                        ><input
+                        <small class="text-grey text-12">Middle Name</small>
+
+                        <input
                           v-model="patient.middlename"
                           type="text"
                           placeholder="Middle Name"
@@ -120,8 +119,8 @@
                         />
                       </div>
                       <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                        <small class="text-grey text-12">Last Name *</small
-                        ><validation-provider
+                        <small class="text-grey text-12">Last Name *</small>
+                        <validation-provider
                           rules="required"
                           v-slot="{ errors }"
                         >
@@ -200,7 +199,7 @@
                             class="style-chooser"
                             placeholder="Gender"
                             label="grade_name"
-                            :options="['Male', 'Female']"
+                            :options="gender"
                           ></v-select>
                           <span class="text-12" style="color: red">{{
                             errors[0]
@@ -220,12 +219,7 @@
                             class="style-chooser"
                             placeholder="Marital Status"
                             label="marital_status"
-                            :options="[
-                              'Married',
-                              'Divorced',
-                              'Single',
-                              'Widowed',
-                            ]"
+                            :options="marital_status"
                           ></v-select>
                           <span class="text-12" style="color: red">{{
                             errors[0]
@@ -267,13 +261,7 @@
                             class="style-chooser"
                             placeholder="Religion"
                             label="religion"
-                            :options="[
-                              'Buddhism',
-                              'Christian',
-                              'Hinduism',
-                              'Islamic',
-                              'Russian',
-                            ]"
+                            :options="religions"
                           ></v-select>
                           <span class="text-12" style="color: red">{{
                             errors[0]
@@ -288,6 +276,7 @@
                           v-slot="{ errors }"
                         >
                           <v-select
+                            @input="searchState"
                             v-model="patient.nationality"
                             class="style-chooser"
                             placeholder="Nationality"
@@ -328,7 +317,9 @@
                         />
                       </div>
                       <div class="mello col-lg-4 col-md-6 col-sm-12 mb-3">
-                        <small class="mb-0">State of Origin</small>
+                        <small class="mb-0 text-grey text-12"
+                          >State of Origin *</small
+                        >
                         <v-select
                           class="style-chooser"
                           placeholder="Type to search"
@@ -403,23 +394,15 @@
                           <small class="text-grey text-12"
                             >Address/Village *</small
                           >
-                          <validation-provider
-                            rules="required"
-                            v-slot="{ errors }"
-                          >
-                            <input
-                              type="text"
-                              v-model="patient.home_address.additionalProp1"
-                              placeholder="Address/Village"
-                              class="
-                                form-control
-                                ng-untouched ng-pristine ng-valid
-                              "
-                            />
-                            <span class="text-12" style="color: red">{{
-                              errors[0]
-                            }}</span>
-                          </validation-provider>
+
+                          <input
+                            type="text"
+                            placeholder="Address/Village"
+                            class="
+                              form-control
+                              ng-untouched ng-pristine ng-valid
+                            "
+                          />
                         </div>
 
                         <div class="mello col-lg-4 col-md-6 col-sm-12 mb-3">
@@ -505,7 +488,6 @@
                         ><input
                           type="text"
                           placeholder="Address/Village"
-                          v-mode
                           class="form-control ng-untouched ng-pristine ng-valid"
                         />
                       </div>
@@ -572,12 +554,11 @@
                     </div>
 
                     <div class="my-5 d-flex justify-content-end">
-                      <button class="btn btn-light btn-md mx-3">Cancel</button>
+                      <div class="btn btn-light btn-md mx-3">Cancel</div>
 
                       <button
-                        @click="createPatient"
+                        @click.prevent="createPatient"
                         class="btn btn-primary"
-                        :disabled="isLoading"
                       >
                         <span
                           v-if="isLoading"
@@ -673,6 +654,7 @@ export default {
   //   DatePicker,
   // },
   layout: "dashboard",
+
   data() {
     return {
       modelConfig: {
@@ -700,56 +682,8 @@ export default {
         "Uncle",
         "Wife",
       ],
-      states: [
-        "Abia",
-        "Adamawa",
-        "Akwa Ibom",
-        "Anambra",
-        "Bauchi",
-        "Bayelsa",
-        "Benue",
-        "Borno",
-        "Cross River",
-        "Delta",
-        "Ebonyi",
-        "Edo",
-        "Ekiti",
-        "Enugu",
-        "FCT - Abuja",
-        "Gombe",
-        "Imo",
-        "Jigawa",
-        "Kaduna",
-        "Kano",
-        "Katsina",
-        "Kebbi",
-        "Kogi",
-        "Kwara",
-        "Lagos",
-        "Nasarawa",
-        "Niger",
-        "Ogun",
-        "Ondo",
-        "Osun",
-        "Oyo",
-        "Plateau",
-        "Rivers",
-        "Sokoto",
-        "Taraba",
-        "Yobe",
-        "Zamfara",
-      ],
-      avatarImage: "",
-      avatar: "",
-      version: 1,
+
       isLoading: false,
-      countries: [],
-      familyList: [],
-      gradeList: [],
-      academicYears: [],
-      imagesArray: "",
-      selectedState: "",
-      selected: "State",
 
       patient: {
         is_baby: false,
@@ -763,269 +697,27 @@ export default {
         date_of_birth: "",
         nationality: "",
         state_id: {},
-        home_address: {
-          additionalProp1: "",
-          additionalProp2: "",
-          additionalProp3: "",
-        },
-        next_of_kin: {
-          additionalProp1: "",
-          additionalProp2: "",
-          additionalProp3: "",
-        },
+        home_address: {},
+        next_of_kin: {},
       },
-      countryList: [
-        "Afghanistan",
-        "Åland Islands",
-        "Albania",
-        "Algeria",
-        "American Samoa",
-        "Andorra",
-        "Angola",
-        "Anguilla",
-        "Antarctica",
-        "Antigua and Barbuda",
-        "Argentina",
-        "Armenia",
-        "Aruba",
-        "Australia",
-        "Austria",
-        "Azerbaijan",
-        "Bahamas (the)",
-        "Bahrain",
-        "Bangladesh",
-        "Barbados",
-        "Belarus",
-        "Belgium",
-        "Belize",
-        "Benin",
-        "Bermuda",
-        "Bhutan",
-        "Bolivia (Plurinational State of)",
-        "Bonaire, Sint Eustatius and Saba",
-        "Bosnia and Herzegovina",
-        "Botswana",
-        "Bouvet Island",
-        "Brazil",
-        "British Indian Ocean Territory (the)",
-        "Brunei Darussalam",
-        "Bulgaria",
-        "Burkina Faso",
-        "Burundi",
-        "Cabo Verde",
-        "Cambodia",
-        "Cameroon",
-        "Canada",
-        "Cayman Islands (the)",
-        "Central African Republic (the)",
-        "Chad",
-        "Chile",
-        "China",
-        "Christmas Island",
-        "Cocos (Keeling) Islands (the)",
-        "Colombia",
-        "Comoros (the)",
-        "Congo (the Democratic Republic of the)",
-        "Congo (the)",
-        "Cook Islands (the)",
-        "Costa Rica",
-        "Croatia",
-        "Cuba",
-        "Curaçao",
-        "Cyprus",
-        "Czechia",
-        "Côte d'Ivoire",
-        "Denmark",
-        "Djibouti",
-        "Dominica",
-        "Dominican Republic (the)",
-        "Ecuador",
-        "Egypt",
-        "El Salvador",
-        "Equatorial Guinea",
-        "Eritrea",
-        "Estonia",
-        "Eswatini",
-        "Ethiopia",
-        "Falkland Islands (the) [Malvinas]",
-        "Faroe Islands (the)",
-        "Fiji",
-        "Finland",
-        "France",
-        "French Guiana",
-        "French Polynesia",
-        "French Southern Territories (the)",
-        "Gabon",
-        "Gambia (the)",
-        "Georgia",
-        "Germany",
-        "Ghana",
-        "Gibraltar",
-        "Greece",
-        "Greenland",
-        "Grenada",
-        "Guadeloupe",
-        "Guam",
-        "Guatemala",
-        "Guernsey",
-        "Guinea",
-        "Guinea-Bissau",
-        "Guyana",
-        "Haiti",
-        "Heard Island and McDonald Islands",
-        "Holy See (the)",
-        "Honduras",
-        "Hong Kong",
-        "Hungary",
-        "Iceland",
-        "India",
-        "Indonesia",
-        "Iran (Islamic Republic of)",
-        "Iraq",
-        "Ireland",
-        "Isle of Man",
-        "Israel",
-        "Italy",
-        "Jamaica",
-        "Japan",
-        "Jersey",
-        "Jordan",
-        "Kazakhstan",
-        "Kenya",
-        "Kiribati",
-        "Korea (the Democratic People's Republic of)",
-        "Korea (the Republic of)",
-        "Kuwait",
-        "Kyrgyzstan",
-        "Lao People's Democratic Republic (the)",
-        "Latvia",
-        "Lebanon",
-        "Lesotho",
-        "Liberia",
-        "Libya",
-        "Liechtenstein",
-        "Lithuania",
-        "Luxembourg",
-        "Macao",
-        "Madagascar",
-        "Malawi",
-        "Malaysia",
-        "Maldives",
-        "Mali",
-        "Malta",
-        "Marshall Islands (the)",
-        "Martinique",
-        "Mauritania",
-        "Mauritius",
-        "Mayotte",
-        "Mexico",
-        "Micronesia (Federated States of)",
-        "Moldova (the Republic of)",
-        "Monaco",
-        "Mongolia",
-        "Montenegro",
-        "Montserrat",
-        "Morocco",
-        "Mozambique",
-        "Myanmar",
-        "Namibia",
-        "Nauru",
-        "Nepal",
-        "Netherlands (the)",
-        "New Caledonia",
-        "New Zealand",
-        "Nicaragua",
-        "Niger (the)",
-        "Nigeria",
-        "Niue",
-        "Norfolk Island",
-        "Northern Mariana Islands (the)",
-        "Norway",
-        "Oman",
-        "Pakistan",
-        "Palau",
-        "Palestine, State of",
-        "Panama",
-        "Papua New Guinea",
-        "Paraguay",
-        "Peru",
-        "Philippines (the)",
-        "Pitcairn",
-        "Poland",
-        "Portugal",
-        "Puerto Rico",
-        "Qatar",
-        "Republic of North Macedonia",
-        "Romania",
-        "Russian Federation (the)",
-        "Rwanda",
-        "Réunion",
-        "Saint Barthélemy",
-        "Saint Helena, Ascension and Tristan da Cunha",
-        "Saint Kitts and Nevis",
-        "Saint Lucia",
-        "Saint Martin (French part)",
-        "Saint Pierre and Miquelon",
-        "Saint Vincent and the Grenadines",
-        "Samoa",
-        "San Marino",
-        "Sao Tome and Principe",
-        "Saudi Arabia",
-        "Senegal",
-        "Serbia",
-        "Seychelles",
-        "Sierra Leone",
-        "Singapore",
-        "Sint Maarten (Dutch part)",
-        "Slovakia",
-        "Slovenia",
-        "Solomon Islands",
-        "Somalia",
-        "South Africa",
-        "South Georgia and the South Sandwich Islands",
-        "South Sudan",
-        "Spain",
-        "Sri Lanka",
-        "Sudan (the)",
-        "Suriname",
-        "Svalbard and Jan Mayen",
-        "Sweden",
-        "Switzerland",
-        "Syrian Arab Republic",
-        "Taiwan (Province of China)",
-        "Tajikistan",
-        "Tanzania, United Republic of",
-        "Thailand",
-        "Timor-Leste",
-        "Togo",
-        "Tokelau",
-        "Tonga",
-        "Trinidad and Tobago",
-        "Tunisia",
-        "Turkey",
-        "Turkmenistan",
-        "Turks and Caicos Islands (the)",
-        "Tuvalu",
-        "Uganda",
-        "Ukraine",
-        "United Arab Emirates (the)",
-        "United Kingdom of Great Britain and Northern Ireland (the)",
-        "United States Minor Outlying Islands (the)",
-        "United States of America (the)",
-        "Uruguay",
-        "Uzbekistan",
-        "Vanuatu",
-        "Venezuela (Bolivarian Republic of)",
-        "Viet Nam",
-        "Virgin Islands (British)",
-        "Virgin Islands (U.S.)",
-        "Wallis and Futuna",
-        "Western Sahara",
-        "Yemen",
-        "Zambia",
-        "Zimbabwe",
-      ],
+      countryList: ["Nigeria"],
+      gender: [],
+      marital_status: [],
+      occupations: [],
+      religions: [],
+      salutations: [],
+      states: [],
+      id: "",
     };
+  },
+  mounted() {
+    this.getCountries();
+    this.getGender();
+    this.getMaritalStatus();
+    this.getOccupations();
+    this.getReligions();
+    this.getSalutations();
+    this.getStates();
   },
   methods: {
     uploadImage() {
@@ -1040,16 +732,15 @@ export default {
       if (this.$refs.runValidation) {
         this.$refs.runValidation.click();
       }
-
       if (
         this.patient.salutation &&
         this.patient.firstname &&
         this.patient.lastname &&
-        this.patient.religion &&
-        this.patient.nationality &&
-        this.patient.date_of_birth &&
         this.patient.gender &&
-        this.patient.marital_status
+        this.patient.marital_status &&
+        this.patient.religion &&
+        this.patient.date_of_birth &&
+        this.patient.nationality
       ) {
         try {
           this.isLoading = true;
@@ -1063,11 +754,9 @@ export default {
             }
           );
           console.log(response);
-          if (response.salutation) {
-            this.$toast.success("Patient record created successfully");
-          }
+          this.id = response.id;
+          this.$router.push(`patient-registeration/patient-search/${this.id}`);
         } catch {
-          // this.$toast.error("Unable to create record");
         } finally {
           this.isLoading = false;
         }
@@ -1076,39 +765,120 @@ export default {
     changeLga(value) {
       console.log(value);
     },
-  },
-  computed: {
-    allStates() {
-      if (this.patient.nationality === "Nigeria") {
-        return this.states;
-      } else {
-        return [];
-      }
-    },
+    async getCountries() {
+      try {
+        let response = await this.$axios.$get(`core/countries/?limit=249`, {
+          headers: {
+            Authorization: `Token ${localStorage.getItem(`HEALTH-TOKEN`)}`,
+          },
+        });
 
-    localGovts() {
-      return this.states.filter((state) => {
-        return state.id === this.patient.state_of_origin;
-      });
-      // return this.sta
+        for (const iterator of await response.results) {
+          this.countryList.push(iterator.country);
+        }
+        this.countryList.splice(159, 1);
+      } catch {
+      } finally {
+      }
     },
-    lga() {
-      if (this.patient.state_of_origin) {
-        return this.patient.state_of_origin.lgas;
-      } else {
-        return "";
+    async getGender() {
+      try {
+        let response = await this.$axios.$get(`core/gender/`, {
+          headers: {
+            Authorization: `Token ${localStorage.getItem(`HEALTH-TOKEN`)}`,
+          },
+        });
+
+        for (const iterator of await response.results) {
+          this.gender.push(iterator.gender);
+        }
+      } catch {
+      } finally {
+      }
+    },
+    async getMaritalStatus() {
+      try {
+        let response = await this.$axios.$get(`core/marital-status/`, {
+          headers: {
+            Authorization: `Token ${localStorage.getItem(`HEALTH-TOKEN`)}`,
+          },
+        });
+
+        for (const iterator of await response.results) {
+          this.marital_status.push(iterator.marital_status);
+        }
+      } catch {
+      } finally {
+      }
+    },
+    async getOccupations() {
+      try {
+        let response = await this.$axios.$get(`core/occupations/`, {
+          headers: {
+            Authorization: `Token ${localStorage.getItem(`HEALTH-TOKEN`)}`,
+          },
+        });
+
+        for (const iterator of await response.results) {
+          this.occupations.push(iterator.occupations);
+        }
+      } catch {
+      } finally {
+      }
+    },
+    async getReligions() {
+      try {
+        let response = await this.$axios.$get(`core/religion/`, {
+          headers: {
+            Authorization: `Token ${localStorage.getItem(`HEALTH-TOKEN`)}`,
+          },
+        });
+
+        for (const iterator of await response.results) {
+          this.religions.push(iterator.religion);
+        }
+      } catch {
+      } finally {
+      }
+    },
+    async getSalutations() {
+      try {
+        let response = await this.$axios.$get(`core/salutations/`, {
+          headers: {
+            Authorization: `Token ${localStorage.getItem(`HEALTH-TOKEN`)}`,
+          },
+        });
+
+        for (const iterator of await response.results) {
+          this.salutations.push(iterator.salutations);
+        }
+      } catch {
+      } finally {
+      }
+    },
+    searchState() {
+      console.log("yay");
+    },
+    async getStates() {
+      try {
+        let response = await this.$axios.$get(
+          `core/states/?country=${160}&limit=100&offset=0`,
+          {
+            headers: {
+              Authorization: `Token ${localStorage.getItem(`HEALTH-TOKEN`)}`,
+            },
+          }
+        );
+
+        for (const iterator of await response.results) {
+          this.states.push(iterator.state);
+        }
+      } catch {
+      } finally {
       }
     },
   },
-  watch: {
-    "patient.family": {
-      handler(newValue) {
-        if (newValue.family_name === "Add Family") {
-          this.$bvModal.show("modal-add-family");
-        }
-      },
-    },
-  },
+  computed: {},
 };
 </script>
 

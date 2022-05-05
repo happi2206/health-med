@@ -253,6 +253,7 @@ export default {
       },
     };
   },
+  computed: {},
   methods: {
     ...mapActions({
       Authentication: "loginUser",
@@ -265,18 +266,19 @@ export default {
       if (this.$refs.runValidation) {
         this.$refs.runValidation.click();
       }
-
-      try {
-        this.isbusy = true;
-        await this.$store.dispatch("loginUser", this.formDetail);
-      } catch (error) {
-        ("yay");
-      } finally {
-        this.isbusy = false;
-        if (this.$store.getters.token) {
-          this.$router.push("/patient-registeration");
-        } else {
-          this.$router.push("/auth/login");
+      if (this.formDetail.username && this.formDetail.password) {
+        try {
+          this.isbusy = true;
+          await this.$store.dispatch("loginUser", this.formDetail);
+        } catch (error) {
+          ("yay");
+        } finally {
+          this.isbusy = false;
+          if (this.$store.getters.token) {
+            this.$router.push("/patient-registeration");
+          } else {
+            this.$router.push("/auth/login");
+          }
         }
       }
     },

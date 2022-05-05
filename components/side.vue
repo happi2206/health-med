@@ -35,7 +35,7 @@
                       <div class="nav-item-text">
                         {{ comp.name }}
                       </div>
-                      <arrow :isToggled="comp.isToggled" />
+                      <!-- <arrow :isToggled="comp.isToggled" /> -->
                     </div>
                   </div>
                 </div>
@@ -45,7 +45,7 @@
                     v-for="(child, index2) in comp.child"
                     :key="index2"
                     :id="`collapse-${index}`"
-                    class="mt-2 mx-3"
+                    class="mt-2 mx-2"
                   >
                     <div @click.prevent="advet">
                       <nuxt-link
@@ -54,7 +54,7 @@
                       >
                         <div>
                           <span
-                            class="iconify ml-1"
+                            class="iconify ml-0"
                             :data-icon="child.icon"
                             data-width="18"
                             data-height="18"
@@ -156,7 +156,7 @@ export default {
           icon: "fontisto:doctor",
           child: [
             {
-              name: "Appointment",
+              name: "Encounters",
               link: "/opd",
               icon: "uil:stethoscope",
             },
