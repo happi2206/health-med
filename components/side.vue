@@ -49,12 +49,12 @@
                   >
                     <div @click.prevent="advet">
                       <nuxt-link
-                        class="nav-item items nav-item-text"
+                        class="nav-item items ml-2 nav-item-text"
                         :to="child.link"
                       >
                         <div>
                           <span
-                            class="iconify ml-0"
+                            class="iconify"
                             :data-icon="child.icon"
                             data-width="18"
                             data-height="18"

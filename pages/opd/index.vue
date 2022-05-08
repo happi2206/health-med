@@ -1,217 +1,154 @@
 <template>
   <div>
-    <div v-if="isLoading" class="skeleton"></div>
-    <div class="bg-light text-12 border-radius mb-3 margin-fix" v-else>
-      <TabView class="tabview-custom">
-        <TabPanel>
-          <template #header>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-clipboard2-pulse"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M9.5 0a.5.5 0 0 1 .5.5.5.5 0 0 0 .5.5.5.5 0 0 1 .5.5V2a.5.5 0 0 1-.5.5h-5A.5.5 0 0 1 5 2v-.5a.5.5 0 0 1 .5-.5.5.5 0 0 0 .5-.5.5.5 0 0 1 .5-.5h3Z"
-              />
-              <path
-                d="M3 2.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 0 0-1h-.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1H12a.5.5 0 0 0 0 1h.5a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-12Z"
-              />
-              <path
-                d="M9.979 5.356a.5.5 0 0 0-.968.04L7.92 10.49l-.94-3.135a.5.5 0 0 0-.926-.08L4.69 10H4.5a.5.5 0 0 0 0 1H5a.5.5 0 0 0 .447-.276l.936-1.873 1.138 3.793a.5.5 0 0 0 .968-.04L9.58 7.51l.94 3.135A.5.5 0 0 0 11 11h.5a.5.5 0 0 0 0-1h-.128L9.979 5.356Z"
-              />
-            </svg>
-            <span class="ml-2">Consultation</span>
-          </template>
-          <div>
-            <div class="d-flex">
-              <ul
-                class="text-14 pl-0"
-                style="
-                  list-style: none;
-                  width: 120px;
-                  border: 1px solid #f5f6f7;
-                  background: #f5f6f7;
-                "
-              >
-                <li class="p-2"><nuxt-link to="/opd"> Vitals</nuxt-link></li>
-                <li class="p-2"><nuxt-link to="/opd"> Records</nuxt-link></li>
-                <li class="p-2"><nuxt-link to="/opd"> Bills </nuxt-link></li>
-              </ul>
-              <div class="w-100 d-flex flex-wrap px-2">
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                  <small class="text-grey text-12">UHID</small
-                  ><input
-                    type="text"
-                    placeholder="UHID"
-                    class="form-control ng-untouched ng-pristine ng-valid"
-                  />
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                  <small class="text-grey text-12">Patient Name</small
-                  ><input
-                    type="text"
-                    placeholder="Patient Name"
-                    class="form-control ng-untouched ng-pristine ng-valid"
-                  />
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                  <small class="text-grey text-12">D.O.B</small
-                  ><input
-                    type="date"
-                    placeholder="Date of birth"
-                    class="form-control ng-untouched ng-pristine ng-valid"
-                  />
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                  <small class="text-grey text-12">Phone Number</small
-                  ><input
-                    type="text"
-                    placeholder="Phone Number"
-                    class="form-control ng-untouched ng-pristine ng-valid"
-                  />
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                  <small class="text-grey text-12">City</small
-                  ><input
-                    type="text"
-                    placeholder="City"
-                    class="form-control ng-untouched ng-pristine ng-valid"
-                  />
-                </div>
+    <div class="margin-fix p-4 mb-3">
+      <div class="font20 d-flex align-items-center click">
+        <h4 class="text-grey text-24">Visit Dashboard</h4>
+      </div>
+      <div class="row">
+        <div
+          style="height: 35px"
+          class="mt-4 col-lg-3 d-flex col-md-6 col-sm-12"
+        >
+          <!-- <small class="text-grey text-12">First Name</small
+          > -->
+          <select
+            class="w-50 form-control text-16"
+            style="height: 35px"
+            name="patient search"
+            id=""
+          >
+            <option value="">Out Patient</option>
+            <option value="">In Patient</option>
+            <option value="">Emergency Patient</option>
+          </select>
+          <input
+            type="text"
+            placeholder="Admission No."
+            class="form-control w-50 ng-untouched ng-pristine ng-valid"
+          />
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12">
+          <small class="text-grey text-12">Doctor</small>
+          <v-select
+            class="style-chooser text-16 text-grey"
+            placeholder="Doctor"
+            v-model="doctor"
+            :options="['Bayo', 'Ade']"
+          ></v-select>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12">
+          <small class="text-grey text-12">Clinic</small>
+          <v-select
+            class="style-chooser text-grey text-16"
+            placeholder="Clinic"
+          ></v-select>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12">
+          <small class="text-grey text-12">Patient Type</small>
+          <select
+            class="form-control text-grey text-16"
+            name="patient type"
+            id=""
+          >
+            <option value="">Patient Search by</option>
+            <option value="">Visit No.</option>
+            <option value="">Admission No.</option>
+            <option value="">Patient Name</option>
+          </select>
+        </div>
+      </div>
 
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                  <small class="text-grey text-12">Member No.</small
-                  ><input
-                    type="text"
-                    placeholder="Member No."
-                    class="form-control ng-untouched ng-pristine ng-valid"
-                  />
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                  <small class="text-grey text-12">HBP</small
-                  ><input
-                    type="text"
-                    placeholder="HPB"
-                    class="form-control ng-untouched ng-pristine ng-valid"
-                  />
-                </div>
-              </div>
-            </div>
+      <div class="text-16 pt-3 row status bar">
+        <div class="col-md-2 col-sm-2">
+          <div
+            class="m-2 py-2 progress-bar text-14"
+            style="background: #ffd166; color: #8d99ae"
+          >
+            New patient (0)
           </div>
-        </TabPanel>
-        <TabPanel>
-          <template #header>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-search"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
-              />
-            </svg>
-            <span class="ml-2">Laboratory</span>
-          </template>
-          Content II
-        </TabPanel>
-        <TabPanel>
-          <template #header>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-activity"
-              viewBox="0 0 16 16"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2Z"
-              />
-            </svg>
-            <span class="ml-2">Vitals</span>
-          </template>
-          Content III
-        </TabPanel>
-        <TabPanel>
-          <template #header>
-            <i class="pi pi-user"></i>
-            <span class="ml-2">Encounter</span>
-          </template>
-          Content IV
-        </TabPanel>
-      </TabView>
+        </div>
+        <div class="col-md-2 col-sm-2">
+          <div
+            class="m-2 py-2 progress-bar text-14"
+            style="background: #64dfdf"
+          >
+            Nurse Seen (0)
+          </div>
+        </div>
+        <div class="col-md-2 col-sm-2 text-14">
+          <div class="m-2 py-2 progress-bar" style="background: #e5383b">
+            Doctor Seen (0)
+          </div>
+        </div>
+        <div class="col-md-2 col-sm-2 text-14">
+          <div class="m-2 py-2 progress-bar" style="background: #52b788">
+            Visit Complete (0)
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pt-3 px-2 bg-white">
+      <table-component
+        :paginate="true"
+        :busy="busy"
+        :items="itemsToShow"
+        @row-clicked="viewPatientData"
+        :fields="fields"
+      >
+      </table-component>
     </div>
   </div>
 </template>
 
 <script>
-import sidebar from "~/components/sidebar.vue";
 export default {
-  components: { sidebar },
   layout: "dashboard",
-
   data() {
     return {
-      items: [],
-      isLoading: false,
+      itemsToShow: [],
+      doctor: "",
+      fields: [
+        { key: "App No", label: "App No.", sortable: true },
+        { key: "Visit No", label: "Visit No", sortable: true },
+        { key: "date", label: "Date & Time", sortable: true },
+        { key: "clinic", label: "Clinic", sortable: true },
+        { key: "UHID", label: "UHID", sortable: true },
+        { key: "name", label: "Patient Name", sortable: true },
+        { key: "age", label: "Age", sortable: true },
+        { key: "user", label: "Assigned User", sortable: true },
+        { key: "status", label: "Status", sortable: true },
+      ],
+      busy: false,
     };
+  },
+  watch: {
+    doctor() {
+      alert();
+    },
+  },
+  methods: {
+    viewPatientData(e) {
+      this.$router.push(`/opd/${e.id}`);
+    },
   },
 };
 </script>
 
 <style scoped>
-.site-sidebar .nav-item.active,
-.nuxt-link-exact-active,
-.site-sidebar .nav-item::after,
-.site-sidebar .nav-item:hover {
-  /* background: rgba(16, 112, 183, 0.1); */
-}
-li {
+.progress-bar {
+  border-radius: 4px;
+  color: #fff;
   cursor: pointer;
-  border: 0.5px solid #fff;
+  transition: transform 0.2s;
+  max-width: 125px;
+  min-width: 124px;
+}
+.progress-bar:hover {
+  /* opacity: 0.7; */
+  transform: scale(1.1);
 }
 .margin-fix {
-  margin: 4.5rem 0 6rem;
+  margin: 3rem 0 6rem;
   background: #fff;
-}
-.site-container {
-  width: calc(100vw - var(--sidebar-width) - 20px);
-  margin-left: var(--sidebar-width);
-  padding-top: 1rem;
-  position: relative;
-  z-index: 1;
-  padding: 2rem calc(1rem + 12px);
-  background-color: #f5f6f7;
-}
-.p-tabview .p-tabview-nav li .p-tabview-nav-link {
-  border: solid #dee2e6;
-  border-width: 0 0 2px 0;
-  min-width: 200px;
-  max-width: 500px;
-  border-color: transparent transparent #dee2e6 transparent;
-  background: #ffffff;
-  color: #6c757d;
-  padding: 1rem 5.8rem;
-  font-weight: 600;
-  border-top-right-radius: 3px;
-  border-top-left-radius: 3px;
-  transition: box-shadow 0.2s;
-  margin: 0 0 -2px 0;
-}
-.p-tabview-nav {
-  display: flex;
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-  flex: 1 1 auto;
-  justify-content: center;
-  width: 100%;
 }
 </style>

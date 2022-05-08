@@ -4,8 +4,9 @@
     <template>
       <div class="margin-fix p-4 mb-3">
         <div class="font20 d-flex align-items-center click">
-          <h4 class="text-grey">Patient Search</h4>
+          <h4 class="text-grey text-24">Patient Search</h4>
         </div>
+
         <div class="row">
           <div class="col-lg-4 col-md-6 col-sm-12">
             <small class="text-grey text-12">First Name</small
@@ -132,30 +133,159 @@
         hide-footer
         ref="encounterModal"
       >
+        <!-- <div>
+          <h4 class="text-20">Patient Details</h4>
+          <hr />
+        </div> -->
         <ValidationObserver v-slot="{ validate }">
-          <form @submit.prevent="addEncounter" class="px-4 mx-3">
-            <div class="row mt-4">
-              <div class="w-100">
-                <div class="mb-2">
-                  <small class="text-grey text-12">Clinic *</small>
+          <form class="mx-3">
+            <div class="mt-4">
+              <div class="w-100 d-flex flex-wrap">
+                <div class="mb-2 col-lg-6 pl-0 pr-2 col-md-6 col-sm-6 w-100">
+                  <small class="text-grey text-12">UHID</small>
+                  <validation-provider rules="required" v-slot="{ errors }">
+                    <input
+                      type="text"
+                      placeholder="UHID"
+                      class="form-control ng-untouched ng-pristine ng-valid"
+                    />
+                    <span class="text-12" style="color: red">{{
+                      errors[0]
+                    }}</span>
+                  </validation-provider>
+                </div>
+                <div class="mb-2 col-lg-6 px-0 col-md-6 col-sm-6">
+                  <small class="text-grey text-12">Patient Name</small>
+
+                  <input
+                    type="text"
+                    disabled
+                    v-model="name"
+                    placeholder="Patient Name"
+                    class="form-control ng-untouched ng-pristine ng-valid"
+                  />
+                </div>
+                <div class="mb-2 col-lg-6 pl-0 pr-2 col-md-6 col-sm-6">
+                  <small class="text-grey text-12">D.o.B</small>
+
+                  <input
+                    type="text"
+                    disabled
+                    v-model="presetData.date_of_birth"
+                    placeholder="D.O.B"
+                    class="form-control ng-untouched ng-pristine ng-valid"
+                  />
+                </div>
+                <div class="mb-2 col-lg-6 px-0 pl-0 col-md-6 col-sm-6">
+                  <small class="text-grey text-12">Age (Y-M-D)</small>
+                  <div class="d-flex">
+                    <div class="px-1">
+                      <input
+                        type="text"
+                        disabled
+                        v-model="age.year"
+                        placeholder="Year"
+                        class="form-control ng-untouched ng-pristine ng-valid"
+                      />
+                    </div>
+                    <div class="px-1">
+                      <input
+                        type="text"
+                        disabled
+                        v-model="age.month"
+                        placeholder="M"
+                        class="form-control ng-untouched ng-pristine ng-valid"
+                      />
+                    </div>
+                    <div class="px-1">
+                      <input
+                        type="text"
+                        disabled
+                        v-model="age.day"
+                        placeholder="D"
+                        class="form-control ng-untouched ng-pristine ng-valid"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-2 col-lg-6 pr-2 pl-0 col-md-6 col-sm-6">
+                  <small class="text-grey text-12">Phone No.</small>
+                  <validation-provider
+                    rules="required|digits"
+                    v-slot="{ errors }"
+                  >
+                    <input
+                      type="text"
+                      v-model="presetData.phone_number"
+                      disabled
+                      placeholder="Phone No."
+                      class="form-control ng-untouched ng-pristine ng-valid"
+                    />
+                    <span class="text-12" style="color: red">{{
+                      errors[0]
+                    }}</span>
+                  </validation-provider>
+                </div>
+
+                <div class="mb-2 col-lg-6 px-0 col-md-6 col-sm-6">
+                  <small class="text-grey text-12">Gender</small>
+
+                  <v-select
+                    class="style-chooser text-grey text-14"
+                    placeholder="Gender"
+                    v-model="presetData.gender"
+                    :options="genders"
+                  ></v-select>
+                </div>
+
+                <!-- <div class="mb-2 col-lg-6 pl-0 pr-2 col-md-6 col-sm-6">
+                  <small class="text-grey text-12">Appointment Type *</small>
                   <validation-provider rules="required" v-slot="{ errors }">
                     <v-select
-                      class="style-chooser"
-                      placeholder="Clinic"
-                      :options="['optomology']"
+                      class="style-chooser text-grey text-14"
+                      placeholder="Appointment Type"
+                      :options="['xyz']"
+                    ></v-select>
+                    <span class="text-12" style="color: red">{{
+                      errors[0]
+                    }}</span>
+                  </validation-provider>
+                </div> -->
+
+                <div class="mb-2 col-lg-6 pl-0 pr-2 col-md-6 col-sm-6">
+                  <small class="text-grey text-12">Encounter Type *</small>
+                  <validation-provider rules="required" v-slot="{ errors }">
+                    <v-select
+                      class="style-chooser text-grey text-14"
+                      placeholder="Visit Type"
+                      :options="['xyz']"
                     ></v-select>
                     <span class="text-12" style="color: red">{{
                       errors[0]
                     }}</span>
                   </validation-provider>
                 </div>
-                <div class="mb-2">
-                  <small class="text-grey text-12">Chart *</small>
+                <div class="mb-2 col-lg-6 px-0 col-md-6 col-sm-6">
+                  <small class="text-grey text-12">Status</small>
                   <validation-provider rules="required" v-slot="{ errors }">
                     <v-select
-                      class="style-chooser"
-                      placeholder="Chart"
-                      :options="['BP']"
+                      class="style-chooser text-grey text-14"
+                      placeholder="Status"
+                      :options="['active']"
+                    ></v-select>
+                    <span class="text-12" style="color: red">{{
+                      errors[0]
+                    }}</span>
+                  </validation-provider>
+                </div>
+                <div class="mb-2 col-lg-6 pl-0 pr-2 col-md-6 col-sm-6">
+                  <small class="text-grey text-12">Clinic *</small>
+                  <validation-provider rules="required" v-slot="{ errors }">
+                    <v-select
+                      class="style-chooser text-grey text-14"
+                      placeholder="Clinic"
+                      :options="['xyz']"
                     ></v-select>
                     <span class="text-12" style="color: red">{{
                       errors[0]
@@ -163,26 +293,13 @@
                   </validation-provider>
                 </div>
 
-                <div class="mb-2">
-                  <small class="text-grey text-12">Provider *</small>
+                <div class="mb-2 col-lg-6 px-0 col-md-6 col-sm-6">
+                  <small class="text-grey text-12">Provider*</small>
                   <validation-provider rules="required" v-slot="{ errors }">
                     <v-select
-                      class="style-chooser"
+                      class="style-chooser text-grey text-14"
                       placeholder="Provider"
-                      :options="['Dr. Vally Karim']"
-                    ></v-select>
-                    <span class="text-12" style="color: red">{{
-                      errors[0]
-                    }}</span>
-                  </validation-provider>
-                </div>
-                <div class="mb-2">
-                  <small class="text-grey text-12">Patient *</small>
-                  <validation-provider rules="required" v-slot="{ errors }">
-                    <v-select
-                      class="style-chooser"
-                      placeholder="Patient"
-                      :options="patientList"
+                      :options="['xyz']"
                     ></v-select>
                     <span class="text-12" style="color: red">{{
                       errors[0]
@@ -192,10 +309,30 @@
               </div>
             </div>
 
-            <div class="my-3 d-flex justify-content-end">
+            <div class="my-3 d-flex justify-content-center">
               <button
-                class="btn btn-primary mainbtndashboard medbrownparagraph"
-                style="height: 40px; width: 9rem; text-align: center"
+                @click.prevent="closeModal"
+                class="btn mr-5 text-14"
+                style="
+                  height: 38px;
+                  width: 5rem;
+                  text-align: center;
+                  background: rgb(220, 53, 69);
+                  color: rgb(255, 255, 255);
+                "
+              >
+                Cancel
+              </button>
+              <button
+                @click.prevent="startEncounterData"
+                class="
+                  btn
+                  text-14
+                  btn-primary
+                  mainbtndashboard
+                  medbrownparagraph
+                "
+                style="height: 38px; width: 5rem; text-align: center"
               >
                 <span v-if="isbusy">
                   <b-spinner
@@ -280,6 +417,7 @@ export default {
   data() {
     return {
       busy: false,
+      isbusy: false,
       itemsToShow: [],
       dropdownItem: ["View", "Add Encounter"],
       fields: [
@@ -302,12 +440,52 @@ export default {
       offset: 0,
       ordering: "",
       religion: "",
-
+      id: "",
       patientList: [],
       genders: [],
       marital: [],
       nations: ["Nigeria"],
+      presetData: {},
+      name: "",
+      year: "",
+      month: "",
+      day: "",
+      age: {
+        year: "",
+        month: "",
+        day: "",
+      },
+      year: 0,
+      encounterData: {
+        clinic: {},
+        status: "",
+        time_log: {},
+        chart: {},
+        provider: {},
+        patient: {},
+        is_active: true,
+        encounter_type: "",
+        date_and_time: {},
+      },
+      temp: {},
     };
+  },
+  watch: {
+    gender() {
+      if (this.gender !== null) {
+        this.getPatients();
+      }
+    },
+    nationality() {
+      if (this.nationality !== null) {
+        this.getPatients();
+      }
+    },
+    marital_status() {
+      if (this.marital_status !== null) {
+        this.getPatients();
+      }
+    },
   },
   mounted() {
     this.getGender();
@@ -315,6 +493,32 @@ export default {
     this.getCountries();
   },
   methods: {
+    async startEncounterData() {
+      console.log(`initial commit`);
+      return;
+      try {
+        let response = await $axios.$post(`/encounters/encounter`, {
+          headers: {
+            Authorization: `Token ${localStorage.getItem(`HEALTH-TOKEN`)}`,
+          },
+        });
+      } catch {}
+    },
+    async getPatientRecord(e) {
+      try {
+        this.isLoading = true;
+        let response = await this.$axios.$get(`patient/patients/${e}`, {
+          headers: {
+            Authorization: `Token ${localStorage.getItem(`HEALTH-TOKEN`)}`,
+          },
+        });
+
+        console.log(response);
+      } catch {
+      } finally {
+        this.isLoading = false;
+      }
+    },
     async getPatients() {
       try {
         this.busy = true;
@@ -397,13 +601,64 @@ export default {
       this.$router.push(`/patient-registeration/patient-search/${e.id}`);
     },
     optionClicked(e, i) {
-      console.log(e, i);
       if (i === 0) {
         this.$router.push(`/patient-registeration/patient-search/${e.id}`);
       }
       if (i === 1) {
         this.$bvModal.show("Add-encounter");
+        this.presetData = e;
+        console.log(this.presetData);
+        this.name = this.presetData.firstname + " " + this.presetData.lastname;
+        this.temp = e.is_baby;
+        this.calcAge(e);
       }
+    },
+    calcAge(e) {
+      // **********calc year***********
+      let presentDate = new Date().getFullYear();
+      let yearOfBirth = e.date_of_birth.substring(0, 4);
+
+      this.age.year = presentDate - yearOfBirth;
+      this.year = this.age.year;
+
+      if (e.is_baby) {
+        this.age.year = 0;
+      }
+
+      // **************calc month***********
+      let tempMonth;
+      let month = new Date().getMonth();
+      let monthOfBirth = parseInt(e.date_of_birth.substring(5, 7));
+      if (presentDate === yearOfBirth) {
+        tempMonth = monthOfBirth;
+      } else {
+        tempMonth = 12 - monthOfBirth;
+      }
+
+      if (monthOfBirth < month) {
+        this.age.month = month - monthOfBirth;
+      } else {
+        this.age.month = tempMonth + month;
+      }
+
+      // **************calc day**************
+      this.age.day = new Date().getDate();
+
+      // *********************************
+
+      if (monthOfBirth < month) {
+        this.age.year;
+      } else {
+        this.age.year--;
+      }
+
+      if (e.is_baby) {
+        this.age.year = 0;
+        this.age.month = 0;
+      }
+    },
+    closeModal() {
+      this.$bvModal.hide("Add-encounter");
     },
     clear() {
       this.itemsToShow = [];
@@ -444,6 +699,12 @@ export default {
   border: 1px solid #1070b7;
   color: #fff;
 }
+hr {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
 .margin-fix {
   margin: 4rem 0 6rem;
   background: #fff;
@@ -451,7 +712,7 @@ export default {
 .table_container {
   /* border-radius: 10px; */
   background-color: #fff;
-  padding: 0 10px 5px 20px;
+  padding: 0 10px 5px 10px;
 }
 .table-responsive,
 [class*="table-responsive-"] {

@@ -167,7 +167,7 @@
                           v-slot="{ errors }"
                         >
                           <input
-                            v-model="patient.date_of_birth"
+                            v-model="date_of_birth"
                             type="date"
                             class="w-100 form-control"
                           />
@@ -179,21 +179,30 @@
                       <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                         <small class="text-grey text-12">Age</small>
                         <div class="d-flex">
-                          <input
-                            type="text"
-                            class="w-100 form-control"
-                            placeholder="Year"
-                          />
-                          <input
-                            type="text"
-                            class="w-100 form-control"
-                            placeholder="Month"
-                          />
-                          <input
-                            type="text"
-                            class="w-100 form-control"
-                            placeholder="Day"
-                          />
+                          <div class="px-1">
+                            <input
+                              v-model="age.year"
+                              type="number"
+                              class="w-100 form-control"
+                              placeholder="Year"
+                            />
+                          </div>
+                          <div class="px-1">
+                            <input
+                              v-model="age.month"
+                              type="number"
+                              class="w-100 form-control"
+                              placeholder="Month"
+                            />
+                          </div>
+                          <div class="px-1">
+                            <input
+                              v-model="age.day"
+                              type="number"
+                              class="w-100 form-control"
+                              placeholder="Day"
+                            />
+                          </div>
                         </div>
                       </div>
                       <div class="col-lg-4 col-md-6 col-sm-12 mb-3 mt-1">
@@ -243,7 +252,7 @@
                           class="form-control ng-untouched ng-pristine ng-valid"
                         />
                       </div>
-                      <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                      <!-- <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                         <small class="text-grey text-12">Language</small
                         ><v-select
                           class="style-chooser"
@@ -257,7 +266,7 @@
                             'Russian',
                           ]"
                         ></v-select>
-                      </div>
+                      </div> -->
                       <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                         <small class="text-grey text-12">Religion *</small>
                         <validation-provider
@@ -296,34 +305,26 @@
                         </validation-provider>
                       </div>
                       <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                        <small class="text-grey text-12">Email Address</small
-                        ><input
-                          type="email"
-                          placeholder="Email Address"
-                          class="form-control ng-untouched ng-pristine ng-valid"
-                        />
+                        <small class="text-grey text-12">Email Address</small>
+                        <validation-provider
+                          rules="required|email"
+                          v-slot="{ errors }"
+                        >
+                          <input
+                            type="email"
+                            v-model="patient.email"
+                            placeholder="Email Address"
+                            class="
+                              form-control
+                              ng-untouched ng-pristine ng-valid
+                            "
+                          />
+                          <span class="text-12" style="color: red">{{
+                            errors[0]
+                          }}</span>
+                        </validation-provider>
                       </div>
-                      <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                        <small class="text-grey text-12">Loyalty Name</small
-                        ><v-select
-                          class="style-chooser"
-                          placeholder="Loyalty Name"
-                          label="loyalty"
-                          :options="[
-                            'Yellow Card',
-                            'Blue Card',
-                            'Silver Member',
-                            'Khema Baby',
-                          ]"
-                        ></v-select>
-                      </div>
-                      <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                        <small class="text-grey text-12">Expiry Date</small
-                        ><input
-                          type="text"
-                          class="form-control ng-untouched ng-pristine ng-valid"
-                        />
-                      </div>
+
                       <div class="mello col-lg-4 col-md-6 col-sm-12 mb-3">
                         <small class="mb-0 text-grey text-grey text-12"
                           >State of Origin *</small
@@ -332,6 +333,7 @@
                           class="style-chooser"
                           placeholder="Type to search"
                           label="state_name"
+                          v-model="patient.state"
                           :options="states"
                           @input="changeLga"
                         ></v-select>
@@ -386,6 +388,7 @@
                       <div class="col-lg-4 col-md-5 col-sm-12 mb-3">
                         <small class="text-grey text-12">LGA</small>
                         <input
+                          v-model="patient.lga"
                           type="text"
                           placeholder="Local Government Area"
                           class="form-control ng-untouched ng-pristine ng-valid"
@@ -463,16 +466,24 @@
                           />
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                          <small class="text-grey text-12">Phone Number</small
-                          ><input
-                            v-model="patient.home_address.mobile_number"
-                            type="text"
-                            placeholder="Phone Number"
-                            class="
-                              form-control
-                              ng-untouched ng-pristine ng-valid
-                            "
-                          />
+                          <small class="text-grey text-12">Phone Number</small>
+                          <validation-provider
+                            rules="digits"
+                            v-slot="{ errors }"
+                          >
+                            <input
+                              v-model="patient.home_address.mobile_number"
+                              type="text"
+                              placeholder="Phone Number"
+                              class="
+                                form-control
+                                ng-untouched ng-pristine ng-valid
+                              "
+                            />
+                            <span class="text-12" style="color: red">{{
+                              errors[0]
+                            }}</span>
+                          </validation-provider>
                         </div>
                       </div>
                     </div>
@@ -499,13 +510,24 @@
                         ></v-select>
                       </div>
                       <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                        <small class="text-grey text-12">Phone Number</small
-                        ><input
-                          v-model="patient.next_of_kin.mobile_number"
-                          type="text"
-                          placeholder="Phone Number"
-                          class="form-control ng-untouched ng-pristine ng-valid"
-                        />
+                        <small class="text-grey text-12">Phone Number</small>
+                        <validation-provider
+                          rules="required|digits"
+                          v-slot="{ errors }"
+                        >
+                          <input
+                            v-model="patient.next_of_kin.mobile_number"
+                            type="text"
+                            placeholder="Phone Number"
+                            class="
+                              form-control
+                              ng-untouched ng-pristine ng-valid
+                            "
+                          />
+                          <span class="text-12" style="color: red">{{
+                            errors[0]
+                          }}</span>
+                        </validation-provider>
                       </div>
 
                       <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
@@ -588,12 +610,14 @@
                       ></v-select>
                     </div>
 
-                    <div class="my-5 d-flex justify-content-end">
-                      <div class="btn btn-light btn-md mx-3">Cancel</div>
+                    <div class="my-5 text-16 d-flex justify-content-end">
+                      <div class="btn text-16 btn-light btn-md mx-3">
+                        Cancel
+                      </div>
 
                       <button
                         @click.prevent="createPatient"
-                        class="btn btn-primary"
+                        class="btn text-16 btn-primary"
                       >
                         <span
                           v-if="isLoading"
@@ -719,23 +743,36 @@ export default {
       ],
 
       isLoading: false,
-
+      date_of_birth: "",
+      age: {
+        year: null,
+        month: null,
+        day: null,
+      },
       patient: {
         is_baby: false,
         salutation: "",
         firstname: "",
         lastname: "",
         middlename: "",
+        email: "",
         gender: "",
         marital_status: "",
         religion: "",
         date_of_birth: "",
+        age: {
+          year: null,
+          month: null,
+          day: null,
+        },
         nationality: "",
         state_id: {},
         identity: {
           type: "",
           no_: "",
         },
+        state: "",
+        lga: "",
         home_address: {
           address: "",
           country: "",
@@ -772,6 +809,7 @@ export default {
     this.getSalutations();
     this.getStates();
   },
+
   methods: {
     uploadImage() {
       this.$refs.uploadAvatar.click();
@@ -912,6 +950,7 @@ export default {
     searchState() {
       console.log("yay");
     },
+
     async getStates() {
       try {
         let response = await this.$axios.$get(

@@ -67,7 +67,7 @@
                       class="class-details-data_value"
                       style="color: rgb(0, 0, 0) !important"
                       >{{ patientData.date_of_birth }} ({{
-                        age === 0 || -1 ? "0" : age + "years"
+                        (age = 0 || -1 ? "0" : age + "years")
                       }})</span
                     >
                   </div>

@@ -7,6 +7,7 @@ body {
     --topbar-height: 48px;
     --topbar-height-style-2: 40px;
     --navbar-height: 60px;
+    font-family: Museo Sans;
 }
 
 *::-webkit-scrollbar {
@@ -36,9 +37,7 @@ body::-webkit-scrollbar-thumb {
     /* border-bottom: 3px solid #fff; */
 }
 
-.theme-color {
-    background: #171E40;
-}
+
 
 .style-chooser {
     height: 38px;
@@ -73,6 +72,11 @@ body::-webkit-scrollbar-thumb {
     background-color: #F5F6F7;
 }
 
+.margin-fix {
+    margin: 4rem 0 6rem;
+    background: #fff;
+}
+
 .slide-bottom-enter-active,
 .slide-bottom-leave-active {
     transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
@@ -91,7 +95,7 @@ body::-webkit-scrollbar-thumb {
 
 .custom-table.table td,
 .custom-table.table th {
-    padding: 0.75rem 0.5rem;
+    padding: 0.1rem 0.5rem;
     vertical-align: middle;
     border: 0;
     font-size: 14px;
@@ -294,7 +298,7 @@ body::-webkit-scrollbar-thumb {
     width: var(--sidebar-width);
     height: 100%;
 
-    padding-top: calc(var(--navbar-height) + var(--topbar-height));
+    padding-top: calc(var(--navbar-height) + 24px);
 
     position: fixed;
     left: 0;
@@ -350,7 +354,7 @@ body::-webkit-scrollbar-thumb {
 .site-sidebar .nav-item {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
     text-decoration: none !important;
     color: #40484f;
     margin-bottom: 0.25rem;
@@ -592,29 +596,29 @@ body::-webkit-scrollbar-thumb {
 @media (max-width: 768.5px) {
     .text-22 {
         font-size: 15px;
-        font-family: Brown;
+        font-family: Museo Sans;
     }
 
     .text-30 {
         font-size: 16px;
-        font-family: Brown;
+        font-family: Museo Sans;
     }
 
     .text-32 {
-        font-size: 32px;
-        font-family: Brown;
+        font-size: 18px;
+        font-family: Museo Sans;
     }
 
 
 
     .text-46 {
-        font-size: 46px;
-        font-family: Brown;
+        font-size: 23px;
+        font-family: Museo Sans;
     }
 
     .text-70 {
-        font-size: 70px;
-        font-family: Brown;
+        font-size: 35px;
+        font-family: Museo Sans;
         color: #2257bf;
     }
 
