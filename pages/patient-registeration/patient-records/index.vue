@@ -617,7 +617,7 @@
 
                       <button
                         @click.prevent="createPatient"
-                        class="btn text-16 btn-primary"
+                        class="btn text-16 btn-success"
                       >
                         <span
                           v-if="isLoading"

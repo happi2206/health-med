@@ -1,7 +1,7 @@
 <template >
   <div class="bg-white">
     <div class="d-flex flex-wrap bg-white w-100 justify-content-center">
-      <div class="vh-100 theme-color m-wit vw-100 col-4 text-center p-5">
+      <div class="vh-100 theme-color m-wit vw-100 col-4 text-center py-5">
         <div
           class="
             position-relative
@@ -13,7 +13,7 @@
         >
           <div class="h-50 mb-4">
             <div class="d-flex justify-content-center push">
-              <div class="h-50 mt-5 pt-3">
+              <div class="h-50 mt-5">
                 <img
                   class="img-fluid"
                   src="~/assets/images/download.png"
@@ -197,7 +197,8 @@
                   <button
                     @click.prevent="Authentication"
                     type="button"
-                    class="btn btn-primary text-16 w-100 mt-4 mb-3"
+                    style="background: #00a859"
+                    class="btn text-16 w-100 mt-4 mb-3"
                   >
                     <span v-if="isbusy">
                       <b-spinner
@@ -208,7 +209,7 @@
                       >
                       </b-spinner>
                     </span>
-                    <span v-else>Sign in</span>
+                    <span class="text-white" v-else>Sign in</span>
                   </button>
                 </div>
 

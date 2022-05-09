@@ -12,7 +12,7 @@
           <!-- <small class="text-grey text-12">First Name</small
           > -->
           <select
-            class="w-50 form-control text-16"
+            class="w-50 form-control px-1 text-16"
             style="height: 35px"
             name="patient search"
             id=""
@@ -21,6 +21,7 @@
             <option value="">In Patient</option>
             <option value="">Emergency Patient</option>
           </select>
+
           <input
             type="text"
             placeholder="Admission No."
@@ -41,6 +42,7 @@
           <v-select
             class="style-chooser text-grey text-16"
             placeholder="Clinic"
+            :options="clinics"
           ></v-select>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-12">
@@ -106,6 +108,7 @@ export default {
   data() {
     return {
       itemsToShow: [],
+      clinics: [],
       doctor: "",
       fields: [
         { key: "App No", label: "App No.", sortable: true },
@@ -115,7 +118,7 @@ export default {
         { key: "UHID", label: "UHID", sortable: true },
         { key: "name", label: "Patient Name", sortable: true },
         { key: "age", label: "Age", sortable: true },
-        { key: "user", label: "Assigned User", sortable: true },
+        { key: "provider", label: "Assigned User", sortable: true },
         { key: "status", label: "Status", sortable: true },
       ],
       busy: false,
@@ -126,9 +129,46 @@ export default {
       alert();
     },
   },
+  mounted() {
+    this.getClinics();
+  },
   methods: {
     viewPatientData(e) {
       this.$router.push(`/opd/${e.id}`);
+    },
+    async getEncounters() {
+      try {
+        let response = await this.$axios.$get(`/encounters/encounter/`, {
+          headers: {
+            Authorization: `Token ${localStorage.getItem(`HEALTH-TOKEN`)}`,
+          },
+        });
+
+        this.itemsToShow = response;
+
+        // for (const iterator of await response.results) {
+        //   this.itemsToShow.push(iterator.name);
+        // }
+      } catch {
+      } finally {
+        this.isLoading = false;
+      }
+    },
+    async getClinics() {
+      try {
+        let response = await this.$axios.$get(`/encounters/clinic/`, {
+          headers: {
+            Authorization: `Token ${localStorage.getItem(`HEALTH-TOKEN`)}`,
+          },
+        });
+
+        for (const iterator of await response.results) {
+          this.clinics.push(iterator.name);
+        }
+      } catch {
+      } finally {
+        this.isLoading = false;
+      }
     },
   },
 };

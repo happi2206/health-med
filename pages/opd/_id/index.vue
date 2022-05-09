@@ -190,6 +190,11 @@ export default {
 .site-sidebar .nav-item:hover {
   /* background: rgba(16, 112, 183, 0.1); */
 }
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  background: #ffffff;
+  border-color: #2196f3;
+  color: #00a859;
+}
 li {
   cursor: pointer;
   border: 0.5px solid #fff;

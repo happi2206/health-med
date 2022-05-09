@@ -4,36 +4,40 @@
       <ul class="text-12 pl-0" style="background: #fff">
         <li
           @click="vitals"
-          :class="hide1 ? 'bg-primary color' : ''"
+          :class="hide1 ? 'bg-success color' : ''"
           class="p-2"
         >
           Vital Signs
         </li>
         <li
           @click="complaint"
-          :class="hide4 ? 'bg-primary color' : ''"
+          :class="hide4 ? 'bg-success color' : ''"
           class="p-2"
         >
           Chief Complaint
         </li>
-        <li @click="ros" :class="hide2 ? 'bg-primary color' : ''" class="p-2">
+        <li @click="ros" :class="hide2 ? 'bg-success color' : ''" class="p-2">
           Review of Systems
         </li>
-        <li @click="exam" :class="hide3 ? 'bg-primary color' : ''" class="p-2">
+        <li @click="exam" :class="hide3 ? 'bg-success color' : ''" class="p-2">
           Physical Exam
         </li>
 
         <li
           @click="diagnosis"
-          :class="hide5 ? 'bg-primary color' : ''"
+          :class="hide5 ? 'bg-success color' : ''"
           class="p-2"
         >
           Diagnosis
         </li>
-        <li @click="order" :class="hide6 ? 'bg-primary color' : ''" class="p-2">
+        <li
+          @click="order"
+          :class="hide6 ? 'bg-succcess color' : ''"
+          class="p-2"
+        >
           Order
         </li>
-        <li @click="plan" :class="hide7 ? 'bg-primary color' : ''" class="p-2">
+        <li @click="plan" :class="hide7 ? 'bg-success color' : ''" class="p-2">
           Plan
         </li>
       </ul>

@@ -16,7 +16,7 @@
     </div>
     <div v-else>
       <div class="bg-light card text-12 border-radius mb-3 margin-fix">
-        <div class="card-body" style="background-color: #e7f0f8">
+        <div class="card-body" style="background-color: #c7f9cc">
           <div class="d-flex align-content-center align-items-center">
             <div class="flex-grow-1">
               <div
@@ -101,7 +101,12 @@
               </div>
             </div>
             <div class="ml-4 text-center" style="border: 2px solid #fff">
-              <b-avatar square variant="#e7f0f8" size="6rem"></b-avatar>
+              <b-avatar
+                style="color: #fff"
+                square
+                variant="#e7f0f8"
+                size="6rem"
+              ></b-avatar>
               <!---->
               <!-- <img
              src="~/assets/images/blackdoctor.jpg"

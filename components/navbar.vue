@@ -37,7 +37,11 @@
           <template #button-content>
             <div class="d-flex align-items-center">
               <div class="d-lg-block">
-                <b-avatar variant="#fff" class="mr-1"></b-avatar>
+                <b-avatar
+                  variant="#fff"
+                  style="color: #fff"
+                  class="mr-1"
+                ></b-avatar>
               </div>
             </div>
           </template>

@@ -31,7 +31,7 @@
           <small class="text-grey text-12">Weight (kg)</small
           ><input
             type="number"
-            v-model="weight"
+            v-model="vitals.weight"
             placeholder="Weight"
             class="form-control ng-untouched ng-pristine ng-valid"
           />
@@ -40,7 +40,7 @@
           <small class="text-grey text-12">Height (cm)</small
           ><input
             type="number"
-            v-model="height"
+            v-model="vitals.height"
             placeholder="Height"
             class="form-control ng-untouched ng-pristine ng-valid"
           />
@@ -50,7 +50,7 @@
           ><input
             disabled
             type="number"
-            v-model="bmi"
+            v-model="vitals.bmi"
             placeholder="BMI"
             class="form-control ng-untouched ng-pristine ng-valid"
           />
@@ -59,6 +59,7 @@
           <small class="text-grey text-12">Systolic B.P</small
           ><input
             type="number"
+            v-model="vitals.systolic"
             placeholder="Systolic B.P"
             class="form-control ng-untouched ng-pristine ng-valid"
           />
@@ -67,6 +68,7 @@
           <small class="text-grey text-12">Diastolic B.P</small
           ><input
             type="number"
+            v-model="vitals.diastolic"
             placeholder="Systolic B.P"
             class="form-control ng-untouched ng-pristine ng-valid"
           />
@@ -76,6 +78,7 @@
           <small class="text-grey text-12">Temperature °F</small
           ><input
             type="number"
+            v-model="vitals.temperature"
             placeholder="Temperature"
             class="form-control ng-untouched ng-pristine ng-valid"
           />
@@ -84,6 +87,7 @@
           <small class="text-grey text-12">Respiratory Rate (/min)</small
           ><input
             type="number"
+            v-model="vitals.respiratory"
             placeholder="Respiratory Rate"
             class="form-control ng-untouched ng-pristine ng-valid"
           />
@@ -92,6 +96,7 @@
           <small class="text-grey text-12">Heart Rate (BPM)</small
           ><input
             type="number"
+            v-model="vitals.heart_rate"
             placeholder="Heart Rate"
             class="form-control ng-untouched ng-pristine ng-valid"
           />
@@ -100,6 +105,7 @@
           <small class="text-grey text-12">Urine Output</small
           ><input
             type="number"
+            v-model="vitals.urine_output"
             placeholder="Urine Output"
             class="form-control ng-untouched ng-pristine ng-valid"
           />
@@ -108,6 +114,7 @@
           <small class="text-grey text-12">Blood Sugar (F)</small
           ><input
             type="number"
+            v-model="vitals.blood_sugar_f"
             placeholder="Blood Sugar (F)"
             class="form-control ng-untouched ng-pristine ng-valid"
           />
@@ -116,6 +123,7 @@
           <small class="text-grey text-12">Blood Sugar (R)</small
           ><input
             type="number"
+            v-model="vitals.blood_sugar_r"
             placeholder="Blood Sugar (R)"
             class="form-control ng-untouched ng-pristine ng-valid"
           />
@@ -124,36 +132,58 @@
           <small class="text-grey text-12">SPO2</small
           ><input
             type="number"
+            v-model="vitals.spo2"
             placeholder="SPO2"
             class="form-control ng-untouched ng-pristine ng-valid"
           />
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6 w-100">
           <small class="text-grey text-12">AVPU</small
-          ><v-select class="style-chooser" placeholder="AVPU"></v-select>
+          ><v-select
+            v-model="vitals.avpu"
+            class="style-chooser"
+            placeholder="AVPU"
+          ></v-select>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6 w-100">
           <small class="text-grey text-12">Trauma</small
-          ><v-select class="style-chooser" placeholder="Trauma"></v-select>
+          ><v-select
+            v-model="vitals.trauma"
+            class="style-chooser"
+            placeholder="Trauma"
+          ></v-select>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6 w-100">
           <small class="text-grey text-12">Mobility</small
-          ><v-select class="style-chooser" placeholder="Mobility"></v-select>
+          ><v-select
+            v-model="vitals.mobility"
+            class="style-chooser"
+            placeholder="Mobility"
+          ></v-select>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6 w-100">
           <small class="text-grey text-12">Oxygen Supplementation</small
           ><v-select
             class="style-chooser"
+            v-model="vitals.oxygen"
             placeholder="Oxygen Supplementation"
           ></v-select>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6 w-100">
           <small class="text-grey text-12">Intake</small
-          ><v-select class="style-chooser" placeholder="Intake"></v-select>
+          ><v-select
+            v-model="vitals.intake"
+            class="style-chooser"
+            placeholder="Intake"
+          ></v-select>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6 w-100">
           <small class="text-grey text-12">Output</small
-          ><v-select class="style-chooser" placeholder="Output"></v-select>
+          ><v-select
+            v-model="vitals.output"
+            class="style-chooser"
+            placeholder="Output"
+          ></v-select>
         </div>
         <div
           style="height: 38px"
@@ -206,9 +236,12 @@
 export default {
   data() {
     return {
-      bmi: 0,
-      height: null,
-      weight: null,
+      vitals: {
+        bmi: 0,
+        height: null,
+        weight: null,
+      },
+
       time: "",
       hideVitalsForm: false,
       busy: false,

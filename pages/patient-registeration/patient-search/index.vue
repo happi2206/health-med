@@ -111,15 +111,12 @@
             <button
               @click.prevent="getPatients"
               :disabled="hellNo"
-              class="btn text-14 btn-primary mr-5"
+              class="btn text-14 mr-5"
+              style="background: #00a859; color: #fff"
             >
               <div class="mt-1">Search</div>
             </button>
-            <div
-              @click.prevent="clear"
-              style="background: #dc3545; color: #fff"
-              class="btn text-14"
-            >
+            <div @click.prevent="clear" class="btn text-grey btn-light text-14">
               <div class="mt-1">Clear</div>
             </div>
           </div>
@@ -143,16 +140,12 @@
               <div class="w-100 d-flex flex-wrap">
                 <div class="mb-2 col-lg-6 pl-0 pr-2 col-md-6 col-sm-6 w-100">
                   <small class="text-grey text-12">UHID</small>
-                  <validation-provider rules="required" v-slot="{ errors }">
-                    <input
-                      type="text"
-                      placeholder="UHID"
-                      class="form-control ng-untouched ng-pristine ng-valid"
-                    />
-                    <span class="text-12" style="color: red">{{
-                      errors[0]
-                    }}</span>
-                  </validation-provider>
+
+                  <input
+                    type="text"
+                    placeholder="UHID"
+                    class="form-control ng-untouched ng-pristine ng-valid"
+                  />
                 </div>
                 <div class="mb-2 col-lg-6 px-0 col-md-6 col-sm-6">
                   <small class="text-grey text-12">Patient Name</small>
@@ -211,21 +204,13 @@
 
                 <div class="mb-2 col-lg-6 pr-2 pl-0 col-md-6 col-sm-6">
                   <small class="text-grey text-12">Phone No.</small>
-                  <validation-provider
-                    rules="required|digits"
-                    v-slot="{ errors }"
-                  >
-                    <input
-                      type="text"
-                      v-model="presetData.phone_number"
-                      disabled
-                      placeholder="Phone No."
-                      class="form-control ng-untouched ng-pristine ng-valid"
-                    />
-                    <span class="text-12" style="color: red">{{
-                      errors[0]
-                    }}</span>
-                  </validation-provider>
+
+                  <input
+                    type="text"
+                    v-model="presetData.phone_number"
+                    placeholder="Phone No."
+                    class="form-control ng-untouched ng-pristine ng-valid"
+                  />
                 </div>
 
                 <div class="mb-2 col-lg-6 px-0 col-md-6 col-sm-6">
@@ -258,8 +243,9 @@
                   <validation-provider rules="required" v-slot="{ errors }">
                     <v-select
                       class="style-chooser text-grey text-14"
-                      placeholder="Visit Type"
-                      :options="['xyz']"
+                      v-model="encounterData.encounter_type"
+                      placeholder="Encounter Type"
+                      :options="['Walk in']"
                     ></v-select>
                     <span class="text-12" style="color: red">{{
                       errors[0]
@@ -267,10 +253,11 @@
                   </validation-provider>
                 </div>
                 <div class="mb-2 col-lg-6 px-0 col-md-6 col-sm-6">
-                  <small class="text-grey text-12">Status</small>
+                  <small class="text-grey text-12">Status *</small>
                   <validation-provider rules="required" v-slot="{ errors }">
                     <v-select
                       class="style-chooser text-grey text-14"
+                      v-model="encounterData.status"
                       placeholder="Status"
                       :options="['active']"
                     ></v-select>
@@ -284,8 +271,9 @@
                   <validation-provider rules="required" v-slot="{ errors }">
                     <v-select
                       class="style-chooser text-grey text-14"
+                      v-model="encounterData.clinic.type"
                       placeholder="Clinic"
-                      :options="['xyz']"
+                      :options="clinics"
                     ></v-select>
                     <span class="text-12" style="color: red">{{
                       errors[0]
@@ -297,9 +285,10 @@
                   <small class="text-grey text-12">Provider*</small>
                   <validation-provider rules="required" v-slot="{ errors }">
                     <v-select
+                      v-model="encounterData.provider.type"
                       class="style-chooser text-grey text-14"
                       placeholder="Provider"
-                      :options="['xyz']"
+                      :options="['Dr Sanjay']"
                     ></v-select>
                     <span class="text-12" style="color: red">{{
                       errors[0]
@@ -312,14 +301,8 @@
             <div class="my-3 d-flex justify-content-center">
               <button
                 @click.prevent="closeModal"
-                class="btn mr-5 text-14"
-                style="
-                  height: 38px;
-                  width: 5rem;
-                  text-align: center;
-                  background: rgb(220, 53, 69);
-                  color: rgb(255, 255, 255);
-                "
+                class="btn btn-light text-grey mr-5 text-14"
+                style="height: 38px; width: 5rem; text-align: center"
               >
                 Cancel
               </button>
@@ -327,12 +310,16 @@
                 @click.prevent="startEncounterData"
                 class="
                   btn
-                  text-14
-                  btn-primary
+                  text-white text-14
                   mainbtndashboard
                   medbrownparagraph
                 "
-                style="height: 38px; width: 5rem; text-align: center"
+                style="
+                  height: 38px;
+                  width: 5rem;
+                  text-align: center;
+                  background: #00a859;
+                "
               >
                 <span v-if="isbusy">
                   <b-spinner
@@ -424,13 +411,14 @@ export default {
         { key: "UHID", label: "UHID", sortable: true },
         { key: "firstname", label: "First Name", sortable: true },
         { key: "lastname", label: "Last Name", sortable: true },
-        { key: "date_of_birth", label: "D.O.B", sortable: true },
+        { key: "date_of_birth", label: "D.o.B", sortable: true },
         { key: "gender", label: "Gender", sortable: true },
         { key: "marital_status", label: "Marital Status", sortable: true },
         { key: "action", label: "", sortable: false },
       ],
 
       firstname: "",
+      isbusy: false,
       gender: null,
       lastname: "",
       limit: 50,
@@ -457,17 +445,22 @@ export default {
       },
       year: 0,
       encounterData: {
-        clinic: {},
+        clinic: {
+          type: "",
+        },
         status: "",
         time_log: {},
         chart: {},
-        provider: {},
+        provider: {
+          type: "",
+        },
         patient: {},
         is_active: true,
         encounter_type: "",
         date_and_time: {},
       },
       temp: {},
+      clinics: [],
     };
   },
   watch: {
@@ -491,22 +484,57 @@ export default {
     this.getGender();
     this.getMaritalStatus();
     this.getCountries();
+    this.getClinics();
   },
   methods: {
     async startEncounterData() {
-      console.log(`initial commit`);
-      return;
+      if (this.$refs.runValidation) {
+        this.$refs.runValidation.click();
+      }
+      if (
+        this.encounterData.encounter_type &&
+        this.encounterData.provider.type &&
+        this.encounterData.status &&
+        this.encounterData.clinic.type
+      ) {
+        try {
+          this.isbusy = true;
+          let response = await this.$axios.$post(
+            "encounters/encounter/",
+            this.encounterData,
+            {
+              headers: {
+                Authorization: `Token ${localStorage.getItem(`HEALTH-TOKEN`)}`,
+              },
+            }
+          );
+          console.log(response);
+          this.$router.push(`/opd/${response.id}`);
+        } catch {
+          this.$toast.error(`Unable to create encounter`);
+        } finally {
+          this.isbusy = false;
+        }
+      }
+    },
+    async getClinics() {
       try {
-        let response = await $axios.$post(`/encounters/encounter`, {
+        let response = await this.$axios.$get(`/encounters/clinic/`, {
           headers: {
             Authorization: `Token ${localStorage.getItem(`HEALTH-TOKEN`)}`,
           },
         });
-      } catch {}
+
+        for (const iterator of await response.results) {
+          this.clinics.push(iterator.name);
+        }
+      } catch {
+      } finally {
+        this.isLoading = false;
+      }
     },
     async getPatientRecord(e) {
       try {
-        this.isLoading = true;
         let response = await this.$axios.$get(`patient/patients/${e}`, {
           headers: {
             Authorization: `Token ${localStorage.getItem(`HEALTH-TOKEN`)}`,
@@ -607,6 +635,7 @@ export default {
       if (i === 1) {
         this.$bvModal.show("Add-encounter");
         this.presetData = e;
+        this.encounterData.patient = e;
         console.log(this.presetData);
         this.name = this.presetData.firstname + " " + this.presetData.lastname;
         this.temp = e.is_baby;
@@ -659,6 +688,7 @@ export default {
     },
     closeModal() {
       this.$bvModal.hide("Add-encounter");
+      this.presetData = {};
     },
     clear() {
       this.itemsToShow = [];
@@ -698,6 +728,12 @@ export default {
   background: #1070b7;
   border: 1px solid #1070b7;
   color: #fff;
+}
+.page-item.active .page-link {
+  z-index: 3;
+  color: #fff;
+  background-color: #00a859;
+  border-color: #00a859;
 }
 hr {
   margin-top: 0.5rem;

@@ -378,25 +378,25 @@ a:hover {
 
 .nuxt-link-exact-active {
   background: rgba(16, 112, 183, 0.1) !important;
-  color: #007bff;
+  color: #00a859;
 }
 .nuxt-link-active {
   background: rgba(16, 112, 183, 0.1) !important;
-  color: #007bff;
+  color: #00a859;
 }
 .nuxt-link-active .nav-item items-text {
-  color: #0d6cbb !important;
+  color: #00a859 !important;
 }
 
 .nuxt-link-active .nav-item items-icon {
-  color: #0d6cbb !important;
+  color: #00a859 !important;
 }
 .nuxt-link-exact-active .nav-item items-text {
-  color: #0d6cbb !important;
+  color: #00a859 !important;
 }
 
 .nuxt-link-exact-active .nav-item items-icon {
-  color: #0d6cbb !important;
+  color: #00a859 !important;
 }
 
 .nav-item items {

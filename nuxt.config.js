@@ -44,6 +44,7 @@ export default {
     '~/plugins/vue-select.js',
     '~/plugins/prime-vue.js',
     '~/plugins/veevalidate.js',
+    '~/plugins/axios.js',
     // { src: '~/plugins/v-calendar.js', ssr: false }
   ],
 
@@ -59,11 +60,28 @@ export default {
     "@nuxtjs/axios",
     "primevue/nuxt",
     "bootstrap-vue/nuxt",
+    '@nuxtjs/toast',
   ],
   primevue: {
     theme: "saga-blue",
     ripple: true,
     components: ["Button", "Menu", "TabView", "TabPanel"],
+  },
+
+  toast: {
+    position: 'bottom-right',
+    singleton: true,
+    duration: 5000,
+    register: [
+      // Register custom toasts
+      {
+        name: 'my-error',
+        message: 'Oops...Something went wrong',
+        options: {
+          type: 'error',
+        },
+      },
+    ],
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

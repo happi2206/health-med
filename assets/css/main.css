@@ -354,7 +354,7 @@ body::-webkit-scrollbar-thumb {
 .site-sidebar .nav-item {
     display: flex;
     align-items: center;
-    justify-content: start;
+    /* justify-content: start; */
     text-decoration: none !important;
     color: #40484f;
     margin-bottom: 0.25rem;
@@ -370,7 +370,7 @@ body::-webkit-scrollbar-thumb {
 .nuxt-link-exact-active,
 .site-sidebar .nav-item::after,
 .site-sidebar .nav-item:hover {
-    background: rgba(16, 112, 183, 0.1);
+    background: #00a859;
 }
 
 .site-sidebar .nav-item .nav-item-icon {
@@ -406,7 +406,7 @@ body::-webkit-scrollbar-thumb {
     /* identical to box height, or 10px */
 
     color: #ffffff;
-    background: #44afff;
+    background: #00a859;
     height: 17px;
     width: 17px;
     display: flex;
@@ -465,7 +465,7 @@ body::-webkit-scrollbar-thumb {
 .site-sidebar .nav-dropdown-item:active,
 .site-sidebar .nav-dropdown-item.active {
     text-decoration: none;
-    color: #1070b7;
+    color: #00a859;
 }
 
 /* @media (min-width: 1036px) {
