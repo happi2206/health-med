@@ -95,7 +95,7 @@ body::-webkit-scrollbar-thumb {
 
 .custom-table.table td,
 .custom-table.table th {
-    padding: 0.1rem 0.5rem;
+    padding: 0.5rem 0.5rem;
     vertical-align: middle;
     border: 0;
     font-size: 14px;
@@ -396,6 +396,10 @@ body::-webkit-scrollbar-thumb {
     display: flex;
     align-items: center;
 }
+
+/* .site-sidebar .nav-item .nav-item-text:hover {
+    background-color: #00a859;
+} */
 
 .site-sidebar .nav-item .count {
     font-family: Brown;

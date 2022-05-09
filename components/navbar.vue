@@ -2,12 +2,16 @@
   <div class="navigation text-white">
     <div class="d-flex theme-color align-items-center justify-content-between">
       <div class="hospital-logo d-flex align-items-center px-3 py-2 text-18">
-        <img
-          src="~/assets/images/download.png"
-          height="50rem"
-          width="50rem"
-          alt=""
-        />
+        <div>
+          <img
+            style="border-radius: 4px"
+            src="~/assets/images/download.png"
+            height="53rem"
+            width="53rem"
+            alt=""
+          />
+        </div>
+
         <div class="text-16 ml-3">NDC CLINIC ABUJA</div>
       </div>
       <div>

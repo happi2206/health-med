@@ -25,6 +25,7 @@
                     <div to="" variant="white" class="nav-item items text">
                       <div style="min-width: 18px">
                         <span
+                          style="color: #26a96c"
                           class="iconify mb-1"
                           :data-icon="comp.icon"
                           data-width="18"
@@ -54,6 +55,7 @@
                       >
                         <div>
                           <span
+                            style="color: #26a96c"
                             class="iconify"
                             :data-icon="child.icon"
                             data-width="18"
@@ -336,13 +338,13 @@ export default {
 .items:hover {
   background-color: #dbe9f4;
 }
-a {
+/* a {
   color: #007bff;
 }
 a:hover {
   text-decoration: none;
   color: #007bff;
-}
+} */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -360,7 +362,9 @@ a:hover {
 .bold {
   font-weight: 900;
 }
-
+.nav-item:hover {
+  background: #c7f9cc;
+}
 .site-sidebar .nav-item items .nav-item items-icon {
   line-height: 0;
 }
@@ -377,11 +381,11 @@ a:hover {
 }
 
 .nuxt-link-exact-active {
-  background: rgba(16, 112, 183, 0.1) !important;
+  background: #c7f9cc !important;
   color: #00a859;
 }
 .nuxt-link-active {
-  background: rgba(16, 112, 183, 0.1) !important;
+  background: #c7f9cc !important;
   color: #00a859;
 }
 .nuxt-link-active .nav-item items-text {

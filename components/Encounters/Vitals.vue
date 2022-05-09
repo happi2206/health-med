@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      style="max-width: 93%; cursor: pointer"
+      style="max-width: 95%; cursor: pointer"
       class="d-flex sleek justify-content-end"
       @click.prevent="hideVitalsForm = true"
     >
@@ -31,7 +31,7 @@
           <small class="text-grey text-12">Weight (kg)</small
           ><input
             type="number"
-            v-model="vitals.weight"
+            v-model="weight"
             placeholder="Weight"
             class="form-control ng-untouched ng-pristine ng-valid"
           />
@@ -40,7 +40,7 @@
           <small class="text-grey text-12">Height (cm)</small
           ><input
             type="number"
-            v-model="vitals.height"
+            v-model="height"
             placeholder="Height"
             class="form-control ng-untouched ng-pristine ng-valid"
           />
@@ -202,7 +202,7 @@
           >
             Cancel
           </button>
-          <button class="btn text-14 btn-primary">
+          <button class="btn text-14 btn-success">
             <span
               v-if="isLoading"
               class="spinner-border spinner-border-sm"
@@ -215,7 +215,7 @@
       </div>
     </transition>
 
-    <div class="pt-3 transit" style="max-width: 93%">
+    <div class="pt-3 transit" style="max-width: 98%">
       <div>
         <h4 class="pl-2 text-24 mb-0 text-grey">Patient Vitals</h4>
       </div>
@@ -236,10 +236,27 @@
 export default {
   data() {
     return {
+      height: 0,
+      weight: 0,
       vitals: {
-        bmi: 0,
+        bmi: null,
         height: null,
         weight: null,
+        systolic: null,
+        diastolic: null,
+        temperature: null,
+        respiratory: null,
+        heart_rate: null,
+        urine_output: null,
+        blood_sugar_f: null,
+        blood_sugar_r: null,
+        spo2: 0,
+        avpu: "",
+        trauma: "",
+        mobility: "",
+        oxygen: "",
+        intake: "",
+        output: "",
       },
 
       time: "",
@@ -253,6 +270,7 @@ export default {
         { key: "date/time", label: "Date/Time", sortable: true },
         { key: "vitals", label: "Vital TimeTaken", sortable: true },
         { key: "sbp", label: "SBP", sortable: true },
+        { key: "bmi", label: "BMI", sortable: true },
         { key: "dpb", label: "DBP", sortable: true },
         { key: "temp", label: "Temp", sortable: true },
         { key: "rr", label: "RR", sortable: true },
@@ -269,9 +287,11 @@ export default {
   },
 
   methods: {
+    async addVitals() {},
     calc() {
       let meter = this.height / 100;
-      this.bmi = this.weight / meter;
+      let pow = meter ** 2;
+      this.vitals.bmi = this.weight / pow;
     },
     getDateTime() {
       let day = new Date().toISOString();

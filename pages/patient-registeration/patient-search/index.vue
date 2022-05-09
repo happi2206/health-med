@@ -39,14 +39,20 @@
             />
           </div>
           <div class="col-lg-4 col-md-6 col-sm-12">
-            <small class="text-grey text-12">Marital status</small>
-            <v-select
+            <small class="text-grey text-12">Date of Birth</small>
+            <!-- <v-select
               v-model="marital_status"
               @change="getPatients"
               class="style-chooser text-grey"
               placeholder="Marital status"
               :options="marital"
-            ></v-select>
+            ></v-select> -->
+            <input
+              type="date"
+              v-model="date_of_birth"
+              placeholder="D.o.B"
+              class="form-control ng-untouched ng-pristine ng-valid"
+            />
           </div>
           <div class="col-lg-4 col-md-6 col-sm-12">
             <small class="text-grey text-12">Gender</small>
@@ -58,14 +64,27 @@
             ></v-select>
           </div>
           <div class="col-lg-4 col-md-6 col-sm-12">
-            <small class="text-grey text-12">Nationlity</small
-            ><v-select
+            <small class="text-grey text-12">Phone Number</small>
+            <!-- <v-select
               v-model="nationality"
               class="style-chooser text-grey"
               placeholder="Nationlity"
               :options="nations"
-            ></v-select>
+            ></v-select> -->
+
+            <input
+              type="Phone"
+              v-model="phone_number"
+              placeholder="Phone Number"
+              class="form-control ng-untouched ng-pristine ng-valid"
+            />
           </div>
+          <!-- <div
+              type="button"
+              ref="runValidation"
+              id="runValidation"
+              @click="validate"
+            ></div> -->
 
           <!-- <div class="col-lg-4 col-md-6 col-sm-12">
             <small class="text-grey text-12">Offset</small>
@@ -98,6 +117,7 @@
               class="form-control ng-untouched ng-pristine ng-valid"
             />
           </div> -->
+
           <div
             class="
               col-lg-12
@@ -208,6 +228,7 @@
                   <input
                     type="text"
                     v-model="presetData.phone_number"
+                    disabled
                     placeholder="Phone No."
                     class="form-control ng-untouched ng-pristine ng-valid"
                   />
@@ -239,34 +260,6 @@
                 </div> -->
 
                 <div class="mb-2 col-lg-6 pl-0 pr-2 col-md-6 col-sm-6">
-                  <small class="text-grey text-12">Encounter Type *</small>
-                  <validation-provider rules="required" v-slot="{ errors }">
-                    <v-select
-                      class="style-chooser text-grey text-14"
-                      v-model="encounterData.encounter_type"
-                      placeholder="Encounter Type"
-                      :options="['Walk in']"
-                    ></v-select>
-                    <span class="text-12" style="color: red">{{
-                      errors[0]
-                    }}</span>
-                  </validation-provider>
-                </div>
-                <div class="mb-2 col-lg-6 px-0 col-md-6 col-sm-6">
-                  <small class="text-grey text-12">Status *</small>
-                  <validation-provider rules="required" v-slot="{ errors }">
-                    <v-select
-                      class="style-chooser text-grey text-14"
-                      v-model="encounterData.status"
-                      placeholder="Status"
-                      :options="['active']"
-                    ></v-select>
-                    <span class="text-12" style="color: red">{{
-                      errors[0]
-                    }}</span>
-                  </validation-provider>
-                </div>
-                <div class="mb-2 col-lg-6 pl-0 pr-2 col-md-6 col-sm-6">
                   <small class="text-grey text-12">Clinic *</small>
                   <validation-provider rules="required" v-slot="{ errors }">
                     <v-select
@@ -282,18 +275,43 @@
                 </div>
 
                 <div class="mb-2 col-lg-6 px-0 col-md-6 col-sm-6">
-                  <small class="text-grey text-12">Provider*</small>
+                  <small class="text-grey text-12">Encounter Type *</small>
                   <validation-provider rules="required" v-slot="{ errors }">
                     <v-select
-                      v-model="encounterData.provider.type"
                       class="style-chooser text-grey text-14"
-                      placeholder="Provider"
-                      :options="['Dr Sanjay']"
+                      v-model="encounterData.encounter_type"
+                      placeholder="Encounter Type"
+                      :options="['Walk in']"
                     ></v-select>
                     <span class="text-12" style="color: red">{{
                       errors[0]
                     }}</span>
                   </validation-provider>
+                </div>
+                <!-- <div class="mb-2 col-lg-6 px-0 col-md-6 col-sm-6">
+                  <small class="text-grey text-12">Status *</small>
+                  <validation-provider rules="required" v-slot="{ errors }">
+                    <v-select
+                      class="style-chooser text-grey text-14"
+                      v-model="encounterData.status"
+                      placeholder="Status"
+                      :options="['active']"
+                    ></v-select>
+                    <span class="text-12" style="color: red">{{
+                      errors[0]
+                    }}</span>
+                  </validation-provider>
+                </div> -->
+
+                <div class="mb-2 col-lg-6 pl-0 pr-2 col-md-6 col-sm-6">
+                  <small class="text-grey text-12">Provider</small>
+
+                  <v-select
+                    v-model="encounterData.provider.type"
+                    class="style-chooser text-grey text-14"
+                    placeholder="Provider"
+                    :options="['Dr Sanjay']"
+                  ></v-select>
                 </div>
               </div>
             </div>
@@ -425,6 +443,8 @@ export default {
       marital_status: null,
       middlename: "",
       nationality: null,
+      date_of_birth: "",
+      phone_number: "",
       offset: 0,
       ordering: "",
       religion: "",
@@ -433,15 +453,17 @@ export default {
       genders: [],
       marital: [],
       nations: ["Nigeria"],
-      presetData: {},
+      presetData: {
+        phone_number: "",
+      },
       name: "",
       year: "",
       month: "",
       day: "",
       age: {
-        year: "",
-        month: "",
-        day: "",
+        year: 0,
+        month: 0,
+        day: 0,
       },
       year: 0,
       encounterData: {
@@ -464,21 +486,26 @@ export default {
     };
   },
   watch: {
-    gender() {
-      if (this.gender !== null) {
-        this.getPatients();
-      }
-    },
-    nationality() {
-      if (this.nationality !== null) {
-        this.getPatients();
-      }
-    },
-    marital_status() {
-      if (this.marital_status !== null) {
-        this.getPatients();
-      }
-    },
+    // "age.month": {
+    //   handler(e) {
+    //     console.log("from watcyer", e);
+    //   },
+    // },
+    // gender() {
+    //   if (this.gender !== null) {
+    //     this.getPatients();
+    //   }
+    // },
+    // nationality() {
+    //   if (this.nationality !== null) {
+    //     this.getPatients();
+    //   }
+    // },
+    // marital_status() {
+    //   if (this.marital_status !== null) {
+    //     this.getPatients();
+    //   }
+    // },
   },
   mounted() {
     this.getGender();
@@ -494,7 +521,6 @@ export default {
       if (
         this.encounterData.encounter_type &&
         this.encounterData.provider.type &&
-        this.encounterData.status &&
         this.encounterData.clinic.type
       ) {
         try {
@@ -508,8 +534,10 @@ export default {
               },
             }
           );
-          console.log(response);
-          this.$router.push(`/opd/${response.id}`);
+          if (response.encounter_id) {
+            this.$toast.success(`Encounter created`);
+            this.$bvModal.hide("Add-encounter");
+          }
         } catch {
           this.$toast.error(`Unable to create encounter`);
         } finally {
@@ -635,8 +663,9 @@ export default {
       if (i === 1) {
         this.$bvModal.show("Add-encounter");
         this.presetData = e;
+
         this.encounterData.patient = e;
-        console.log(this.presetData);
+        console.log(this.presetData.phone_number);
         this.name = this.presetData.firstname + " " + this.presetData.lastname;
         this.temp = e.is_baby;
         this.calcAge(e);
@@ -647,24 +676,38 @@ export default {
       let presentDate = new Date().getFullYear();
       let yearOfBirth = e.date_of_birth.substring(0, 4);
 
-      this.age.year = presentDate - yearOfBirth;
-      this.year = this.age.year;
-
-      if (e.is_baby) {
+      let diff = presentDate - yearOfBirth;
+      let x = parseInt(diff);
+      console.log(x);
+      if (x === 0) {
         this.age.year = 0;
+        this.age.month = 0;
+      } else {
+        this.age.year = x;
+      }
+
+      if (monthOfBirth < month) {
+        this.age.year;
+      } else {
+        if (this.age.year === 0) {
+          this.age.year;
+        } else {
+          this.age.year--;
+        }
       }
 
       // **************calc month***********
       let tempMonth;
       let month = new Date().getMonth();
       let monthOfBirth = parseInt(e.date_of_birth.substring(5, 7));
+      // tempMonth = monthOfBirth - month
       if (presentDate === yearOfBirth) {
-        tempMonth = monthOfBirth;
+        this.age.month = 0;
       } else {
         tempMonth = 12 - monthOfBirth;
       }
 
-      if (monthOfBirth < month) {
+      if (monthOfBirth <= month) {
         this.age.month = month - monthOfBirth;
       } else {
         this.age.month = tempMonth + month;
@@ -674,17 +717,6 @@ export default {
       this.age.day = new Date().getDate();
 
       // *********************************
-
-      if (monthOfBirth < month) {
-        this.age.year;
-      } else {
-        this.age.year--;
-      }
-
-      if (e.is_baby) {
-        this.age.year = 0;
-        this.age.month = 0;
-      }
     },
     closeModal() {
       this.$bvModal.hide("Add-encounter");
@@ -712,8 +744,8 @@ export default {
         this.middlename.length === 0 &&
         this.lastname.length === 0 &&
         this.gender === null &&
-        this.nationality === null &&
-        this.marital_status === null
+        this.date_of_birth.length === 0 &&
+        this.phone_number.length === 0
       ) {
         return true;
       }

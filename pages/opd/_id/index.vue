@@ -43,7 +43,7 @@
           </div>
           <div class="px-2">
             <p class="text-14 mb-0 text-grey">
-              Age: {{ age.year }} {{ age.year === 0 ? "year" : "years" }}
+              Age: {{ age }} {{ age === 0 ? " year" : " years" }}
             </p>
           </div>
           <div class="px-2">
@@ -133,9 +133,7 @@
 </template>
 
 <script>
-import sidebar from "~/components/sidebar.vue";
 export default {
-  components: { sidebar },
   layout: "dashboard",
 
   data() {
@@ -143,9 +141,7 @@ export default {
       items: [],
       isLoading: false,
       patientData: {},
-      age: {
-        year: "",
-      },
+      age: 0,
     };
   },
   mounted() {
@@ -156,7 +152,7 @@ export default {
       try {
         this.isLoading = true;
         let response = await this.$axios.$get(
-          `patient/patients/${this.$route.params.id}`,
+          `encounters/encounter/${this.$route.params.id}`,
           {
             headers: {
               Authorization: `Token ${localStorage.getItem(`HEALTH-TOKEN`)}`,
@@ -164,20 +160,21 @@ export default {
           }
         );
 
-        this.patientData = response;
+        this.patientData = response.patient;
+        console.log(this.patientData);
       } catch {
       } finally {
         this.isLoading = false;
         this.calcAge();
       }
     },
-
     calcAge() {
       let presentDate = new Date().getFullYear();
       let yearOfBirth = this.patientData.date_of_birth;
       yearOfBirth;
       let temp = yearOfBirth.substring(0, 4);
-      this.age.year = presentDate - temp;
+      let x = presentDate - temp;
+      this.age = x;
     },
   },
 };

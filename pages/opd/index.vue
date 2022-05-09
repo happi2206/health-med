@@ -66,7 +66,7 @@
             class="m-2 py-2 progress-bar text-14"
             style="background: #ffd166; color: #8d99ae"
           >
-            New patient (0)
+            New patient ({{ item }})
           </div>
         </div>
         <div class="col-md-2 col-sm-2">
@@ -97,6 +97,44 @@
         @row-clicked="viewPatientData"
         :fields="fields"
       >
+        <template #action="{ data: { item } }">
+          <b-dropdown
+            variant="link"
+            toggle-class="text-decoration-none text-center"
+            no-caret
+          >
+            <div class="d-none">
+              {{ item }}
+            </div>
+            <template class="p-0 mx-auto text-center" #button-content>
+              <div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  style="color: #000"
+                  class="bi bi-three-dots-vertical"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"
+                  />
+                </svg>
+              </div>
+            </template>
+            <template v-if="dropdownItem.length > 0">
+              <b-dropdown-item
+                v-for="(dropdown, index) in dropdownItem"
+                right
+                :key="index"
+                class="text-capitalize text-14"
+                @click="optionClicked(item, index)"
+                >{{ dropdown.split("_").join(" ") }}</b-dropdown-item
+              >
+            </template>
+          </b-dropdown>
+        </template>
       </table-component>
     </div>
   </div>
@@ -108,18 +146,21 @@ export default {
   data() {
     return {
       itemsToShow: [],
+      dropdownItem: ["Nurse Vitals"],
+      item: 0,
       clinics: [],
       doctor: "",
       fields: [
-        { key: "App No", label: "App No.", sortable: true },
-        { key: "Visit No", label: "Visit No", sortable: true },
+        { key: "encounter_id", label: "App No.", sortable: true },
+
         { key: "date", label: "Date & Time", sortable: true },
         { key: "clinic", label: "Clinic", sortable: true },
         { key: "UHID", label: "UHID", sortable: true },
         { key: "name", label: "Patient Name", sortable: true },
-        { key: "age", label: "Age", sortable: true },
+        { key: "encounter_type", label: "Encounter Type", sortable: true },
         { key: "provider", label: "Assigned User", sortable: true },
         { key: "status", label: "Status", sortable: true },
+        { key: "action", label: "", sortable: false },
       ],
       busy: false,
     };
@@ -131,27 +172,46 @@ export default {
   },
   mounted() {
     this.getClinics();
+    this.getEncounters();
   },
   methods: {
     viewPatientData(e) {
-      this.$router.push(`/opd/${e.id}`);
+      console.log(e);
+      this.$router.push(`/opd/${e.patient.id}`);
     },
     async getEncounters() {
       try {
+        this.busy = true;
         let response = await this.$axios.$get(`/encounters/encounter/`, {
           headers: {
             Authorization: `Token ${localStorage.getItem(`HEALTH-TOKEN`)}`,
           },
         });
+        let temp = [];
+        this.item = response.results.length;
+        for (const iterator of await response.results) {
+          temp.push(iterator);
+        }
 
-        this.itemsToShow = response;
+        for (const iterator of temp) {
+          let x = iterator.patient;
 
-        // for (const iterator of await response.results) {
-        //   this.itemsToShow.push(iterator.name);
-        // }
+          x = x.firstname + " " + x.lastname;
+
+          this.itemsToShow.push({
+            name: x,
+            encounter_type: iterator.encounter_type,
+            encounter_id: iterator.encounter_id,
+            provider: iterator.provider.type,
+            clinic: iterator.clinic.type,
+            patient: iterator.patient,
+            id: iterator.id,
+          });
+        }
       } catch {
       } finally {
         this.isLoading = false;
+        this.busy = false;
       }
     },
     async getClinics() {
@@ -168,6 +228,11 @@ export default {
       } catch {
       } finally {
         this.isLoading = false;
+      }
+    },
+    optionClicked(e, i) {
+      if (i === 0) {
+        this.$router.push(`/opd/${e.id}`);
       }
     },
   },
@@ -190,5 +255,14 @@ export default {
 .margin-fix {
   margin: 3rem 0 6rem;
   background: #fff;
+}
+.custom-table.table td,
+.custom-table.table th {
+  padding: 0.5rem 0.5rem;
+  vertical-align: middle;
+  border: 0;
+  font-size: 14px;
+  line-height: 100%;
+  color: #40484f;
 }
 </style>

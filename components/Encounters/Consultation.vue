@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="d-flex">
+    <div class="d-flex w-100">
       <ul class="text-12 pl-0" style="background: #fff">
         <li
           @click="vitals"
@@ -30,11 +30,7 @@
         >
           Diagnosis
         </li>
-        <li
-          @click="order"
-          :class="hide6 ? 'bg-succcess color' : ''"
-          class="p-2"
-        >
+        <li @click="order" :class="hide6 ? 'bg-success color' : ''" class="p-2">
           Order
         </li>
         <li @click="plan" :class="hide7 ? 'bg-success color' : ''" class="p-2">
@@ -180,8 +176,8 @@ export default {
 <style scoped>
 ul {
   list-style: none;
-  width: 120px;
-  max-width: 121px;
+  width: 76px;
+  max-width: 77px;
 
   /* border: 1px solid #f5f6f7; */
   background: #f5f6f7;

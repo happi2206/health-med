@@ -103,7 +103,7 @@
                               <input
                                 v-model="patient.firstname"
                                 type="text"
-                                placeholder="First Name*"
+                                placeholder="First Name"
                                 class="
                                   form-control
                                   ng-untouched ng-pristine ng-valid
@@ -135,7 +135,7 @@
                           <input
                             v-model="patient.lastname"
                             type="text"
-                            placeholder="Last Name*"
+                            placeholder="Last Name"
                             class="
                               form-control
                               ng-untouched ng-pristine ng-valid
@@ -167,7 +167,7 @@
                           v-slot="{ errors }"
                         >
                           <input
-                            v-model="date_of_birth"
+                            v-model="patient.date_of_birth"
                             type="date"
                             class="w-100 form-control"
                           />
@@ -181,7 +181,7 @@
                         <div class="d-flex">
                           <div class="px-1">
                             <input
-                              v-model="age.year"
+                              v-model="patient.age.year"
                               type="number"
                               class="w-100 form-control"
                               placeholder="Year"
@@ -189,7 +189,7 @@
                           </div>
                           <div class="px-1">
                             <input
-                              v-model="age.month"
+                              v-model="patient.age.month"
                               type="number"
                               class="w-100 form-control"
                               placeholder="Month"
@@ -197,7 +197,7 @@
                           </div>
                           <div class="px-1">
                             <input
-                              v-model="age.day"
+                              v-model="patient.age.day"
                               type="number"
                               class="w-100 form-control"
                               placeholder="Day"
@@ -213,7 +213,7 @@
                         >
                           <v-select
                             v-model="patient.gender"
-                            class="style-chooser"
+                            class="style-chooser text-14"
                             placeholder="Gender"
                             label="grade_name"
                             :options="gender"
@@ -233,7 +233,7 @@
                         >
                           <v-select
                             v-model="patient.marital_status"
-                            class="style-chooser"
+                            class="style-chooser text-14"
                             placeholder="Marital Status"
                             label="marital_status"
                             :options="marital_status"
@@ -255,7 +255,7 @@
                       <!-- <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                         <small class="text-grey text-12">Language</small
                         ><v-select
-                          class="style-chooser"
+                          class="style-chooser text-14"
                           placeholder="Language"
                           label="marital_status"
                           :options="[
@@ -275,7 +275,7 @@
                         >
                           <v-select
                             v-model="patient.religion"
-                            class="style-chooser"
+                            class="style-chooser text-14"
                             placeholder="Religion"
                             label="religion"
                             :options="religions"
@@ -295,7 +295,7 @@
                           <v-select
                             @input="searchState"
                             v-model="patient.nationality"
-                            class="style-chooser"
+                            class="style-chooser text-14"
                             placeholder="Nationality"
                             :options="countryList"
                           ></v-select>
@@ -330,7 +330,7 @@
                           >State of Origin *</small
                         >
                         <v-select
-                          class="style-chooser"
+                          class="style-chooser text-14"
                           placeholder="Type to search"
                           label="state_name"
                           v-model="patient.state"
@@ -347,6 +347,7 @@
                             name="title"
                             id=""
                           >
+                            <option value="Service No.">Service No</option>
                             <option value="Driving License">
                               Driving License
                             </option>
@@ -360,7 +361,7 @@
                           </select>
                           <!-- <v-select
                           v-model="patient.identity_no"
-                          class="style-chooser w-50"
+                          class="style-chooser text-14 w-50"
                           placeholder="Select identity"
                           label="state_name"
                           :options="[
@@ -386,13 +387,24 @@
                         />
                       </div>
                       <div class="col-lg-4 col-md-5 col-sm-12 mb-3">
-                        <small class="text-grey text-12">LGA</small>
-                        <input
-                          v-model="patient.lga"
-                          type="text"
-                          placeholder="Local Government Area"
-                          class="form-control ng-untouched ng-pristine ng-valid"
-                        />
+                        <small class="text-grey text-12">LGA *</small>
+                        <validation-provider
+                          rules="required"
+                          v-slot="{ errors }"
+                        >
+                          <input
+                            v-model="patient.lga"
+                            type="text"
+                            placeholder="Local Government Area"
+                            class="
+                              form-control
+                              ng-untouched ng-pristine ng-valid
+                            "
+                          />
+                          <span class="text-12" style="color: red">{{
+                            errors[0]
+                          }}</span>
+                        </validation-provider>
                       </div>
                       <!-- <div class="row" style="margin: 0; width: 100%">
                       <div class="mb-3 col-12">
@@ -400,7 +412,7 @@
 
                         <v-select
                           v-model="patient.family"
-                          class="style-chooser"
+                          class="style-chooser text-14"
                           placeholder="Select Family"
                           label="family_name"
                           :options="familyList"
@@ -434,7 +446,7 @@
                           <small class="mb-0 text-grey">Country</small>
                           <v-select
                             v-model="patient.home_address.country"
-                            class="style-chooser"
+                            class="style-chooser text-14"
                             placeholder="Type to search"
                             label="Country"
                             :options="countryList"
@@ -468,7 +480,7 @@
                         <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                           <small class="text-grey text-12">Phone Number</small>
                           <validation-provider
-                            rules="digits"
+                            rules="required|digits:11"
                             v-slot="{ errors }"
                           >
                             <input
@@ -491,8 +503,9 @@
                     <h3 class="text-24">Nearest Relative</h3>
                     <div class="row">
                       <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                        <small class="text-grey text-12">Relative Name</small
-                        ><input
+                        <small class="text-grey text-12">Relative Name</small>
+
+                        <input
                           v-model="patient.next_of_kin.nok_name"
                           type="text"
                           placeholder="Relative Name"
@@ -503,7 +516,7 @@
                         <small class="text-grey">Relation </small>
                         <v-select
                           v-model="patient.next_of_kin.relation"
-                          class="style-chooser"
+                          class="style-chooser text-14"
                           placeholder="Relation"
                           label="name"
                           :options="relation"
@@ -512,7 +525,7 @@
                       <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                         <small class="text-grey text-12">Phone Number</small>
                         <validation-provider
-                          rules="required|digits"
+                          rules="digits:11"
                           v-slot="{ errors }"
                         >
                           <input
@@ -544,7 +557,7 @@
                         <small class="mb-0 text-grey">Country</small>
                         <v-select
                           v-model="patient.next_of_kin.country"
-                          class="style-chooser"
+                          class="style-chooser text-14"
                           placeholder="Type to search"
                           label="Country"
                           :options="countryList"
@@ -579,10 +592,10 @@
                     >
                       <small class="mb-0 text-grey text-grey">Payer</small>
                       <v-select
-                        class="style-chooser"
+                        class="style-chooser text-14"
                         placeholder="Type to search"
                         label="Country"
-                        :options="countryList"
+                        :options="['NHIS', 'Care pay', 'Private']"
                       ></v-select>
                     </div>
 
@@ -591,10 +604,10 @@
                     >
                       <small class="mb-0 text-grey">Sponsor</small>
                       <v-select
-                        class="style-chooser"
+                        class="style-chooser text-14"
                         placeholder="Type to search"
                         label="Country"
-                        :options="countryList"
+                        :options="[]"
                       ></v-select>
                     </div>
 
@@ -603,10 +616,10 @@
                     >
                       <small class="mb-0 text-grey">Network</small>
                       <v-select
-                        class="style-chooser"
+                        class="style-chooser text-14"
                         placeholder="Type to search"
-                        label="Country"
-                        :options="['Antigua and Barbuda', 'General', 'Kongo']"
+                        label=""
+                        :options="[]"
                       ></v-select>
                     </div>
 
@@ -846,7 +859,7 @@ export default {
           );
           console.log(response);
           this.id = response.id;
-          this.$router.push(`patient-registeration/patient-search/${this.id}`);
+          this.$router.push(`/patient-registeration/patient-search/${this.id}`);
         } catch {
         } finally {
           this.isLoading = false;
@@ -951,7 +964,7 @@ export default {
       console.log("yay");
     },
 
-    async getStates() {
+    async getStates(e) {
       try {
         let response = await this.$axios.$get(
           `core/states/?country=${160}&limit=100&offset=0`,
@@ -978,7 +991,7 @@ export default {
 .margin-fix {
   margin: 4rem 0rem 6rem;
 }
-.style-chooser {
+.style-chooser text-14 {
   height: 38px;
 }
 .touch {
